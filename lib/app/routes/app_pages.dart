@@ -32,6 +32,8 @@ import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/search_bar/bindings/search_bar_binding.dart';
 import '../modules/search_bar/views/search_bar_view.dart';
+import '../modules/signup/bindings/signup_binding.dart';
+import '../modules/signup/views/signup_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -127,6 +129,11 @@ class AppPages {
       name: _Paths.CURENT_LOCATION,
       page: () => const CurentLocationView(),
       binding: CurentLocationBinding(),
+    ),
+    GetPage(
+      name: _Paths.SIGNUP,
+      page: () => const SignupView(),
+      binding: SignupBinding(),
     ),
   ];
 }

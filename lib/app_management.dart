@@ -15,7 +15,7 @@ class AppManagement extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
 
-      builder: (context, child) =>   GetMaterialApp(
+      builder: (context, child) => GetMaterialApp(
         title: "Application",
         theme: themeData(),
         debugShowCheckedModeBanner: false,
