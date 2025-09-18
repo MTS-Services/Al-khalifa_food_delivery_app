@@ -31,7 +31,6 @@ class HomeView extends GetView<HomeController> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-
                 elevation: WidgetStateProperty.all(0.0),
                 leading: Icon(Icons.search),
                 hintText: "Search for food",
