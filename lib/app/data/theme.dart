@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-ThemeData themeData(){
-  return ThemeData(
-
-  );
+ThemeData themeData() {
+  return ThemeData(fontFamily: 'Poppins');
 }
