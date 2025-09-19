@@ -2,6 +2,7 @@ import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/modules/otp/views/otp_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
@@ -27,23 +28,23 @@ class EmailVerificationView extends GetView<EmailVerificationController> {
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding:  EdgeInsets.symmetric(horizontal: 16.h),
               child: Column(
                 children: [
-                  const SizedBox(height: 160),
+                   SizedBox(height: 160.h),
                   Text("Recover Password", style: AppTextStyles.medium32),
-                  const SizedBox(height: 12),
+                   SizedBox(height: 12.h),
                   Center(
                     child: Text(
                       'Enter the Email Address that you used when\nregister to recover your password, You will receive a\nVerification code.',
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(height: 25),
+                   SizedBox(height: 25.h),
                   TextFormField(
                     decoration: InputDecoration(hintText: 'Enter your Email'),
                   ),
-                  const SizedBox(height: 35),
+                   SizedBox(height: 35.h),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(

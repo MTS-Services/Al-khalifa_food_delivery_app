@@ -1,8 +1,8 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
-import 'package:al_khalifa/app/modules/reset_password/views/reset_password_view.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -29,19 +29,19 @@ class OtpView extends GetView<OtpController> {
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding:  EdgeInsets.symmetric(horizontal: 16.h),
               child: Column(
                 children: [
-                  const SizedBox(height: 160),
+                   SizedBox(height: 160.h),
                   Text("Verification", style: AppTextStyles.medium32),
-                  const SizedBox(height: 12),
+                   SizedBox(height: 12.h),
                   Center(
                     child: Text(
                       'We sent Verification code to your Email address',
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(height: 25),
+                   SizedBox(height: 25.h),
                   PinCodeTextField(
                     length: 6,
                     obscureText: false,
@@ -69,7 +69,7 @@ class OtpView extends GetView<OtpController> {
                     },
                     appContext: context,
                   ),
-                  const SizedBox(height: 25),
+                   SizedBox(height: 25.h),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -79,7 +79,7 @@ class OtpView extends GetView<OtpController> {
                       child: Text("Next"),
                     ),
                   ),
-                  const SizedBox(height: 25),
+                   SizedBox(height: 25.h),
                 ],
               ),
             ),
@@ -104,7 +104,7 @@ class OtpView extends GetView<OtpController> {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: const SizedBox(height: 25)),
+          SliverToBoxAdapter(child:  SizedBox(height: 25.h)),
           SliverToBoxAdapter(
             child: Center(
               child: Text("00.59 sec", style: AppTextStyles.regular14),

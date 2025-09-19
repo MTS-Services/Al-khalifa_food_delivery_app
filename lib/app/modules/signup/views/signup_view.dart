@@ -3,6 +3,7 @@ import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/data/image_path.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../controllers/signup_controller.dart';
@@ -19,16 +20,16 @@ class SignupView extends GetView<SignupController> {
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 24.0,
+                padding:  EdgeInsets.symmetric(
+                  horizontal: 16.0.w,
+                  vertical: 24.0.h,
                 ),
                 child: Text('Sign Up', style: AppTextStyles.medium32),
               ),
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding:  EdgeInsets.symmetric(horizontal: 16.0.w),
                 child: Row(
                   children: [
                     // First field
@@ -37,7 +38,7 @@ class SignupView extends GetView<SignupController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('First Name', style: AppTextStyles.medium16),
-                          const SizedBox(height: 8),
+                           SizedBox(height: 8.h),
                           TextFormField(
                             decoration: InputDecoration(
                               hintText: 'Enter First Name',
@@ -46,13 +47,13 @@ class SignupView extends GetView<SignupController> {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 10),
+                     SizedBox(width: 10.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Last Name', style: AppTextStyles.medium16),
-                          const SizedBox(height: 8),
+                           SizedBox(height: 8.h),
                           TextFormField(
                             decoration: InputDecoration(
                               hintText: 'Enter Last Name',
@@ -67,41 +68,40 @@ class SignupView extends GetView<SignupController> {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding:  EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16.h),
                     Text('Email', style: AppTextStyles.medium16),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8.h),
                     TextFormField(
                       decoration: InputDecoration(hintText: 'Enter your email'),
                     ),
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16.h),
                     Text('Number', style: AppTextStyles.medium16),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8.h),
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'Enter your number',
                       ),
                     ),
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16.h),
                   ],
                 ),
               ),
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding:  EdgeInsets.symmetric(horizontal: 16.0.w),
                 child: Row(
                   children: [
-                    // First field
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('District', style: AppTextStyles.medium16),
-                          const SizedBox(height: 8),
+                           SizedBox(height: 8.h),
                           TextFormField(
                             decoration: InputDecoration(
                               hintText: 'Enter District Name',
@@ -110,13 +110,13 @@ class SignupView extends GetView<SignupController> {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 10),
+                     SizedBox(width: 10.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('City', style: AppTextStyles.medium16),
-                          const SizedBox(height: 8),
+                           SizedBox(height: 8.h),
                           TextFormField(
                             decoration: InputDecoration(
                               hintText: 'Enter City Name',
@@ -131,21 +131,21 @@ class SignupView extends GetView<SignupController> {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding:  EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16.h),
                     Text('Address', style: AppTextStyles.medium16),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8.h),
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'Example:house no 32',
                       ),
                     ),
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16.h),
                     Text('Create Password', style: AppTextStyles.medium16),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8.h),
                     Obx(
                           () => TextFormField(
                         obscureText: controller.isObSecure2.value,
@@ -163,9 +163,9 @@ class SignupView extends GetView<SignupController> {
                       ),
                     ),
 
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16.h),
                     Text('Confirm Password', style: AppTextStyles.medium16),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8.h),
                     Obx(
                           () => TextFormField(
                         obscureText: controller.isObSecure3.value,
@@ -196,9 +196,9 @@ class SignupView extends GetView<SignupController> {
                       onChanged: controller.toggleCheckbox,
                     ),
                     Expanded(
-                      child: const Text(
+                      child:  Text(
                         "I Accept All Terms & Condition",
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 16.sp),
                       ),
                     ),
                   ],
@@ -207,10 +207,10 @@ class SignupView extends GetView<SignupController> {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding:  EdgeInsets.symmetric(horizontal: 16.h),
                 child: Column(
                   children: [
-                    const SizedBox(height: 20),
+                     SizedBox(height: 20.h),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -223,16 +223,16 @@ class SignupView extends GetView<SignupController> {
                         child: Text('Sign Up'),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                     SizedBox(height: 30.h),
                     Text(
                       'Or Sign UP with',
                       style: AppTextStyles.medium14.copyWith(
                         color: AppColors.darkBlackColor,
                       ),
                     ),
-                    const SizedBox(height: 30),
+                     SizedBox(height: 30.h),
                     Image.asset(ImagePath.googleIcon, scale: 4),
-                    const SizedBox(height: 25),
+                     SizedBox(height: 25.h),
                   ],
                 ),
               ),

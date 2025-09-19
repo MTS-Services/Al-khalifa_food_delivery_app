@@ -2,6 +2,7 @@ import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/modules/login/views/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
@@ -27,19 +28,19 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding:  EdgeInsets.symmetric(horizontal: 16.h),
               child: Column(
                 children: [
-                  const SizedBox(height: 150),
+                   SizedBox(height: 150.h),
                   Text("Create New Password", style: AppTextStyles.medium32),
-                  const SizedBox(height: 12),
+                   SizedBox(height: 12.h),
                   Center(
                     child: Text(
                       'Type and confirm a secure new password for your amount',
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(height: 30),
+                   SizedBox(height: 30.h),
                   Obx(
                     () => TextFormField(
                       obscureText: controller.isObSecure4.value,
@@ -57,7 +58,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                   SizedBox(height: 20.h),
                   Obx(
                     () => TextFormField(
                       obscureText: controller.isObSecure5.value,
@@ -75,7 +76,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 35),
+                   SizedBox(height: 35.h),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(

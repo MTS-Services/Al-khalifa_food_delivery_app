@@ -5,6 +5,7 @@ import 'package:al_khalifa/app/modules/email_verification/views/email_verificati
 import 'package:al_khalifa/app/modules/signup/views/signup_view.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
 
@@ -17,10 +18,10 @@ class LoginView extends GetView<LoginController> {
       backgroundColor: AppColors.whiteColor,//backgroundColor
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding:  EdgeInsets.symmetric(horizontal: 16.w),
           child: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(child: const SizedBox(height: 50)),
+              SliverToBoxAdapter(child:SizedBox(height: 50.h)),
               SliverToBoxAdapter(
                 child: Text(
                   'Log In \nYour Account',
@@ -31,17 +32,17 @@ class LoginView extends GetView<LoginController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 28),
+                     SizedBox(height: 28.h),
                     Text('Email or Number', style: AppTextStyles.medium16),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8.h),
                     TextFormField(
                       decoration: InputDecoration(
                         hintText: 'Enter your email or number',
                       ),
                     ),
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16.h),
                     Text('password', style: AppTextStyles.medium16),
-                    const SizedBox(height: 8),
+                     SizedBox(height: 8.h),
                     Obx(
                       () => TextFormField(
                         obscureText: controller.isObSecure1.value,
@@ -60,7 +61,7 @@ class LoginView extends GetView<LoginController> {
                       ),
                     ),
 
-                    const SizedBox(height: 16),
+                     SizedBox(height: 16.h),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: GestureDetector(
@@ -81,7 +82,7 @@ class LoginView extends GetView<LoginController> {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    const SizedBox(height: 40),
+                     SizedBox(height: 40.h),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -94,16 +95,16 @@ class LoginView extends GetView<LoginController> {
                         child: Text('Log In'),
                       ),
                     ),
-                    const SizedBox(height: 35),
+                     SizedBox(height: 35.h),
                     Text(
                       'Or Log In with',
                       style: AppTextStyles.medium14.copyWith(
                         color: AppColors.darkBlackColor,
                       ),
                     ),
-                    const SizedBox(height: 35),
+                     SizedBox(height: 35.h),
                     Image.asset(ImagePath.googleIcon, scale: 4),
-                    const SizedBox(height: 25),
+                     SizedBox(height: 25.h),
                   ],
                 ),
               ),
