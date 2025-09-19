@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../data/app_text_styles.dart';
 
-class Customlist extends StatelessWidget {
+class CustomList extends StatelessWidget {
   final String chargeType;
   final String amount;
 
-  const Customlist({super.key, required this.chargeType, required this.amount});
+  const CustomList({super.key, required this.chargeType, required this.amount});
 
   @override
   Widget build(BuildContext context) {

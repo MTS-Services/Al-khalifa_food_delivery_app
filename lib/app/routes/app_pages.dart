@@ -34,13 +34,12 @@ import '../modules/search_bar/bindings/search_bar_binding.dart';
 import '../modules/search_bar/views/search_bar_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.PROFILE;
+  static const INITIAL = Routes.CHECKOUT;
 
   static final routes = [
     GetPage(

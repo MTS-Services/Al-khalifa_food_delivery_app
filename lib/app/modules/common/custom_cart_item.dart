@@ -13,83 +13,101 @@ class CustomCartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 90.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
-        color: AppColors.greyLightColor,
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10.r),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Container(
-              height: 70.h,
-              width: 70.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                image: DecorationImage(image: AssetImage(ImagePath.kacchi)),
-              ),
-            ),
-            SizedBox(width: 10.w),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Basmoti Kacchi',
-                  style: AppTextStyles.medium14,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                Obx(
-                  () => Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          controller.increment();
-                        },
-                        child: Container(
-                          height: 16.r,
-                          width: 16.r,
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Text('+', style: AppTextStyles.regular10),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        child: Text("${controller.count.value}"),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          controller.decrement();
-                        },
-                        child: Container(
-                          height: 16.r,
-                          width: 16.r,
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Text('-', style: AppTextStyles.regular10),
-                        ),
-                      ),
-                    ],
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0.h),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.r),
+          color: AppColors.greyLightColor,
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(10.r),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: 70.h,
+                width: 70.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  image: const DecorationImage(
+                    image: AssetImage(ImagePath.kacchi),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Text('260 Tk', style: AppTextStyles.medium14),
-              ],
-            ),
-            const Spacer(),
-            Icon(Icons.delete_outline_outlined, color: AppColors.primaryColor),
-          ],
+              ),
+              SizedBox(width: 10.w),
+
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Basmoti Kacchi',
+                      style: AppTextStyles.medium14,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    SizedBox(height: 6.h),
+                    Obx(
+                          () => Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GestureDetector(
+                            onTap: controller.increment,
+                            child: Container(
+                              height: 18.r,
+                              width: 18.r,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: Text('+', style: AppTextStyles.regular10),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            child: Text("${controller.count.value}",
+                                style: AppTextStyles.medium14),
+                          ),
+                          GestureDetector(
+                            onTap: controller.decrement,
+                            child: Container(
+                              height: 18.r,
+                              width: 18.r,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: Text('-', style: AppTextStyles.regular10),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(height: 6.h),
+                    Text('260 Tk', style: AppTextStyles.medium14),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10.w),
+              Column(
+                children: [
+                  SizedBox(height: 50.h,),
+                  Icon(
+                    Icons.delete_outline_outlined,
+                    color: AppColors.primaryColor,
+                    size: 24.sp,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,3 @@
-
-import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
