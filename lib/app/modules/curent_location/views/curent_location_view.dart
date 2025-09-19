@@ -9,7 +9,6 @@ import 'dropdown_button.dart';
 
 class CurentLocationView extends GetView<CurentLocationController> {
   CurentLocationView({super.key});
-
   final List<String> district = ['Dhaka', 'Cumilla', 'Chittagong', 'Rajshahi'];
   final List<String> city = ['Dhaka', 'Dhanmondi', 'Uttora', 'Mirpur'];
 
@@ -23,7 +22,7 @@ class CurentLocationView extends GetView<CurentLocationController> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -47,12 +46,11 @@ class CurentLocationView extends GetView<CurentLocationController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('District', style: AppTextStyles.medium16),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Obx(() {
                         return AppDropdown<String>(
                           items: district,
-                          value:
-                              (controller.selectedDistrict.value ?? '').isEmpty
+                          value: (controller.selectedDistrict.value ?? '').isEmpty
                               ? null
                               : controller.selectedDistrict.value,
                           onChanged: (v) {
@@ -64,7 +62,7 @@ class CurentLocationView extends GetView<CurentLocationController> {
                           hintStyle: AppTextStyles.regular14.copyWith(
                             color: Colors.grey,
                           ),
-                          padding: const EdgeInsets.only(top: 8),
+                          padding: EdgeInsets.only(top: 8.h),
                         );
                       }),
                     ],
@@ -76,7 +74,7 @@ class CurentLocationView extends GetView<CurentLocationController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('City', style: AppTextStyles.medium16),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Obx(() {
                         return AppDropdown<String>(
                           items: city,
@@ -92,7 +90,7 @@ class CurentLocationView extends GetView<CurentLocationController> {
                           hintStyle: AppTextStyles.regular14.copyWith(
                             color: AppColors.greyColor,
                           ),
-                          padding: const EdgeInsets.only(top: 8),
+                          padding: EdgeInsets.only(top: 8.h),
                         );
                       }),
                     ],
@@ -104,7 +102,7 @@ class CurentLocationView extends GetView<CurentLocationController> {
               label: 'Address',
               hintText: 'Example: House no 32,street,etc',
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 30.h),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class CheckoutController extends GetxController {
   //TODO: Implement CheckoutController
 
-  final count = 0.obs;
+  final count = 1.obs;
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +19,14 @@ class CheckoutController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  void increment() {
+   if(count>=1){
+     count.value++;
+   }
+  }
+  void decrement() {
+    if(count>1){
+      count.value--;
+    }
+  }
 }
