@@ -157,7 +157,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CURENT_LOCATION,
-      page: () => const CurentLocationView(),
+      page: () =>  CurentLocationView(),
       binding: CurentLocationBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
