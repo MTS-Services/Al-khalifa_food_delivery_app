@@ -69,7 +69,7 @@ class LoginView extends GetView<LoginController> {
                           Get.to(() => EmailVerificationView());
                         },
                         child: Text(
-                          'Forgetted Password',
+                          'Forget Password',
                           style: AppTextStyles.medium16.copyWith(
                             color: Color(0xffFF5900),
                           ),
