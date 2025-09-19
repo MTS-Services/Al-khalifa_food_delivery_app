@@ -40,7 +40,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.CHECKOUT;
 
   static final routes = [
     GetPage(
@@ -125,7 +125,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CURENT_LOCATION,
-      page: () => const CurentLocationView(),
+      page: () =>  CurentLocationView(),
       binding: CurentLocationBinding(),
     ),
   ];
