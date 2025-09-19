@@ -49,7 +49,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => const HomeView(),
+      page: () =>  HomeView(),
       binding: HomeBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
@@ -175,7 +175,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CUSTOM_BOTTOOM_BAR,
-      page: () => const CustomBottoomBarView(),
+      page: () =>  CustomBottoomBarView(),
       binding: CustomBottoomBarBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
