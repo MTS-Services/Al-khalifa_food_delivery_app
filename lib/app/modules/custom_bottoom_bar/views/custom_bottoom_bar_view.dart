@@ -42,9 +42,13 @@ class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
               topRight: Radius.circular(20.0.r),
             ),
             child: BottomNavigationBar(
+              currentIndex: controller.currentIndex.value, // Add this line
               type: BottomNavigationBarType.fixed,
               onTap: controller.changeTab,
               backgroundColor: Colors.white,
+              selectedItemColor: AppColors.primaryColor, // Add selected color
+              unselectedItemColor:
+                  AppColors.primaryTextColor, // Add unselected color
               selectedLabelStyle: AppTextStyles.medium13.apply(
                 color: AppColors.primaryColor,
               ),
@@ -71,7 +75,7 @@ class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
         iconPath,
         height: 28.h,
         width: 28.w,
-        color: isSelected ? AppColors.primaryColor : AppColors.greyColor,
+        color: isSelected ? AppColors.primaryColor : AppColors.primaryTextColor,
       ),
       label: label,
     );
