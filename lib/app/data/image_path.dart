@@ -10,5 +10,9 @@ class ImagePath{
   static const String starIcon ='$baseUrl/starIcon.png';
   static const String rightIcon ='$baseUrl/rightIcon.png';
   static const String carIcon ='$baseUrl/carIcon.png';
+  static const String cart ='$baseUrl/cart.png';
+  static const String home ='$baseUrl/home.png';
+  static const String person ='$baseUrl/person.png';
+  static const String list ='$baseUrl/list.png';
 
 }

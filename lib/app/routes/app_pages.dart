@@ -8,6 +8,8 @@ import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/checkout_view.dart';
 import '../modules/curent_location/bindings/curent_location_binding.dart';
 import '../modules/curent_location/views/curent_location_view.dart';
+import '../modules/custom_bottoom_bar/bindings/custom_bottoom_bar_binding.dart';
+import '../modules/custom_bottoom_bar/views/custom_bottoom_bar_view.dart';
 import '../modules/email_verification/bindings/email_verification_binding.dart';
 import '../modules/email_verification/views/email_verification_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -32,6 +34,8 @@ import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/search_bar/bindings/search_bar_binding.dart';
 import '../modules/search_bar/views/search_bar_view.dart';
+import '../modules/signup/bindings/signup_binding.dart';
+import '../modules/signup/views/signup_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 
@@ -40,7 +44,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -157,10 +161,24 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CURENT_LOCATION,
-      page: () =>  CurentLocationView(),
+      page: () => CurentLocationView(),
       binding: CurentLocationBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
-      ),
+    ),
+    GetPage(
+      name: _Paths.SIGNUP,
+      page: () => const SignupView(),
+      binding: SignupBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: _Paths.CUSTOM_BOTTOOM_BAR,
+      page: () => const CustomBottoomBarView(),
+      binding: CustomBottoomBarBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
   ];
 }
