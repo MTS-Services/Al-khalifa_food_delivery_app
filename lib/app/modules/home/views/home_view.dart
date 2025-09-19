@@ -12,9 +12,7 @@ import '../widget/food_card.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key});
-
   final TextEditingController _searchTEController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,14 +76,19 @@ class HomeView extends GetView<HomeController> {
         childAspectRatio: 0.72,
       ),
       itemBuilder: (context, index) {
-        return FoodCard(
-          imageUrl: ImagePath.foodImage,
-          title: "Spicy Sausage",
-          rating: 5.0,
-          price: 495,
-          onAdd: () {
-            print("Added Spicy Sausage!");
+        return GestureDetector(
+          onTap: (){
+            Get.to(()=>ProductDetailsScreen());
           },
+          child: FoodCard(
+            imageUrl: ImagePath.foodImage,
+            title: "Spicy Sausage",
+            rating: 5.0,
+            price: 495,
+            onAdd: () {
+              print("Added Spicy Sausage!");
+            },
+          ),
         );
       },
     );

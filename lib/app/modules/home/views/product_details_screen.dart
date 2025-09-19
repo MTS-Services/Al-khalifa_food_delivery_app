@@ -1,3 +1,4 @@
+import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -5,11 +6,9 @@ import '../../../data/image_path.dart';
 import '../widget/custom_circle.dart';
 import '../widget/custom_header.dart';
 import '../widget/food_card.dart';
+
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key});
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,35 +40,19 @@ class ProductDetailsScreen extends StatelessWidget {
               SizedBox(height: 15),
               SizedBox(
                 height: 220,
-                child:ListView(
+                child: ListView(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   children: [
-                    _buildListTile("For 1 person","Tk 190"),
-                    _buildListTile("For 1 person","Tk 190"),
-                    _buildListTile("For 1 person","Tk 190"),
-                    _buildListTile("For 1 person","Tk 190")
+                    _buildListTile("For 1 person", "Tk 190"),
+                    _buildListTile("For 1 person", "Tk 190"),
+                    _buildListTile("For 1 person", "Tk 190"),
+                    _buildListTile("For 1 person", "Tk 190"),
                   ],
-                )
+                ),
               ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildCircleButton(Icons.remove,
-                    () {
-
-              },),
-              const SizedBox(width: 20),
-              Text(
-                '',
-                style: const TextStyle(fontSize: 24),
-              ),
-              const SizedBox(width: 20),
-              _buildCircleButton(Icons.add,() {
-
-              },),
-            ],
-          ),
+              SizedBox(height: 20),
+              _buildAddToCard(),
             ],
           ),
         ),
@@ -77,6 +60,21 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildAddToCard() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            _buildCircleButton(Icons.remove, () {}),
+            Text('', style: const TextStyle(fontSize: 24)),
+            _buildCircleButton(Icons.add, () {}),
+          ],
+        ),
+        CustomElevatedButton(onPressed: () {}, text: "Add to cart"),
+      ],
+    );
+  }
 
   Widget _buildListTile(String title, String price) {
     return ListTile(
@@ -85,6 +83,7 @@ class ProductDetailsScreen extends StatelessWidget {
       trailing: Text(price, style: const TextStyle(fontSize: 16)),
     );
   }
+
   Widget _buildCircleButton(IconData icon, VoidCallback onPressed) {
     return ElevatedButton(
       onPressed: onPressed,
@@ -98,8 +97,10 @@ class ProductDetailsScreen extends StatelessWidget {
       child: Icon(icon, size: 20),
     );
   }
- Widget _buildTitleRow() {
+
+  Widget _buildTitleRow() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,6 +112,7 @@ class ProductDetailsScreen extends StatelessWidget {
             Text("Select one", style: TextStyle(fontSize: 15)),
           ],
         ),
+        CustomElevatedButton(onPressed: () {}, text: "Required"),
       ],
     );
   }
