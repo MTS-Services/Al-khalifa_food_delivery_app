@@ -48,7 +48,7 @@ class Onbording2View extends GetView<Onbording2Controller> {
                 ),
                 CustomElevatedButton(
                   onPressed: () {
-                    Get.toNamed(Routes.LOGIN);
+                    Get.offAllNamed(Routes.LOGIN);
                   },
                   text: 'Next',
                 ),

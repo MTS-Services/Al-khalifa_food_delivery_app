@@ -47,86 +47,120 @@ class AppPages {
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.ONBORDING1,
       page: () => const Onbording1View(),
       binding: Onbording1Binding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.ONBORDING2,
       page: () => const Onbording2View(),
       binding: Onbording2Binding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.LOGIN,
       page: () => const LoginView(),
       binding: LoginBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.EMAIL_VERIFICATION,
       page: () => const EmailVerificationView(),
       binding: EmailVerificationBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.OTP,
       page: () => const OtpView(),
       binding: OtpBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.RESET_PASSWORD,
       page: () => const ResetPasswordView(),
       binding: ResetPasswordBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.BIRIYANI,
       page: () => const BiriyaniView(),
       binding: BiriyaniBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.PRODUCT_DETAILS,
       page: () => const ProductDetailsView(),
       binding: ProductDetailsBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.SEARCH_BAR,
       page: () => const SearchBarView(),
       binding: SearchBarBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.NOTIFICATION,
       page: () => const NotificationView(),
       binding: NotificationBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.CART,
       page: () => const CartView(),
       binding: CartBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.CHECKOUT,
       page: () => const CheckoutView(),
       binding: CheckoutBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.ORDER,
       page: () => const OrderView(),
       binding: OrderBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.CURENT_LOCATION,
       page: () => const CurentLocationView(),
       binding: CurentLocationBinding(),
+      transition: Transition.rightToLeft, // 👈 animation defined here
+      transitionDuration: const Duration(milliseconds: 400),
     ),
   ];
 }
