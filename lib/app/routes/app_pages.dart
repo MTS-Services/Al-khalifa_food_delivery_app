@@ -40,7 +40,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.SPLASH;
+  static const INITIAL = Routes.LOGIN;
 
   static final routes = [
     GetPage(
@@ -161,6 +161,6 @@ class AppPages {
       binding: CurentLocationBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
-    ),
+      ),
   ];
 }
