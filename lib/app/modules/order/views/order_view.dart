@@ -1,4 +1,3 @@
-import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/modules/common/custom_cart_item.dart';
 import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
@@ -67,9 +66,6 @@ class OrderView extends GetView<OrderController> {
                         context: context,
                         builder: (context) => AlertDialog(
                           title: Text('Cancle your order?'),
-                          titleTextStyle: AppTextStyles.medium16.apply(
-                            color: Colors.black,
-                          ),
                           actions: [
                             Column(
                               spacing: 10.h,
@@ -80,24 +76,18 @@ class OrderView extends GetView<OrderController> {
                                 ),
                                 SizedBox(
                                   width: double.infinity,
-                                  child: CustomElevatedButton(
+                                  child: ElevatedButton(
                                     onPressed: () {},
-                                    text: 'Cancle my order',
+                                    child: Text(
+                                      'Cancle my order',
+                                      style: AppTextStyles.regular14,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
                                   width: double.infinity,
                                   child: OutlinedButton(
                                     onPressed: () {},
-                                    style: OutlinedButton.styleFrom(
-                                      side: BorderSide(
-                                        color: AppColors.primaryColor,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadiusGeometry.circular(10),
-                                      ),
-                                    ),
                                     child: Text(
                                       'I\'ll wait for the raider',
                                       style: AppTextStyles.regular14.apply(

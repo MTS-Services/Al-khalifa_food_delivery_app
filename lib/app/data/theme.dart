@@ -2,8 +2,6 @@ import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-
-
 ThemeData themeData() {
   return ThemeData(
     fontFamily: 'Poppins',
@@ -35,6 +33,19 @@ ThemeData themeData() {
         ), // textStyle: AppTextStyles.bold16,
       ),
     ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(color: AppColors.primaryColor),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+    ),
+    dialogTheme: DialogThemeData(
+      backgroundColor: Colors.white,
+      // elevation: 10,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      titleTextStyle: AppTextStyles.medium16.apply(color: Colors.black),
+    ),
   );
 }
-
