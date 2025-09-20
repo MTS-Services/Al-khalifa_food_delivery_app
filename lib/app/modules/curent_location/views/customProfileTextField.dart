@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../data/app_colors.dart';
 import '../../../data/app_text_styles.dart';
 
@@ -19,7 +19,7 @@ class CustomProfileTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: EdgeInsets.symmetric(vertical: 16.h),
           child: Text(label, style: AppTextStyles.medium18),
         ),
         TextFormField(

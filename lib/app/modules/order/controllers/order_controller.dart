@@ -1,23 +1,41 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 
 class OrderController extends GetxController {
-  //TODO: Implement OrderController
+  Timer? _timer;
+  final remainingTime = 600.obs; // 10 minutes in seconds, made observable
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    startTimer();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (remainingTime.value < 1) {
+          timer.cancel();
+          // Timer finished, you can add any action here
+        } else {
+          remainingTime.value--;
+        }
+      },
+    );
+  }
+
+  String get formattedTime {
+    final minutes = (remainingTime.value ~/ 60).toString().padLeft(2, '0');
+    final seconds = (remainingTime.value % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
   }
 
   @override
   void onClose() {
+    _timer?.cancel();
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

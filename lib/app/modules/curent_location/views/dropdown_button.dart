@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// A reusable, responsive Dropdown built on top of dropdown_button2
 class AppDropdown<T> extends StatelessWidget {
   const AppDropdown({
     super.key,
@@ -49,28 +49,23 @@ class AppDropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
-    final isSmall = mq.size.width < 380;
     final defaultMaxHeight = mq.size.height * 0.45;
 
     final effectiveBorder = Border.all(
       color: borderColor ?? const Color(0xFFE5E7EB),
-      width: strokeWidth,
+      width: strokeWidth.r,
     );
 
-    final effectiveHintStyle = hintStyle ??
-        Theme.of(context)
-            .textTheme
-            .bodyMedium
-            ?.copyWith(color: Colors.grey);
+    final effectiveHintStyle =
+        hintStyle ??
+        Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey);
 
     final effectiveTextStyle =
         textStyle ?? Theme.of(context).textTheme.bodyMedium;
 
-    final buttonPadding = contentPadding ??
-        EdgeInsets.symmetric(
-          horizontal: isSmall ? 12 : 14,
-          vertical: isSmall ? 10 : 12,
-        );
+    final buttonPadding =
+        contentPadding ??
+        EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h);
 
     return Padding(
       padding: padding ?? EdgeInsets.zero,
@@ -86,21 +81,22 @@ class AppDropdown<T> extends StatelessWidget {
               items: items
                   .map(
                     (item) => DropdownMenuItem<T>(
-                  value: item,
-                  child: Text(
-                    (labelBuilder?.call(item)) ?? item.toString(),
-                    style: effectiveTextStyle,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              )
+                      value: item,
+                      child: Text(
+                        (labelBuilder?.call(item)) ?? item.toString(),
+                        style: effectiveTextStyle,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  )
                   .toList(),
               // Button styling
               buttonStyleData: ButtonStyleData(
                 padding: buttonPadding,
                 decoration: BoxDecoration(
                   color: backgroundColor ?? Colors.white,
-                  borderRadius: BorderRadius.circular(borderRadius),
+                  borderRadius: BorderRadius.circular(borderRadius.r),
+                  // responsive radius
                   border: effectiveBorder,
                 ),
                 elevation: 0,
@@ -116,31 +112,26 @@ class AppDropdown<T> extends StatelessWidget {
                 width: dropdownWidth,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(borderRadius),
+                  borderRadius: BorderRadius.circular(borderRadius.r),
+                  // responsive radius
                   border: effectiveBorder,
                 ),
                 elevation: 2,
-                padding: EdgeInsets.symmetric(
-                  vertical: isSmall ? 6 : 8,
-                ),
+                padding: EdgeInsets.symmetric(vertical: 8.h),
               ),
               // Each menu item padding/height
               menuItemStyleData: MenuItemStyleData(
-                padding: EdgeInsets.symmetric(
-                  horizontal: isSmall ? 12 : 14,
-                  vertical: isSmall ? 8 : 10,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
               ),
             ),
           ),
           if (errorText != null) ...[
-            const SizedBox(height: 6),
+            SizedBox(height: 6.h),
             Text(
               errorText!,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall
-                  ?.copyWith(color: Colors.red),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: Colors.red),
             ),
           ],
         ],
