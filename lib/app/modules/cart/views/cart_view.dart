@@ -34,9 +34,7 @@ class CartView extends GetView<CartController> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.h),
                   child: GestureDetector(
-                    onTap: () {
-
-                    },
+                    onTap: () {},
                     child: Text(
                       '+ Add more items',
                       style: AppTextStyles.medium18.copyWith(
