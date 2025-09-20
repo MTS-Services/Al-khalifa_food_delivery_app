@@ -1,4 +1,5 @@
 import 'package:al_khalifa/app/data/image_path.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,9 @@ class ProfileView extends GetView<ProfileController> {
         backgroundColor: Colors.white,
         toolbarHeight: 80.h,
         title: Text('Profile', style: AppTextStyles.regular18),
-        actions: const [Icon(Icons.edit)],
+        actions: [IconButton(onPressed: (){
+          Get.toNamed(Routes.CURENT_LOCATION);
+        }, icon: const Icon(Icons.edit))],
         centerTitle: true,
       ),
       body: Padding(
