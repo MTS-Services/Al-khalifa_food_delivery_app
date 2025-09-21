@@ -13,9 +13,7 @@ class FoodCard extends StatelessWidget {
   final bool showAddButton;
   final bool showFullImage;
   final bool isFullWidth;
-
   final double borderRadiusValue = 10.0;
-
   const FoodCard({
     super.key,
     required this.imageUrl,

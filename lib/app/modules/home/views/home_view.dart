@@ -64,62 +64,70 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildMealForOneGridView() {
+  Widget _buildPopularGridView() {
+    final screenWidth = MediaQuery.of(Get.context!).size.width;
+    int crossAxisCount = screenWidth < 500 ? 2 : 3;
+
     return GridView.builder(
-      itemCount: 2,
+      itemCount: 6,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
         childAspectRatio: 0.72,
       ),
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: (){
-            Get.to(()=>ProductDetailsScreen());
+          onTap: () {
+            Get.to(() => ProductDetailsScreen());
           },
           child: FoodCard(
-              imageUrl : ImagePath.foodImage,
-              title: "Spicy Sausage",
-              rating: 5.8,
-              price: 250,
-              onAdd: () {},
-              cardHeight: 135
+            imageUrl: ImagePath.foodImage,
+            title: "Spicy Sausage",
+            rating: 5.8,
+            price: 250,
+            onAdd: () {},
+            cardHeight: 135,
           ),
         );
       },
     );
   }
-  Widget _buildPopularGridView() {
+
+  Widget _buildMealForOneGridView() {
+    final screenWidth = MediaQuery.of(Get.context!).size.width;
+    int crossAxisCount = screenWidth < 500 ? 2 : 3;
+
     return GridView.builder(
-      itemCount: 2,
+      itemCount: 6,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
         childAspectRatio: 0.72,
       ),
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap:(){
-            Get.to(()=>ProductDetailsScreen());
+          onTap: () {
+            Get.to(() => ProductDetailsScreen());
           },
-          child:FoodCard(
-              imageUrl : ImagePath.foodImage,
-              title: "Spicy Sausage",
-              rating: 5.8,
-              price: 250,
-              onAdd: () {},
-              cardHeight: 135
+          child: FoodCard(
+            imageUrl: ImagePath.foodImage,
+            title: "Spicy Sausage",
+            rating: 5.8,
+            price: 250,
+            onAdd: () {},
+            cardHeight: 135,
           ),
         );
       },
     );
   }
+
 
   Widget _buildProduct() {
     return SizedBox(
@@ -209,7 +217,7 @@ class HomeView extends GetView<HomeController> {
                 alignment: Alignment.centerRight,
                 child: Image.asset(
                   ImagePath.footItem,
-                  height: screenWidth < 400 ? 120 : 180,
+                  height: screenWidth < 400 ? 250 : 200,
                   fit: BoxFit.contain,
                 ),
               ),
