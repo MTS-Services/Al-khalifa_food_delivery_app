@@ -49,14 +49,13 @@ class SeeAllMealForOneScreen extends StatelessWidget {
           onTap: (){
             Get.to(()=>ProductDetailsScreen());
           },
-          child: FoodCard(
-            imageUrl: ImagePath.foodImage,
-            title: "Spicy Sausage",
-            rating: 5.0,
-            price: 495,
-            onAdd: () {
-              print("Added Spicy Sausage!");
-            },
+          child:FoodCard(
+              imageUrl : ImagePath.foodImage,
+              title: "Spicy Sausage",
+              rating: 5.8,
+              price: 250,
+              onAdd: () {},
+              cardHeight: 135
           ),
         );
       },

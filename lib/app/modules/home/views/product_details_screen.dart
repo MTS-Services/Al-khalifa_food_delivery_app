@@ -26,20 +26,24 @@ class ProductDetailsScreen extends StatelessWidget {
                 },
               ),
               FoodCard(
-                imageUrl: ImagePath.foodImage,
+                showFullImage: true,
+                isFullWidth: true,
+                cardHeight: 150,
+                imageUrl: ImagePath.foodDetails,
+
                 title: "Spicy Sausage",
                 rating: 5.0,
                 price: 495,
               ),
               Text(
-                "Popular dish prepared of slow-cooked \naromatic basmati  rice layered with potatoes \nmarinated mutton pcs, in a delicate blend of \nwhole spices",
-                style: TextStyle(fontSize: 18, color: Colors.grey),
+                "Popular dish prepared of slow-cooked \naromatic basmati  rice layered with potatoes marinated mutton pcs, in a delicate blend of \nwhole spices",
+                style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               SizedBox(height: 15),
               _buildTitleRow(),
               SizedBox(height: 15),
               SizedBox(
-                height: 220,
+                height:150,
                 child: ListView(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -78,11 +82,14 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _buildListTile(String title, String price) {
     return ListTile(
+      contentPadding: EdgeInsets.zero,
+      dense: true,
       leading: const CustomCircle(),
       title: Text(title, style: const TextStyle(fontSize: 16)),
       trailing: Text(price, style: const TextStyle(fontSize: 16)),
     );
   }
+
 
   Widget _buildCircleButton(IconData icon, VoidCallback onPressed) {
     return ElevatedButton(
