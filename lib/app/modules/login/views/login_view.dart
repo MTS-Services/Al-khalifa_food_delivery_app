@@ -2,7 +2,6 @@ import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/data/image_path.dart';
 import 'package:al_khalifa/app/modules/email_verification/views/email_verification_view.dart';
-import 'package:al_khalifa/app/modules/signup/views/signup_view.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +14,7 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,//backgroundColor
+      backgroundColor: AppColors.whiteColor, //backgroundColor
       body: SafeArea(
         child: Padding(
           padding:  EdgeInsets.symmetric(horizontal: 16.w),
@@ -86,7 +85,9 @@ class LoginView extends GetView<LoginController> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.offAllNamed(Routes.CUSTOM_BOTTOOM_BAR);
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),

@@ -1,23 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class CheckoutController extends GetxController {
-  //TODO: Implement CheckoutController
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  final count = 1.obs;
+  final selectedIndex = (-1).obs;
+  TextEditingController addressController = TextEditingController();
+  TextEditingController instructionController = TextEditingController();
+  void select(int index) {
+    selectedIndex.value = index;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void increment() {
+    count.value++;
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void decrement() {
+    if (count > 1) {
+      count.value--;
+    }
   }
-
-  void increment() => count.value++;
 }

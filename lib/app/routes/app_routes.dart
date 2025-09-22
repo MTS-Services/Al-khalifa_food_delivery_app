@@ -21,6 +21,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const CURENT_LOCATION = _Paths.CURENT_LOCATION;
   static const SIGNUP = _Paths.SIGNUP;
+  static const CUSTOM_BOTTOOM_BAR = _Paths.CUSTOM_BOTTOOM_BAR;
 }
 
 abstract class _Paths {
@@ -43,4 +44,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const CURENT_LOCATION = '/curent-location';
   static const SIGNUP = '/signup';
+  static const CUSTOM_BOTTOOM_BAR = '/custom-bottoom-bar';
 }
