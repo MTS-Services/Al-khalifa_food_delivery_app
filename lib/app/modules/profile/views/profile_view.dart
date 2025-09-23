@@ -1,4 +1,6 @@
 import 'package:al_khalifa/app/data/image_path.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
+import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -80,7 +82,10 @@ class ProfileView extends GetView<ProfileController> {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: ()async {
+                  await SharedPrefServices.clear();
+                  Get.offAllNamed(Routes.LOGIN);
+                },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(width: 1.2.w, color: Colors.black),
                   shape: RoundedRectangleBorder(

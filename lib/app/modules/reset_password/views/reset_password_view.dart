@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 import '../controllers/reset_password_controller.dart';
 
 class ResetPasswordView extends GetView<ResetPasswordController> {
-  const ResetPasswordView({super.key});
-
+   ResetPasswordView({super.key});
+final GlobalKey<FormState> _globalKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,73 +24,108 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
           icon: Icon(Icons.arrow_back_ios),
         ),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 16.h),
-              child: Column(
-                children: [
-                   SizedBox(height: 150.h),
-                  Text("Create New Password", style: AppTextStyles.medium32),
-                   SizedBox(height: 12.h),
-                  Center(
-                    child: Text(
-                      'Type and confirm a secure new password for your amount',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                   SizedBox(height: 30.h),
-                  Obx(
-                    () => TextFormField(
-                      obscureText: controller.isObSecure4.value,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your Password',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            controller.isObSecure4.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: AppColors.primaryColor,
-                          ),
-                          onPressed: controller.togglePassVisibility,
-                        ),
+      body: Form(
+        key: _globalKey,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 16.h),
+                child: Column(
+                  children: [
+                     SizedBox(height: 140.h),
+                    Text("Create New Password", style: AppTextStyles.medium32,textAlign: TextAlign.center,),
+                     SizedBox(height: 12.h),
+                    Center(
+                      child: Text(
+                        'Type and confirm a secure new password for your account',
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                  ),
-                   SizedBox(height: 20.h),
-                  Obx(
-                    () => TextFormField(
-                      obscureText: controller.isObSecure5.value,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your Password',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            controller.isObSecure5.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: AppColors.primaryColor,
+                     SizedBox(height: 30.h),
+                    Obx(
+                      () => TextFormField(
+                        controller: controller.passwordController,
+                        obscureText: controller.isObSecure4.value,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              controller.isObSecure4.value
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: AppColors.primaryColor,
+                            ),
+                            onPressed: controller.togglePassVisibility,
                           ),
-                          onPressed: controller.toggleConfirmPassVisibility,
                         ),
+                        validator: (String? value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Enter your password';
+                          }
+                          if (value!.length != 6) {
+                            return 'Enter six digit';
+                          }
+                          return null;
+                        },
                       ),
                     ),
-                  ),
-                   SizedBox(height: 35.h),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.to(() => LoginView());
-                      },
-                      child: Text("Confirm"),
+                     SizedBox(height: 20.h),
+                    Obx(
+                      () => TextFormField(
+                        controller: controller.confirmPassController,
+                        obscureText: controller.isObSecure5.value,
+                        decoration: InputDecoration(
+                          hintText: 'Confirm Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              controller.isObSecure5.value
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: AppColors.primaryColor,
+                            ),
+                            onPressed: controller.toggleConfirmPassVisibility,
+                          ),
+                        ),
+                        validator: (String? value) {
+                          if (value?.isEmpty ?? true) {
+                            return 'Enter your password';
+                          }
+                          if (value!.length != 6) {
+                            return 'Enter six digit';
+                          }
+                          if (value != controller.passwordController.text) {
+                            return 'password not matching';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                     SizedBox(height: 35.h),
+                    SizedBox(
+                      width: double.infinity,
+                      child: GetBuilder<ResetPasswordController>(
+                        builder: (resetController) {
+                          if(resetController.resetPasswordInProgress){
+                            return Center(child: CircularProgressIndicator(),);
+                          }
+                          return ElevatedButton(
+                            onPressed: () {
+                              if(_globalKey.currentState!.validate()){
+                                resetController.getResetPassword();
+                              }
+                            },
+                            child: Text("Confirm"),
+                          );
+                        }
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

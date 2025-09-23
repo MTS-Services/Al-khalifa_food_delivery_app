@@ -36,8 +36,11 @@ import '../modules/search_bar/bindings/search_bar_binding.dart';
 import '../modules/search_bar/views/search_bar_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
+import '../modules/signup_otp/bindings/signup_otp_binding.dart';
+import '../modules/signup_otp/views/signup_otp_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -48,7 +51,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () =>  HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
@@ -76,28 +79,28 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () => const LoginView(),
+      page: () =>  LoginView(),
       binding: LoginBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.EMAIL_VERIFICATION,
-      page: () => const EmailVerificationView(),
+      page: () => EmailVerificationView(),
       binding: EmailVerificationBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.OTP,
-      page: () => const OtpView(),
+      page: () => OtpView(),
       binding: OtpBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.RESET_PASSWORD,
-      page: () => const ResetPasswordView(),
+      page: () =>  ResetPasswordView(),
       binding: ResetPasswordBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
@@ -167,17 +170,22 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SIGNUP,
-      page: () => const SignupView(),
+      page: () =>  SignupView(),
       binding: SignupBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.CUSTOM_BOTTOOM_BAR,
-      page: () =>  CustomBottoomBarView(),
+      page: () => CustomBottoomBarView(),
       binding: CustomBottoomBarBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: _Paths.SIGNUP_OTP,
+      page: () => SignupOtpView(),
+      binding: SignupOtpBinding(),
     ),
   ];
 }

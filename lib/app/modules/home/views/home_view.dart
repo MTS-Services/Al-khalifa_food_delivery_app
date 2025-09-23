@@ -29,7 +29,6 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 20),
                 _buildContainer(),
                 const SizedBox(height: 20),
-                // Header
                 CustomHeader(title: "Our Cuisines"),
                 const SizedBox(height: 10),
                 _buildProduct(),

@@ -22,6 +22,7 @@ abstract class Routes {
   static const CURENT_LOCATION = _Paths.CURENT_LOCATION;
   static const SIGNUP = _Paths.SIGNUP;
   static const CUSTOM_BOTTOOM_BAR = _Paths.CUSTOM_BOTTOOM_BAR;
+  static const SIGNUP_OTP = _Paths.SIGNUP_OTP;
 }
 
 abstract class _Paths {
@@ -45,4 +46,5 @@ abstract class _Paths {
   static const CURENT_LOCATION = '/curent-location';
   static const SIGNUP = '/signup';
   static const CUSTOM_BOTTOOM_BAR = '/custom-bottoom-bar';
+  static const SIGNUP_OTP = '/signup-otp';
 }

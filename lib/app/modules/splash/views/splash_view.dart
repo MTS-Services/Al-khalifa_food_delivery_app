@@ -11,7 +11,7 @@ class SplashView extends GetView<SplashController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SplashController());
+  Get.put(SplashController());
     return Scaffold(
       body: SizedBox.expand(
         child: Stack(

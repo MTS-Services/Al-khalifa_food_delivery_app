@@ -1,18 +1,19 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../controllers/otp_controller.dart';
+import '../controllers/signup_otp_controller.dart';
 
-class OtpView extends GetView<OtpController> {
-  OtpView({super.key});
+class SignupOtpView extends GetView<SignupOtpController> {
+  SignupOtpView({super.key});
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
@@ -26,7 +27,7 @@ class OtpView extends GetView<OtpController> {
         ),
       ),
       body: Form(
-        key: _formKey,
+        key: _globalKey,
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -35,7 +36,7 @@ class OtpView extends GetView<OtpController> {
                 child: Column(
                   children: [
                     SizedBox(height: 160.h),
-                    Text("Verification", style: AppTextStyles.medium32),
+                    Text("Otp Verification", style: AppTextStyles.medium32),
                     SizedBox(height: 12.h),
                     Center(
                       child: Text(
@@ -45,7 +46,7 @@ class OtpView extends GetView<OtpController> {
                     ),
                     SizedBox(height: 25.h),
                     PinCodeTextField(
-                      controller: controller.otpController,
+                      controller: controller.otpTEController,
                       validator: (String? value) {
                         if (value?.isEmpty ?? true) {
                           return 'Enter valid otp';
@@ -81,15 +82,15 @@ class OtpView extends GetView<OtpController> {
                     SizedBox(height: 25.h),
                     SizedBox(
                       width: double.infinity,
-                      child: GetBuilder<OtpController>(
-                        builder: (otpController) {
-                          if (otpController.otpInProgress) {
+                      child: GetBuilder<SignupOtpController>(
+                        builder: (signUpOtp) {
+                          if (signUpOtp.otpInProgress) {
                             return Center(child: CircularProgressIndicator());
                           }
                           return ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                otpController.getOtpVerification();
+                              if (_globalKey.currentState!.validate()) {
+                                signUpOtp.getOtpVerification();
                               }
                             },
                             child: Text("Next"),
@@ -104,7 +105,7 @@ class OtpView extends GetView<OtpController> {
             ),
             SliverToBoxAdapter(
               child: Center(
-                child: GetBuilder<OtpController>(
+                child: GetBuilder<SignupOtpController>(
                   builder: (c) {
                     return Row(
                       children: [
@@ -114,11 +115,11 @@ class OtpView extends GetView<OtpController> {
                           style: AppTextStyles.medium13,
                         ),
                         InkWell(
-                          onTap: c.canResend ? c.resendOtp : null,
+                          onTap: c.canToResend ? c.resendOtp : null,
                           child: Text(
                             "  Resend",
                             style: AppTextStyles.medium14.copyWith(
-                              color: c.canResend
+                              color: c.canToResend
                                   ? AppColors.primaryColor
                                   : Colors.grey,
                             ),
@@ -134,11 +135,11 @@ class OtpView extends GetView<OtpController> {
             SliverToBoxAdapter(child: SizedBox(height: 25.h)),
             SliverToBoxAdapter(
               child: Center(
-                child: GetBuilder<OtpController>(
+                child: GetBuilder<SignupOtpController>(
                   builder: (c) => Text(
-                    c.canResend
+                    c.canToResend
                         ? "00.59"
-                        : "00:${c.remainingSeconds.toString().padLeft(2, '0')} sec",
+                        : "00:${c.remainingSecond.toString().padLeft(2, '0')} sec",
                     style: AppTextStyles.regular14,
                   ),
                 ),
