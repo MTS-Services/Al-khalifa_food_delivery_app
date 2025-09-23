@@ -10,6 +10,8 @@ import '../modules/curent_location/bindings/curent_location_binding.dart';
 import '../modules/curent_location/views/curent_location_view.dart';
 import '../modules/email_verification/bindings/email_verification_binding.dart';
 import '../modules/email_verification/views/email_verification_view.dart';
+import '../modules/history_page/bindings/history_page_binding.dart';
+import '../modules/history_page/views/history_page_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -45,7 +47,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () =>  HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -127,6 +129,11 @@ class AppPages {
       name: _Paths.CURENT_LOCATION,
       page: () => const CurentLocationView(),
       binding: CurentLocationBinding(),
+    ),
+    GetPage(
+      name: _Paths.HISTORY_PAGE,
+      page: () => const HistoryPageView(),
+      binding: HistoryPageBinding(),
     ),
   ];
 }

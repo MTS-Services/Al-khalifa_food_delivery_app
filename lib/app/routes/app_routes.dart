@@ -20,6 +20,7 @@ abstract class Routes {
   static const ORDER = _Paths.ORDER;
   static const PROFILE = _Paths.PROFILE;
   static const CURENT_LOCATION = _Paths.CURENT_LOCATION;
+  static const HISTORY_PAGE = _Paths.HISTORY_PAGE;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const ORDER = '/order';
   static const PROFILE = '/profile';
   static const CURENT_LOCATION = '/curent-location';
+  static const HISTORY_PAGE = '/history-page';
 }
