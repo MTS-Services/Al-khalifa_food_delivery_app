@@ -14,46 +14,52 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomHeader(
-                leadingIcon: Icons.arrow_back,
-                onLeadingTap: () {
-                  Get.back();
-                },
-              ),
-              FoodCard(
-                imageUrl: ImagePath.foodImage,
-                title: "Spicy Sausage",
-                rating: 5.0,
-                price: 495,
-              ),
-              Text(
-                "Popular dish prepared of slow-cooked \naromatic basmati  rice layered with potatoes \nmarinated mutton pcs, in a delicate blend of \nwhole spices",
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-              SizedBox(height: 15),
-              _buildTitleRow(),
-              SizedBox(height: 15),
-              SizedBox(
-                height: 220,
-                child: ListView(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    _buildListTile("For 1 person", "Tk 190"),
-                    _buildListTile("For 1 person", "Tk 190"),
-                    _buildListTile("For 1 person", "Tk 190"),
-                    _buildListTile("For 1 person", "Tk 190"),
-                  ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomHeader(
+                  leadingIcon: Icons.arrow_back,
+                  onLeadingTap: () {
+                    Get.back();
+                  },
                 ),
-              ),
-              SizedBox(height: 20),
-              _buildAddToCard(),
-            ],
+                FoodCard(
+                  showFullImage: true,
+                  isFullWidth: true,
+                  cardHeight: 150,
+                  imageUrl: ImagePath.foodDetails,
+          
+                  title: "Spicy Sausage",
+                  rating: 5.0,
+                  price: 495,
+                ),
+                Text(
+                  "Popular dish prepared of slow-cooked \naromatic basmati  rice layered with potatoes marinated mutton pcs, in a delicate blend of \nwhole spices",
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                SizedBox(height: 15),
+                _buildTitleRow(),
+                SizedBox(height: 15),
+                SizedBox(
+                  height:150,
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    children: [
+                      _buildListTile("For 1 person", "Tk 190"),
+                      _buildListTile("For 1 person", "Tk 190"),
+                      _buildListTile("For 1 person", "Tk 190"),
+                      _buildListTile("For 1 person", "Tk 190"),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                _buildAddToCard(),
+              ],
+            ),
           ),
         ),
       ),
@@ -78,11 +84,14 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _buildListTile(String title, String price) {
     return ListTile(
+      contentPadding: EdgeInsets.zero,
+      dense: true,
       leading: const CustomCircle(),
       title: Text(title, style: const TextStyle(fontSize: 16)),
       trailing: Text(price, style: const TextStyle(fontSize: 16)),
     );
   }
+
 
   Widget _buildCircleButton(IconData icon, VoidCallback onPressed) {
     return ElevatedButton(

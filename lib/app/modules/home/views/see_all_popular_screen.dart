@@ -34,29 +34,30 @@ class SeeAllPopularScreen extends StatelessWidget {
     );
   }
   Widget _buildPopularGridView() {
+    final screenWidth = Get.width;
+    final crossAxisCount = screenWidth > 600 ? 3 : 2;
     return GridView.builder(
       itemCount: 6,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
         childAspectRatio: 0.72,
       ),
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: (){
-            Get.to(()=>ProductDetailsScreen());
+          onTap: () {
+            Get.to(() => ProductDetailsScreen());
           },
           child: FoodCard(
             imageUrl: ImagePath.foodImage,
             title: "Spicy Sausage",
-            rating: 5.0,
-            price: 495,
-            onAdd: () {
-              print("Added Spicy Sausage!");
-            },
+            rating: 5.8,
+            price: 250,
+            onAdd: () {},
+            cardHeight: 135,
           ),
         );
       },

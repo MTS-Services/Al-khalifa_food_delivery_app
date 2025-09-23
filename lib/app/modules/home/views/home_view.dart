@@ -27,10 +27,12 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 8),
                 _buildSearchBar(),
                 const SizedBox(height: 20),
-                _buildContainer(),
+                _buildContainer(context),
                 const SizedBox(height: 20),
                 // Header
-                CustomHeader(title: "Our Cuisines"),
+                CustomHeader(
+                  title: "Categories ",
+                ),
                 const SizedBox(height: 10),
                 _buildProduct(),
                 CustomHeader(
@@ -62,13 +64,16 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildMealForOneGridView() {
+  Widget _buildPopularGridView() {
+    final screenWidth = MediaQuery.of(Get.context!).size.width;
+    int crossAxisCount = screenWidth < 500 ? 2 : 3;
+
     return GridView.builder(
-      itemCount: 2,
+      itemCount: 6,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
         childAspectRatio: 0.72,
@@ -81,24 +86,26 @@ class HomeView extends GetView<HomeController> {
           child: FoodCard(
             imageUrl: ImagePath.foodImage,
             title: "Spicy Sausage",
-            rating: 5.0,
-            price: 495,
-            onAdd: () {
-              print("Added Spicy Sausage!");
-            },
+            rating: 5.8,
+            price: 250,
+            onAdd: () {},
+            cardHeight: 135,
           ),
         );
       },
     );
   }
 
-  Widget _buildPopularGridView() {
+  Widget _buildMealForOneGridView() {
+    final screenWidth = MediaQuery.of(Get.context!).size.width;
+    int crossAxisCount = screenWidth < 500 ? 2 : 3;
+
     return GridView.builder(
-      itemCount: 2,
+      itemCount: 6,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
         childAspectRatio: 0.72,
@@ -111,16 +118,16 @@ class HomeView extends GetView<HomeController> {
           child: FoodCard(
             imageUrl: ImagePath.foodImage,
             title: "Spicy Sausage",
-            rating: 5.0,
-            price: 495,
-            onAdd: () {
-              print("Added Spicy Sausage!");
-            },
+            rating: 5.8,
+            price: 250,
+            onAdd: () {},
+            cardHeight: 135,
           ),
         );
       },
     );
   }
+
 
   Widget _buildProduct() {
     return SizedBox(
@@ -133,9 +140,14 @@ class HomeView extends GetView<HomeController> {
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
               width: 160,
-              child: FoodCard(
-                imageUrl: ImagePath.foodImage,
-                title: "Rooftop menu",
+              child:  FoodCard(
+                showRating: false,
+                  showAddButton: false,
+                  imageUrl : ImagePath.foodImage,
+                  title: "Spicy Sausage",
+                  rating: 5.8,
+                  onAdd: () {},
+                  cardHeight: 140
               ),
             ),
           );
@@ -144,9 +156,10 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildContainer() {
+  Widget _buildContainer(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      height: 180,
+      height: screenWidth < 400 ? 160 : 200,
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(8),
@@ -154,50 +167,67 @@ class HomeView extends GetView<HomeController> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Share the love",
-                  style: TextStyle(color: Colors.white, fontSize: 14),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Enjoy \n30% off",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Text(
-                    "Code : Developer",
+
+            Expanded(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Share the love",
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primaryColor,
+                      color: Colors.white,
+                      fontSize: screenWidth < 400 ? 12 : 14,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  Text(
+                    "Enjoy \n30% off",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: screenWidth < 400 ? 20 : 25,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Text(
+                      "Code : Developer",
+                      style: TextStyle(
+                        fontSize: screenWidth < 400 ? 14 : 18,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(width: 60),
-            Image.asset(ImagePath.footItem, height: 200),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Image.asset(
+                  ImagePath.footItem,
+                  height: screenWidth < 400 ? 250 : 200,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
 
   Widget _buildCustomLocationRow() {
     return CustomLocationRow(
