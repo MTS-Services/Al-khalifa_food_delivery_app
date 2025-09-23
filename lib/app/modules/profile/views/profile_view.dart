@@ -60,21 +60,21 @@ class ProfileView extends GetView<ProfileController> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 32.h),
-                    child: Text(
-                      'Md. Al Arafat',
+                    child: Obx(() => Text(
+                      controller.name.value,
                       style: AppTextStyles.medium20,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                    ),
+                    ),),
                   ),
                   ListTile(
                     leading: const Icon(Icons.phone),
-                    title: Text('01xxx-xxxxxx', style: AppTextStyles.regular14),
+                    title: Text(controller.number.value, style: AppTextStyles.regular14),
                   ),
                   ListTile(
                     leading: const Icon(Icons.email_outlined),
                     title: Text(
-                      'Example@gmail.com',
+                      controller.email.value,
                       style: AppTextStyles.regular14,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -86,9 +86,15 @@ class ProfileView extends GetView<ProfileController> {
                     trailing: const Icon(Icons.arrow_forward_ios_sharp),
                     onTap: () {},
                   ),
+                  ListTile(
+                    leading: const Icon(Icons.card_giftcard),
+                    title: Text('History', style: AppTextStyles.regular14),
+                    trailing: const Icon(Icons.arrow_forward_ios_sharp),
+                    onTap: () {},
+                  ),
                 ],
               ),
-              SizedBox(height: 100.h),
+              SizedBox(height: 80.h),
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(

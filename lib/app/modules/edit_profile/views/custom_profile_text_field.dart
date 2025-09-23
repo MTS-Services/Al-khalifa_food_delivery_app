@@ -6,11 +6,13 @@ import '../../../data/app_text_styles.dart';
 class CustomProfileTextField extends StatelessWidget {
   final String label;
   final String hintText;
+  final TextEditingController controller;
 
   const CustomProfileTextField({
     super.key,
     required this.label,
     required this.hintText,
+    required this.controller,
   });
 
   @override
@@ -23,6 +25,7 @@ class CustomProfileTextField extends StatelessWidget {
           child: Text(label, style: AppTextStyles.medium18),
         ),
         TextFormField(
+          controller: controller,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: AppTextStyles.regular14.copyWith(

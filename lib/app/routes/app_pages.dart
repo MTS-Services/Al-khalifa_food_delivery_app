@@ -1,13 +1,12 @@
+import 'package:al_khalifa/app/modules/edit_profile/bindings/edit_profile_binding.dart';
+import 'package:al_khalifa/app/modules/edit_profile/views/edit_profile_view.dart';
 import 'package:get/get.dart';
-
 import '../modules/biriyani/bindings/biriyani_binding.dart';
 import '../modules/biriyani/views/biriyani_view.dart';
 import '../modules/cart/bindings/cart_binding.dart';
 import '../modules/cart/views/cart_view.dart';
 import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/checkout_view.dart';
-import '../modules/curent_location/bindings/curent_location_binding.dart';
-import '../modules/curent_location/views/curent_location_view.dart';
 import '../modules/custom_bottoom_bar/bindings/custom_bottoom_bar_binding.dart';
 import '../modules/custom_bottoom_bar/views/custom_bottoom_bar_view.dart';
 import '../modules/email_verification/bindings/email_verification_binding.dart';
@@ -38,6 +37,7 @@ import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -48,7 +48,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () =>  HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
@@ -160,8 +160,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CURENT_LOCATION,
-      page: () => CurentLocationView(),
-      binding: CurentLocationBinding(),
+      page: () => EditProfileView(),
+      binding: EditProfileBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
     ),
@@ -174,7 +174,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CUSTOM_BOTTOOM_BAR,
-      page: () =>  CustomBottoomBarView(),
+      page: () => CustomBottoomBarView(),
       binding: CustomBottoomBarBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
