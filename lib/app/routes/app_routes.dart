@@ -25,6 +25,7 @@ abstract class Routes {
   static const USER_ROLE = _Paths.USER_ROLE;
   static const PRODUCTS = _Paths.PRODUCTS;
   static const DETAILS_PAGE = _Paths.DETAILS_PAGE;
+  static const HISTORY_PAGE = _Paths.HISTORY_PAGE;
 }
 
 abstract class _Paths {
@@ -51,4 +52,5 @@ abstract class _Paths {
   static const USER_ROLE = '/user-role';
   static const PRODUCTS = '/products';
   static const DETAILS_PAGE = '/details-page';
+  static const HISTORY_PAGE = '/history-page';
 }

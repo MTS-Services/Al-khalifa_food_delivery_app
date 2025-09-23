@@ -11,6 +11,8 @@ import '../modules/custom_bottoom_bar/bindings/custom_bottoom_bar_binding.dart';
 import '../modules/custom_bottoom_bar/views/custom_bottoom_bar_view.dart';
 import '../modules/email_verification/bindings/email_verification_binding.dart';
 import '../modules/email_verification/views/email_verification_view.dart';
+import '../modules/history_page/bindings/history_page_binding.dart';
+import '../modules/history_page/views/history_page_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -178,6 +180,11 @@ class AppPages {
       binding: CustomBottoomBarBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: _Paths.HISTORY_PAGE,
+      page: () => const HistoryPageView(),
+      binding: HistoryPageBinding(),
     ),
   ];
 }
