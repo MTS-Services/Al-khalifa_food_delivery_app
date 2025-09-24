@@ -52,7 +52,7 @@ class SeeAllPopularScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-              Get.to(()=>ProductDetailsScreen());
+             // Get.to(()=>ProductDetailsScreen());
           },
           child: FoodCard(
             imageUrl: ImagePath.foodImage,

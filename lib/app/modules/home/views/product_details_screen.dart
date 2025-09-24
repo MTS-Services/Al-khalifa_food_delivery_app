@@ -9,7 +9,7 @@ import '../widget/food_card.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
 
-  const ProductDetailsScreen({super.key});
+  const ProductDetailsScreen({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 },
               ),
               FoodCard(
-                imageUrl: ImagePath.foodImage,
+                imageUrl:ImagePath.foodImage ,
                 title: "Spicy",
                 rating: 5.0,
                 price: 495,
