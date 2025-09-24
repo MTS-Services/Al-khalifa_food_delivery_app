@@ -2,14 +2,15 @@ import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/modules/otp/views/otp_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
 import '../controllers/email_verification_controller.dart';
 
 class EmailVerificationView extends GetView<EmailVerificationController> {
-  const EmailVerificationView({super.key});
-
+   EmailVerificationView({super.key});
+  final GlobalKey<FormState> _globalKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,41 +24,62 @@ class EmailVerificationView extends GetView<EmailVerificationController> {
           icon: Icon(Icons.arrow_back_ios),
         ),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  const SizedBox(height: 160),
-                  Text("Recover Password", style: AppTextStyles.medium32),
-                  const SizedBox(height: 12),
-                  Center(
-                    child: Text(
-                      'Enter the Email Address that you used when\nregister to recover your password, You will receive a\nVerification code.',
-                      textAlign: TextAlign.center,
+      body: Form(
+        key: _globalKey,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 16.h),
+                child: Column(
+                  children: [
+                     SizedBox(height: 160.h),
+                    Text("Recover Password", style: AppTextStyles.medium32),
+                     SizedBox(height: 12.h),
+                    Center(
+                      child: Text(
+                        'Enter the Email Address that you used when\nregister to recover your password, You will receive a\nVerification code.',
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 25),
-                  TextFormField(
-                    decoration: InputDecoration(hintText: 'Enter your Email'),
-                  ),
-                  const SizedBox(height: 35),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.to(() => OtpView());
+                     SizedBox(height: 25.h),
+                    TextFormField(
+                      controller: controller.emailTEController,
+                      decoration: InputDecoration(hintText: 'Enter your Email'),
+                      validator: (String? value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Enter your email address';
+                        } else if (value?.isEmail == false) {
+                          return 'Enter your valid email address';
+                        }
+                        return null;
                       },
-                      child: Text("submit"),
                     ),
-                  ),
-                ],
+                     SizedBox(height: 35.h),
+                    SizedBox(
+                      width: double.infinity,
+                      child: GetBuilder<EmailVerificationController>(
+                        builder: (emailController) {
+                          if(emailController.emailInProgress){
+                            return Center(child: CircularProgressIndicator(),);
+                          }
+                          return ElevatedButton(
+                            onPressed: () {
+                             if(_globalKey.currentState!.validate()){
+                               emailController.getEmailVerify();
+                             }
+                            },
+                            child: Text("submit"),
+                          );
+                        }
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

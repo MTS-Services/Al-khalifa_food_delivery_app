@@ -4,4 +4,6 @@ class ProfileController extends GetxController {
   final RxString number = '01xxx-xxxxxx'.obs;
   final RxString email = 'Example@gmail.com'.obs;
 
+
+
 }

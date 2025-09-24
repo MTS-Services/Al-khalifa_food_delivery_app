@@ -26,6 +26,7 @@ abstract class Routes {
   static const PRODUCTS = _Paths.PRODUCTS;
   static const DETAILS_PAGE = _Paths.DETAILS_PAGE;
   static const HISTORY_PAGE = _Paths.HISTORY_PAGE;
+  static const SIGNUP_OTP = _Paths.SIGNUP_OTP;
 }
 
 abstract class _Paths {
@@ -53,4 +54,5 @@ abstract class _Paths {
   static const PRODUCTS = '/products';
   static const DETAILS_PAGE = '/details-page';
   static const HISTORY_PAGE = '/history-page';
+  static const SIGNUP_OTP = '/signup-otp';
 }
