@@ -1,5 +1,6 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
+import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
 import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,8 +11,9 @@ import '../widget/custom_header.dart';
 import '../widget/food_card.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
+  final PopularFoodItemModel popularItem;
   final bool? sold;
-  const ProductDetailsScreen({super.key, this.sold = false});
+  const ProductDetailsScreen({super.key, this.sold = false, required this.popularItem});
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +35,14 @@ class ProductDetailsScreen extends StatelessWidget {
                   showFullImage: true,
                   isFullWidth: true,
                   cardHeight: 150,
-                  imageUrl: ImagePath.foodDetails,
+                  imageUrl: popularItem.food.foodImageUrl,
 
-                  title: "Spicy Sausage",
-                  rating: 5.0,
-                  price: 495,
+                  title: popularItem.food.name,
+                  rating: popularItem.averageRating,
+                  price: popularItem.food.price,
                 ),
                 Text(
-                  "Popular dish prepared of slow-cooked \naromatic basmati  rice layered with potatoes marinated mutton pcs, in a delicate blend of \nwhole spices",
+                  popularItem.food.description,
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 SizedBox(height: 15),

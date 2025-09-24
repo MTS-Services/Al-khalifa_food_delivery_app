@@ -7,4 +7,5 @@ class Urls{
   static  String resetPassword= '$_baseUrl/user/reset_password';
   static  String allMenu= '$_baseUrl/menus/';
   static  String popularFoodData= '$_baseUrl/food_rating/filter/popular';
+  static  String notification= '$_baseUrl/notifications/';
 }

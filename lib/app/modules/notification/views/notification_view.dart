@@ -23,42 +23,50 @@ class NotificationView extends GetView<NotificationController> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: GetBuilder<NotificationController>(
+          builder: (notiController) {
+            if(notiController.notificationInProgress){
+              return Center(child: CircularProgressIndicator(),);
+            }
+            return Column(
               children: [
-                Text(
-                  'Today',
-                  style: AppTextStyles.regular18.apply(
-                    color: AppColors.primaryTextColor,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Today',
+                      style: AppTextStyles.regular18.apply(
+                        color: AppColors.primaryTextColor,
+                      ),
+                    ),
+                    Text(
+                      'Mark all as read',
+                      style: AppTextStyles.regular14.apply(
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  'Mark all as read',
-                  style: AppTextStyles.regular14.apply(
-                    color: AppColors.primaryColor,
+                SizedBox(height: 30.h),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount:notiController.notificationList.length,
+                    itemBuilder: (context, index)
+                    => Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+
+                      child: NotificationContainer(
+                        iconImage: notiController.notificationList[index].image,
+                        time: '1h',
+                        notiTitle: notiController.notificationList[index].title,
+                        notiSubTitle:notiController.notificationList[index].content,
+                      ),
+                    ),
                   ),
                 ),
               ],
-            ),
-            SizedBox(height: 30.h),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 45,
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: NotificationContainer(
-                    iconImage: ImagePath.carIcon,
-                    time: '1h',
-                    notiTitle: 'Order Shipped',
-                    notiSubTitle:
-                        'Lorem ipsum dolor sit amet,consectrtur adipiscing elit, sed do ejusmod tempor incididunt ut labore et dolore magne al',
-                  ),
-                ),
-              ),
-            ),
-          ],
+            );
+          }
         ),
       ),
     );

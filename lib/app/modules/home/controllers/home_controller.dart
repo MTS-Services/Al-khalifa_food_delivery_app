@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:al_khalifa/app/api_services/menu_api_services/menu_api_services.dart';
 import 'package:al_khalifa/app/api_services/utility/urls.dart';
 import 'package:al_khalifa/app/modules/home/models/all_menu_model.dart';
@@ -21,8 +20,6 @@ class HomeController extends GetxController {
     try {
       final response = await MenuApiServices.getAllMenuRequest(Urls.allMenu);
       menuInProgress = false;
-      print(response.body);
-      print(response.statusCode);
       if (response.statusCode == 200) {
         List<dynamic> decodedResponse = jsonDecode(response.body);
         allMenuModelList = decodedResponse

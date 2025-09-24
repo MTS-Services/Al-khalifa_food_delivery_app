@@ -104,7 +104,7 @@ class HistoryPageView extends GetView<HistoryPageController> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.to(ProductDetailsScreen(sold: true,));
+                     // Get.to(ProductDetailsScreen(sold: true,));
                     },
                     child: Text('See Details'),
                   ),

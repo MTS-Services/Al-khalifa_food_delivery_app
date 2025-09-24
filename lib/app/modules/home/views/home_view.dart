@@ -1,6 +1,7 @@
 import 'package:al_khalifa/app/modules/home/views/product_details_screen.dart';
 import 'package:al_khalifa/app/modules/home/views/see_all_meal_for_one_screen.dart';
 import 'package:al_khalifa/app/modules/home/views/see_all_popular_screen.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/app_colors.dart';
@@ -31,9 +32,9 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 20),
                 // Header
                 CustomHeader(
-                  title: "Categories ",
+                  title: "Categories",
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 2),
                 _buildProduct(),
                 CustomHeader(
                   title: "Popular",
@@ -68,31 +69,39 @@ class HomeView extends GetView<HomeController> {
     final screenWidth = MediaQuery.of(Get.context!).size.width;
     int crossAxisCount = screenWidth < 500 ? 2 : 3;
 
-    return GridView.builder(
-      itemCount: 6,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 0.72,
-      ),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            Get.to(() => ProductDetailsScreen());
-          },
-          child: FoodCard(
-            imageUrl: ImagePath.foodImage,
-            title: "Spicy Sausage",
-            rating: 5.8,
-            price: 250,
-            onAdd: () {},
-            cardHeight: 135,
+    return GetBuilder<HomeController>(
+      builder: (homeController) {
+        if(homeController.popularDataInProgress){
+          return Center(child: CircularProgressIndicator(),);
+        }
+        return GridView.builder(
+          itemCount: 4,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 0.72,
           ),
+          itemBuilder: (context, index) {
+            final data=homeController.popularFoodItemList[index];
+            return GestureDetector(
+              onTap: () {
+                Get.to(() => ProductDetailsScreen(popularItem: data,));
+              },
+              child: FoodCard(
+                imageUrl: data.food.foodImageUrl,
+                title: data.food.name,
+                rating: data.averageRating,
+                price: data.food.price,
+                onAdd: () {},
+                cardHeight: 135,
+              ),
+            );
+          },
         );
-      },
+      }
     );
   }
 
@@ -113,7 +122,7 @@ class HomeView extends GetView<HomeController> {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            Get.to(() => ProductDetailsScreen());
+          //  Get.to(() => ProductDetailsScreen());
           },
           child: FoodCard(
             imageUrl: ImagePath.foodImage,
@@ -130,29 +139,37 @@ class HomeView extends GetView<HomeController> {
 
 
   Widget _buildProduct() {
-    return SizedBox(
-      height: 220,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: 160,
-              child:  FoodCard(
-                showRating: false,
-                  showAddButton: false,
-                  imageUrl : ImagePath.foodImage,
-                  title: "Spicy Sausage",
-                  rating: 5.8,
-                  onAdd: () {},
-                  cardHeight: 140
-              ),
-            ),
-          );
-        },
-      ),
+    return GetBuilder<HomeController>(
+      builder: (homeController) {
+        if(homeController.menuInProgress){
+          return Center(child: CircularProgressIndicator(),);
+        }
+        return SizedBox(
+          height: 220,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: homeController.allMenuModelList.length,
+            itemBuilder: (context, index) {
+              final menuData=homeController.allMenuModelList[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 160,
+                  child:  FoodCard(
+                    showRating: false,
+                      showAddButton: false,
+                      imageUrl : menuData.menuImage,
+                      title: menuData.name,
+                      rating: 5.8,
+                      onAdd: () {},
+                      cardHeight: 140
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      }
     );
   }
 
@@ -237,7 +254,7 @@ class HomeView extends GetView<HomeController> {
         print("Selected: $value");
       },
       onNotificationTap: () {
-        print("Notification tapped!");
+        Get.toNamed(Routes.NOTIFICATION);
       },
     );
   }
