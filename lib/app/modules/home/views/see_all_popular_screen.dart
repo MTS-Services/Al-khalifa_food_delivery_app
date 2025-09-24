@@ -6,7 +6,11 @@ import '../widget/custom_header.dart';
 import '../widget/food_card.dart';
 
 class SeeAllPopularScreen extends StatelessWidget {
-  const SeeAllPopularScreen({super.key});
+
+
+  const SeeAllPopularScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +25,11 @@ class SeeAllPopularScreen extends StatelessWidget {
                   title: "Kitchen Menu",
                   centerTitle: true,
                   leadingIcon: Icons.arrow_back,
-                  onLeadingTap: (){
+                  onLeadingTap: () {
                     Get.back();
                   },
                 ),
-                _buildPopularGridView()
+                _buildPopularGridView(),
               ],
             ),
           ),
@@ -33,6 +37,7 @@ class SeeAllPopularScreen extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildPopularGridView() {
     return GridView.builder(
       itemCount: 6,
@@ -46,8 +51,8 @@ class SeeAllPopularScreen extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: (){
-            Get.to(()=>ProductDetailsScreen());
+          onTap: () {
+              Get.to(()=>ProductDetailsScreen());
           },
           child: FoodCard(
             imageUrl: ImagePath.foodImage,

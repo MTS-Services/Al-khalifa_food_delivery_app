@@ -1,3 +1,4 @@
+import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
 import 'package:al_khalifa/app/modules/home/views/product_details_screen.dart';
 import 'package:al_khalifa/app/modules/home/views/see_all_meal_for_one_screen.dart';
 import 'package:al_khalifa/app/modules/home/views/see_all_popular_screen.dart';
@@ -12,7 +13,11 @@ import '../widget/food_card.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key});
+
   final TextEditingController _searchTEController = TextEditingController();
+  final homeController = Get.put(HomeController());
+
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +34,8 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 20),
                 _buildContainer(),
                 const SizedBox(height: 20),
-                CustomHeader(title: "Our Cuisines"),
-                const SizedBox(height: 10),
+                CustomHeader(title: "Our Menu"),
+                const SizedBox(height: 5),
                 _buildProduct(),
                 CustomHeader(
                   title: "Popular",
@@ -75,7 +80,7 @@ class HomeView extends GetView<HomeController> {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            Get.to(() => ProductDetailsScreen());
+           // Get.to(() => ProductDetailsScreen());
           },
           child: FoodCard(
             imageUrl: ImagePath.foodImage,
@@ -92,54 +97,76 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildPopularGridView() {
-    return GridView.builder(
-      itemCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 0.72,
-      ),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            Get.to(() => ProductDetailsScreen());
-          },
-          child: FoodCard(
-            imageUrl: ImagePath.foodImage,
-            title: "Spicy Sausage",
-            rating: 5.0,
-            price: 495,
-            onAdd: () {
-              print("Added Spicy Sausage!");
-            },
+    return GetBuilder<HomeController>(
+      builder: (homeController) {
+        if (homeController.popularDataInProgress) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (homeController.popularFoodItemList.isEmpty) {
+          return Center(child: Text("No data available"));
+        }
+        return GridView.builder(
+          itemCount: 4,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 0.72,
           ),
+          itemBuilder: (context, index) {
+            final popularData = homeController.popularFoodItemList[index];
+            return GestureDetector(
+              onTap: () {
+                Get.to(() => ProductDetailsScreen());
+              },
+              child: FoodCard(
+                imageUrl: popularData.food.foodImageUrl,
+                title: popularData.food.name,
+                rating: popularData.averageRating,
+                price: popularData.food.price,
+                onAdd: () {
+                  print("Added Spicy Sausage!");
+                },
+              ),
+            );
+          },
         );
       },
     );
   }
 
   Widget _buildProduct() {
-    return SizedBox(
-      height: 220,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: 160,
-              child: FoodCard(
-                imageUrl: ImagePath.foodImage,
-                title: "Rooftop menu",
-              ),
-            ),
-          );
-        },
-      ),
+    return GetBuilder<HomeController>(
+      builder: (homeController) {
+        if (homeController.menuInProgress) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (homeController.allMenuModelList.isEmpty) {
+          return Center(child: Text("No data available"));
+        }
+        return SizedBox(
+          height: 220,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: homeController.allMenuModelList.length,
+            itemBuilder: (context, index) {
+              final menuData = homeController.allMenuModelList[index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 160,
+                  child: FoodCard(
+                    imageUrl: menuData.menuImage,
+                    title: menuData.name,
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 

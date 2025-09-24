@@ -2,16 +2,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefServices{
 
-  static String userEmail='';
+
   static String userOtp='';
-  static String? userToken = '';
+
 
 
   static Future<void> saveUserEmail(String email)async{
     final SharedPreferences prefs=await SharedPreferences.getInstance();
     await prefs.setString("user_email", email);
-    final saveEmail=await getUserEmail();
-    userEmail=email;
+    await getUserEmail();
+
   }
   static Future<String?> getUserEmail()async{
     final SharedPreferences prefs=await SharedPreferences.getInstance();
@@ -37,11 +37,11 @@ class SharedPrefServices{
   static Future<void> saveUserToken(String token)async{
     final SharedPreferences prefs=await SharedPreferences.getInstance();
     await prefs.setString("user_token", token);
-    userToken=token;
+
   }
-  static Future<void> getUserToken()async{
+  static Future<String?> getUserToken()async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    userToken = prefs.getString("user_token");
+    return prefs.getString("user_token");
   }
 
   static Future<void> clear()async{
@@ -49,7 +49,8 @@ class SharedPrefServices{
     await prefs.clear();
   }
 
-  static bool get isLoggedIn{
+  static Future<bool> get isLoggedIn async {
+    String? userToken= await getUserToken();
     return userToken != null;
   }
 

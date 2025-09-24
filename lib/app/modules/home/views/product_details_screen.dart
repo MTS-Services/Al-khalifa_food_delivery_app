@@ -1,13 +1,14 @@
+import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
 import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../../data/image_path.dart';
 import '../widget/custom_circle.dart';
 import '../widget/custom_header.dart';
 import '../widget/food_card.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
+
   const ProductDetailsScreen({super.key});
 
   @override
@@ -27,7 +28,7 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
               FoodCard(
                 imageUrl: ImagePath.foodImage,
-                title: "Spicy Sausage",
+                title: "Spicy",
                 rating: 5.0,
                 price: 495,
               ),
