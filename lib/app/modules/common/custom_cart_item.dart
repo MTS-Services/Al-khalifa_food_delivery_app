@@ -58,8 +58,8 @@ class CustomCartItem extends StatelessWidget {
                           GestureDetector(
                             onTap: controller.increment,
                             child: Container(
-                              height: 18.r,
-                              width: 18.r,
+                              height: 20.r,
+                              width: 20.r,
                               alignment: Alignment.center,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
@@ -76,8 +76,8 @@ class CustomCartItem extends StatelessWidget {
                           GestureDetector(
                             onTap: controller.decrement,
                             child: Container(
-                              height: 18.r,
-                              width: 18.r,
+                              height: 20.r,
+                              width: 20.r,
                               alignment: Alignment.center,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,

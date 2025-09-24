@@ -1,0 +1,136 @@
+import 'package:al_khalifa/app/data/app_colors.dart';
+import 'package:al_khalifa/app/data/app_text_styles.dart';
+import 'package:al_khalifa/app/modules/profile/controllers/profile_controller.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import '../controllers/edit_profile_controller.dart';
+import 'custom_profile_text_field.dart';
+import 'dropdown_button.dart';
+
+class EditProfileView extends GetView<EditProfileController> {
+  EditProfileView({super.key});
+
+  final List<String> district = ['Dhaka', 'Cumilla', 'Chittagong', 'Rajshahi'];
+  final List<String> city = ['Dhaka', 'Dhanmondi', 'Uttora', 'Mirpur'];
+  ProfileController profileController = Get.put(ProfileController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text('Edit'),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomProfileTextField(
+                label: 'Name',
+                controller: controller.nameController,
+                hintText: 'Enter your Name',
+              ),
+              CustomProfileTextField(
+                controller: controller.numberController,
+                label: 'Contract Number',
+                hintText: 'Example: 01xxx-xxxxxx',
+              ),
+              CustomProfileTextField(
+                controller: controller.emailController,
+                label: 'Email',
+                hintText: 'company@gmail.com',
+              ),
+              SizedBox(height: 20.h),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('District', style: AppTextStyles.medium16),
+                        SizedBox(height: 16.h),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppColors.strokeColor
+                            ),
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(22.0.r),
+                            child: Text(
+                              'shaistaganj',
+                              style: AppTextStyles.regular16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('City', style: AppTextStyles.medium16),
+                        SizedBox(height: 8.h),
+                        Obx(() {
+                          return AppDropdown<String>(
+                            items: city,
+                            value: (controller.selectedCity.value ?? '').isEmpty
+                                ? null
+                                : controller.selectedCity.value,
+                            onChanged: (v) {
+                              controller.selectedCity.value = v ?? '';
+                            },
+                            hintText: 'Select City',
+                            borderColor: AppColors.strokeColor,
+                            textStyle: AppTextStyles.regular14,
+                            hintStyle: AppTextStyles.regular14.copyWith(
+                              color: AppColors.greyColor,
+                            ),
+                            padding: EdgeInsets.only(top: 8.h),
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              CustomProfileTextField(
+                controller: controller.addressController,
+                label: 'Address',
+                hintText: 'Example: House no 32,street,etc',
+              ),
+              SizedBox(height: 30.h),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    controller.profileController.name.value = controller
+                        .nameController
+                        .text
+                        .trim();
+                    controller.profileController.number.value = controller
+                        .numberController
+                        .text
+                        .trim();
+                    Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR);
+                  },
+                  child: Text('Save', style: AppTextStyles.medium18),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -11,7 +11,7 @@ class CustomHeader extends StatelessWidget {
 
   const CustomHeader({
     super.key,
-    this.title, // required ছিল, এখন optional
+    this.title,
     this.onSeeAllTap,
     this.leadingIcon,
     this.centerTitle = false,
@@ -27,7 +27,6 @@ class CustomHeader extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // ✅ Leading icon
           if (leadingIcon != null)
             Positioned(
               left: 0,
@@ -36,8 +35,6 @@ class CustomHeader extends StatelessWidget {
                 icon: Icon(leadingIcon, color: Colors.green),
               ),
             ),
-
-          // ✅ Title শুধু দিলে দেখাবে
           if (title != null)
             Align(
               alignment: centerTitle ? Alignment.center : Alignment.centerLeft,

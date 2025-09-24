@@ -15,8 +15,8 @@ class CustomList extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(chargeType, style: AppTextStyles.regular14),
-          Text(amount, style: AppTextStyles.regular14),
+          Flexible(child: Text(chargeType, style: AppTextStyles.regular14)),
+          Flexible(child: Text(amount, style: AppTextStyles.regular14)),
         ],
       ),
     );

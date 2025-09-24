@@ -1,6 +1,8 @@
-import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
+import 'package:al_khalifa/app/data/app_colors.dart';
+import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../data/image_path.dart';
 import '../widget/custom_circle.dart';
@@ -8,59 +10,116 @@ import '../widget/custom_header.dart';
 import '../widget/food_card.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-
-  const ProductDetailsScreen({super.key});
+  final bool? sold;
+  const ProductDetailsScreen({super.key, this.sold = false});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomHeader(
-                leadingIcon: Icons.arrow_back,
-                onLeadingTap: () {
-                  Get.back();
-                },
-              ),
-              FoodCard(
-                imageUrl: ImagePath.foodImage,
-                title: "Spicy",
-                rating: 5.0,
-                price: 495,
-              ),
-              Text(
-                "Popular dish prepared of slow-cooked \naromatic basmati  rice layered with potatoes \nmarinated mutton pcs, in a delicate blend of \nwhole spices",
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-              SizedBox(height: 15),
-              _buildTitleRow(),
-              SizedBox(height: 15),
-              SizedBox(
-                height: 220,
-                child: ListView(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    _buildListTile("For 1 person", "Tk 190"),
-                    _buildListTile("For 1 person", "Tk 190"),
-                    _buildListTile("For 1 person", "Tk 190"),
-                    _buildListTile("For 1 person", "Tk 190"),
-                  ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomHeader(
+                  leadingIcon: Icons.arrow_back,
+                  onLeadingTap: () {
+                    Get.back();
+                  },
                 ),
-              ),
-              SizedBox(height: 20),
-              _buildAddToCard(),
-            ],
+                FoodCard(
+                  showFullImage: true,
+                  isFullWidth: true,
+                  cardHeight: 150,
+                  imageUrl: ImagePath.foodDetails,
+
+                  title: "Spicy Sausage",
+                  rating: 5.0,
+                  price: 495,
+                ),
+                Text(
+                  "Popular dish prepared of slow-cooked \naromatic basmati  rice layered with potatoes marinated mutton pcs, in a delicate blend of \nwhole spices",
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                SizedBox(height: 15),
+                _buildTitleRow(),
+                SizedBox(height: 15),
+                SizedBox(
+                  height: 150,
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    children: [
+                      _buildListTile("For 1 person", "Tk 190"),
+                      _buildListTile("For 1 person", "Tk 190"),
+                      _buildListTile("For 1 person", "Tk 190"),
+                      _buildListTile("For 1 person", "Tk 190"),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                _buildAddToCard(),
+                SizedBox(height: 20.h),
+              sold == true ? _buildRatingContainer() : SizedBox.shrink(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  Container _buildRatingContainer() {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.greyLightColor),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Did you like the food!', style: AppTextStyles.bold24),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0.h),
+              child: Text(
+                'Please rate this food so, that we can improve it!',
+                style: AppTextStyles.regular15.copyWith(
+                  color: AppColors.greyColor,
+                ),
+              ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
+                5,
+                (index) =>
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4.0.w),
+                      child: Icon(Icons.star_rounded, size: 54.sp, color: Colors.amber),
+                    ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0.h),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen.shade600,
+                    ),
+                    onPressed: () {}, child: Text('Rate')),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
   Widget _buildAddToCard() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,6 +138,8 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _buildListTile(String title, String price) {
     return ListTile(
+      contentPadding: EdgeInsets.zero,
+      dense: true,
       leading: const CustomCircle(),
       title: Text(title, style: const TextStyle(fontSize: 16)),
       trailing: Text(price, style: const TextStyle(fontSize: 16)),
