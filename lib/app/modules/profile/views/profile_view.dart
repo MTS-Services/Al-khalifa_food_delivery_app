@@ -90,7 +90,9 @@ class ProfileView extends GetView<ProfileController> {
                     leading: const Icon(Icons.card_giftcard),
                     title: Text('History', style: AppTextStyles.regular14),
                     trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(Routes.HISTORY_PAGE);
+                    },
                   ),
                 ],
               ),
