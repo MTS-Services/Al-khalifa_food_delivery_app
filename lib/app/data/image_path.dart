@@ -10,6 +10,7 @@ class ImagePath{
   static const String footItem ='$baseUrl/food.png';
   static const String product ='$baseUrl/product.png';
   static const String foodImage ='$baseUrl/foodimage.png';
+  static const String foodDetails ='$baseUrl/imagedetails.jpg';
 
   static const String starIcon ='$baseUrl/starIcon.png';
   static const String rightIcon ='$baseUrl/rightIcon.png';

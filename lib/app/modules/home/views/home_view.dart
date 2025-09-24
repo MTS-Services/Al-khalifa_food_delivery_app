@@ -1,4 +1,3 @@
-import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
 import 'package:al_khalifa/app/modules/home/views/product_details_screen.dart';
 import 'package:al_khalifa/app/modules/home/views/see_all_meal_for_one_screen.dart';
 import 'package:al_khalifa/app/modules/home/views/see_all_popular_screen.dart';
@@ -13,11 +12,7 @@ import '../widget/food_card.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key});
-
   final TextEditingController _searchTEController = TextEditingController();
-  final homeController = Get.put(HomeController());
-
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +27,13 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 8),
                 _buildSearchBar(),
                 const SizedBox(height: 20),
-                _buildContainer(),
+                _buildContainer(context),
                 const SizedBox(height: 20),
-                CustomHeader(title: "Our Menu"),
-                const SizedBox(height: 5),
+                // Header
+                CustomHeader(
+                  title: "Categories ",
+                ),
+                const SizedBox(height: 10),
                 _buildProduct(),
                 CustomHeader(
                   title: "Popular",
@@ -66,13 +64,16 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildMealForOneGridView() {
+  Widget _buildPopularGridView() {
+    final screenWidth = MediaQuery.of(Get.context!).size.width;
+    int crossAxisCount = screenWidth < 500 ? 2 : 3;
+
     return GridView.builder(
-      itemCount: 2,
+      itemCount: 6,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
         childAspectRatio: 0.72,
@@ -80,99 +81,85 @@ class HomeView extends GetView<HomeController> {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-           // Get.to(() => ProductDetailsScreen());
+            Get.to(() => ProductDetailsScreen());
           },
           child: FoodCard(
             imageUrl: ImagePath.foodImage,
             title: "Spicy Sausage",
-            rating: 5.0,
-            price: 495,
-            onAdd: () {
-              print("Added Spicy Sausage!");
-            },
+            rating: 5.8,
+            price: 250,
+            onAdd: () {},
+            cardHeight: 135,
           ),
         );
       },
     );
   }
 
-  Widget _buildPopularGridView() {
-    return GetBuilder<HomeController>(
-      builder: (homeController) {
-        if (homeController.popularDataInProgress) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (homeController.popularFoodItemList.isEmpty) {
-          return Center(child: Text("No data available"));
-        }
-        return GridView.builder(
-          itemCount: 4,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: 0.72,
-          ),
-          itemBuilder: (context, index) {
-            final popularData = homeController.popularFoodItemList[index];
-            return GestureDetector(
-              onTap: () {
-                Get.to(() => ProductDetailsScreen());
-              },
-              child: FoodCard(
-                imageUrl: popularData.food.foodImageUrl,
-                title: popularData.food.name,
-                rating: popularData.averageRating,
-                price: popularData.food.price,
-                onAdd: () {
-                  print("Added Spicy Sausage!");
-                },
-              ),
-            );
+  Widget _buildMealForOneGridView() {
+    final screenWidth = MediaQuery.of(Get.context!).size.width;
+    int crossAxisCount = screenWidth < 500 ? 2 : 3;
+
+    return GridView.builder(
+      itemCount: 6,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        childAspectRatio: 0.72,
+      ),
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            Get.to(() => ProductDetailsScreen());
           },
+          child: FoodCard(
+            imageUrl: ImagePath.foodImage,
+            title: "Spicy Sausage",
+            rating: 5.8,
+            price: 250,
+            onAdd: () {},
+            cardHeight: 135,
+          ),
         );
       },
     );
   }
+
 
   Widget _buildProduct() {
-    return GetBuilder<HomeController>(
-      builder: (homeController) {
-        if (homeController.menuInProgress) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (homeController.allMenuModelList.isEmpty) {
-          return Center(child: Text("No data available"));
-        }
-        return SizedBox(
-          height: 220,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: homeController.allMenuModelList.length,
-            itemBuilder: (context, index) {
-              final menuData = homeController.allMenuModelList[index];
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 160,
-                  child: FoodCard(
-                    imageUrl: menuData.menuImage,
-                    title: menuData.name,
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
+    return SizedBox(
+      height: 220,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 6,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: 160,
+              child:  FoodCard(
+                showRating: false,
+                  showAddButton: false,
+                  imageUrl : ImagePath.foodImage,
+                  title: "Spicy Sausage",
+                  rating: 5.8,
+                  onAdd: () {},
+                  cardHeight: 140
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
-  Widget _buildContainer() {
+  Widget _buildContainer(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      height: 180,
+      height: screenWidth < 400 ? 160 : 200,
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(8),
@@ -180,50 +167,67 @@ class HomeView extends GetView<HomeController> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Share the love",
-                  style: TextStyle(color: Colors.white, fontSize: 14),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "Enjoy \n30% off",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Text(
-                    "Code : Developer",
+
+            Expanded(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Share the love",
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primaryColor,
+                      color: Colors.white,
+                      fontSize: screenWidth < 400 ? 12 : 14,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  Text(
+                    "Enjoy \n30% off",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: screenWidth < 400 ? 20 : 25,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Text(
+                      "Code : Developer",
+                      style: TextStyle(
+                        fontSize: screenWidth < 400 ? 14 : 18,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(width: 60),
-            Image.asset(ImagePath.footItem, height: 200),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Image.asset(
+                  ImagePath.footItem,
+                  height: screenWidth < 400 ? 250 : 200,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
 
   Widget _buildCustomLocationRow() {
     return CustomLocationRow(
