@@ -214,7 +214,7 @@ class SignupView extends GetView<SignupController> {
                           controller: controller.passwordTEController,
                           obscureText: controller.isObSecure2.value,
                           decoration: InputDecoration(
-                            hintText: 'Enter six digit Password',
+                            hintText: 'Enter six digit or letter Password',
                             suffixIcon: IconButton(
                               icon: Icon(
                                 controller.isObSecure2.value
@@ -230,7 +230,7 @@ class SignupView extends GetView<SignupController> {
                               return 'Enter your password';
                             }
                             if (value!.length != 6) {
-                              return 'Enter six digit';
+                              return 'Enter six letter or digit';
                             }
                             return null;
                           },
@@ -262,7 +262,7 @@ class SignupView extends GetView<SignupController> {
                               return 'Enter your password';
                             }
                             if (value!.length != 6) {
-                              return 'Enter six digit';
+                              return 'Enter six letter or digit';
                             }
                             if (value != controller.passwordTEController.text) {
                               return 'password not matching';

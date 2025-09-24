@@ -64,7 +64,7 @@ final GlobalKey<FormState> _globalKey=GlobalKey<FormState>();
                             return 'Enter your password';
                           }
                           if (value!.length != 6) {
-                            return 'Enter six digit';
+                            return 'Password must be six digit or letter';
                           }
                           return null;
                         },
@@ -92,7 +92,7 @@ final GlobalKey<FormState> _globalKey=GlobalKey<FormState>();
                             return 'Enter your password';
                           }
                           if (value!.length != 6) {
-                            return 'Enter six digit';
+                            return 'Enter six digit or letter';
                           }
                           if (value != controller.passwordController.text) {
                             return 'password not matching';

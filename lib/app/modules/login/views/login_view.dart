@@ -74,7 +74,7 @@ class LoginView extends GetView<LoginController> {
                               return 'Enter your password';
                             }
                             if (value!.length != 6) {
-                              return 'Enter six digit';
+                              return 'Enter six digit or letter';
                             }
                             return null;
                           },
