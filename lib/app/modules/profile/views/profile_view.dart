@@ -1,5 +1,6 @@
 import 'package:al_khalifa/app/data/image_path.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
+import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class ProfileView extends GetView<ProfileController> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
-              onPressed: () {
+              onPressed: (){
                 Get.toNamed(Routes.CURENT_LOCATION);
               },
               icon: const Icon(Icons.edit),
@@ -100,7 +101,8 @@ class ProfileView extends GetView<ProfileController> {
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
-                  onPressed: () {
+                  onPressed: () async{
+                    await SharedPrefServices.clear();
                     Get.toNamed(Routes.LOGIN);
                   },
                   style: OutlinedButton.styleFrom(

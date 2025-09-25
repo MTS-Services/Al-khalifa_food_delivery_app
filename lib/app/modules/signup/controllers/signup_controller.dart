@@ -70,7 +70,6 @@ class SignupController extends GetxController {
       update();
       Get.snackbar('Error', 'Something went wrong: ${e.toString()}');
     }
-
   }
 
 
