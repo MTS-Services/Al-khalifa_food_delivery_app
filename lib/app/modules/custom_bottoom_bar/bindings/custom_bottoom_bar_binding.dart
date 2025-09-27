@@ -21,8 +21,6 @@ class CustomBottoomBarBinding extends Bindings {
     Get.lazyPut<OrderController>(
       () => OrderController(),
     );
-    Get.lazyPut<ProfileController>(
-      () => ProfileController(),
-    );
+    Get.put(ProfileController());
   }
 }

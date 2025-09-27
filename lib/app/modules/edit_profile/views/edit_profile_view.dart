@@ -14,7 +14,7 @@ class EditProfileView extends GetView<EditProfileController> {
 
   final List<String> district = ['Dhaka', 'Cumilla', 'Chittagong', 'Rajshahi'];
   final List<String> city = ['Dhaka', 'Dhanmondi', 'Uttora', 'Mirpur'];
-  ProfileController profileController = Get.put(ProfileController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +31,20 @@ class EditProfileView extends GetView<EditProfileController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomProfileTextField(
-                label: 'Name',
-                controller: controller.nameController,
-                hintText: 'Enter your Name',
+              Row(
+                children: [
+                  Expanded(child:CustomProfileTextField(
+                    label: 'First Name',
+                    controller: controller.firstNameController,
+                    hintText: 'Enter First Name',
+                  ), ),
+                   SizedBox(width: 8.w,),
+                  Expanded(child:CustomProfileTextField(
+                    label: 'Last Name',
+                    controller: controller.lastNameController,
+                    hintText: 'Enter Last Name',
+                  ),)
+                ],
               ),
               CustomProfileTextField(
                 controller: controller.numberController,
@@ -112,19 +122,18 @@ class EditProfileView extends GetView<EditProfileController> {
               SizedBox(height: 30.h),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    controller.profileController.name.value = controller
-                        .nameController
-                        .text
-                        .trim();
-                    controller.profileController.number.value = controller
-                        .numberController
-                        .text
-                        .trim();
-                    Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR);
-                  },
-                  child: Text('Save', style: AppTextStyles.medium18),
+                child: GetBuilder<EditProfileController>(
+                  builder: (editController) {
+                    if(editController.editProfileInProgress){
+                      return Center(child: CircularProgressIndicator(),);
+                    }
+                    return ElevatedButton(
+                      onPressed: () {
+                        editController.getEditData();
+                      },
+                      child: Text('Save', style: AppTextStyles.medium18),
+                    );
+                  }
                 ),
               ),
             ],

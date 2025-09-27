@@ -107,7 +107,7 @@ class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
 
   Widget _buildBottomNavBar() {
     return Container(
-      height: 70.h,
+     // height: 70.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0.r),

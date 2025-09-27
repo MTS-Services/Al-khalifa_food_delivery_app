@@ -22,12 +22,12 @@ class NotificationContainer extends StatelessWidget {
       decoration: BoxDecoration(),
       child: Row(
         children: [
-          // CircleAvatar(
-          //   backgroundColor: AppColors.notiContainerColor,
-          //   radius: 30.r,
-          //   child: Image.asset(iconImage, height: 32.h, width: 40.w),
-          // ),
-          // SizedBox(width: 20.w),
+          CircleAvatar(
+            backgroundColor: AppColors.notiContainerColor,
+            radius: 30.r,
+            child: Image.network(iconImage, height: 32.h, width: 40.w),
+          ),
+          SizedBox(width: 20.w),
           Expanded(
             child: Container(
               padding: EdgeInsets.all(10),
@@ -36,17 +36,12 @@ class NotificationContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
-                spacing: 5.h,
+                spacing: 3.h,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(notiTitle, style: AppTextStyles.medium16),
-                      Text(time, style: AppTextStyles.regular14),
-                    ],
-                  ),
+                  Text(notiTitle, style: AppTextStyles.medium16),
                   Text(notiSubTitle, style: AppTextStyles.regular12),
+                  Text(time, style: AppTextStyles.regular14),
                 ],
               ),
             ),

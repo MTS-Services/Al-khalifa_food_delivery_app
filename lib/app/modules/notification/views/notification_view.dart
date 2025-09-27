@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/notification_controller.dart';
 
@@ -52,16 +53,21 @@ class NotificationView extends GetView<NotificationController> {
                   child: ListView.builder(
                     itemCount:notiController.notificationList.length,
                     itemBuilder: (context, index)
-                    => Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
+                    {
+                      DateTime time = notiController.notificationList[index].createdAt;
+                      String formattedTime = DateFormat('dd/MM/yyyy hh:mm a').format(time);
 
-                      child: NotificationContainer(
-                        iconImage: notiController.notificationList[index].image,
-                        time: '1h',
-                        notiTitle: notiController.notificationList[index].title,
-                        notiSubTitle:notiController.notificationList[index].content,
-                      ),
-                    ),
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12.0),
+
+                        child: NotificationContainer(
+                          iconImage: notiController.notificationList[index].image,
+                          time: formattedTime,
+                          notiTitle: notiController.notificationList[index].title,
+                          notiSubTitle:notiController.notificationList[index].content,
+                        ),
+                      );
+                    }
                   ),
                 ),
               ],

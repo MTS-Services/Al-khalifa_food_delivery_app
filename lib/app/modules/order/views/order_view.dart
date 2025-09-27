@@ -24,12 +24,12 @@ class OrderView extends GetView<OrderController> {
                 SizedBox(height: 20.h),
                 Text('Order Item', style: AppTextStyles.medium18),
                 SizedBox(height: 10.h),
-                ListView.builder(
-                  itemCount: 2,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => CustomCartItem(),
-                ),
+                // ListView.builder(
+                //   itemCount: 2,
+                //   shrinkWrap: true,
+                //   physics: NeverScrollableScrollPhysics(),
+                //   itemBuilder: (context, index) => CustomCartItem(cartItemModel: controller.,),
+                // ),
                 SizedBox(height: 20.h),
                 Text('Order Details', style: AppTextStyles.medium18),
                 SizedBox(height: 10.h),

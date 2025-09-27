@@ -8,4 +8,9 @@ class Urls{
   static  String allMenu= '$_baseUrl/menus/';
   static  String popularFoodData= '$_baseUrl/food_rating/filter/popular';
   static  String notification= '$_baseUrl/notifications/';
+  static  String getProfile= '$_baseUrl/profile/me';
+  static  String editProfile= '$_baseUrl/profile/update}';
+  static  String addCart= '$_baseUrl/carts/';
+  static  String cartList= '$_baseUrl/carts/me';
+  static  String deleteCart(int id) => '$_baseUrl/carts/$id';
 }

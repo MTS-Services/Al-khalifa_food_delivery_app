@@ -56,7 +56,7 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 5),
                 Text("Delivery fee included!", style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 5),
-                _buildMealForOneGridView(),
+                //_buildMealForOneGridView(),
               ],
             ),
           ),
@@ -105,7 +105,7 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildMealForOneGridView() {
+/*  Widget _buildMealForOneGridView() {
     final screenWidth = MediaQuery.of(Get.context!).size.width;
     int crossAxisCount = screenWidth < 500 ? 2 : 3;
 
@@ -135,7 +135,7 @@ class HomeView extends GetView<HomeController> {
         );
       },
     );
-  }
+  }*/
 
 
   Widget _buildProduct() {

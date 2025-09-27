@@ -8,7 +8,7 @@ import '../../../data/app_text_styles.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({super.key});
+   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,66 +36,72 @@ class ProfileView extends GetView<ProfileController> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Column(
-                children: [
-                  Stack(
+              GetBuilder<ProfileController>(
+                builder: (profileController) {
+                  if(profileController.profileInProgress){
+                    return Center(child: CircularProgressIndicator(),);
+                  }
+                  return Column(
                     children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage(ImagePath.googleIcon),
-                        radius: 60.r,
-                      ),
-                      Positioned(
-                        right: 0,
-                        bottom: 0,
-                        child: CircleAvatar(
-                          radius: 20.r,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            size: 20.sp,
-                            color: Colors.black,
+                      Stack(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: AssetImage(ImagePath.googleIcon),
+                            radius: 60.r,
                           ),
+                          Positioned(
+                            right: 0,
+                            bottom: 0,
+                            child: CircleAvatar(
+                              radius: 20.r,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.camera_alt_outlined,
+                                size: 20.sp,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 25.h),
+                        child:Text("${profileController.profileModelInfo.value.firstName} ${profileController.profileModelInfo.value.lastName}",
+                          style: AppTextStyles.medium20,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ),
+                      ListTile(
+                        leading: const Icon(Icons.phone),
+                        title: Text(profileController.profileModelInfo.value.phoneNumber, style: AppTextStyles.regular14),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.email_outlined),
+                        title: Text(
+                         profileController.profileModelInfo.value.email,
+                          style: AppTextStyles.regular14,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.card_giftcard),
+                        title: Text('Invite Friend', style: AppTextStyles.regular14),
+                        trailing: const Icon(Icons.arrow_forward_ios_sharp),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.card_giftcard),
+                        title: Text('History', style: AppTextStyles.regular14),
+                        trailing: const Icon(Icons.arrow_forward_ios_sharp),
+                        onTap: () {
+                          Get.toNamed(Routes.HISTORY_PAGE);
+                        },
+                      ),
                     ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 32.h),
-                    child: Obx(() => Text(
-                      controller.name.value,
-                      style: AppTextStyles.medium20,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.phone),
-                    title: Text(controller.number.value, style: AppTextStyles.regular14),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.email_outlined),
-                    title: Text(
-                      controller.email.value,
-                      style: AppTextStyles.regular14,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.card_giftcard),
-                    title: Text('Invite Friend', style: AppTextStyles.regular14),
-                    trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.card_giftcard),
-                    title: Text('History', style: AppTextStyles.regular14),
-                    trailing: const Icon(Icons.arrow_forward_ios_sharp),
-                    onTap: () {
-                      Get.toNamed(Routes.HISTORY_PAGE);
-                    },
-                  ),
-                ],
+                  );
+                }
               ),
               SizedBox(height: 80.h),
               SizedBox(

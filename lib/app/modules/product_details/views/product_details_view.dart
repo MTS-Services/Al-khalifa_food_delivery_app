@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/product_details_controller.dart';
+import '../widgets/custom_stepper.dart';
 
 class ProductDetailsView extends GetView<ProductDetailsController> {
   const ProductDetailsView({super.key});
@@ -13,10 +14,21 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
         title: const Text('ProductDetailsView'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'ProductDetailsView is working',
-          style: TextStyle(fontSize: 20),
+      body:  Center(
+        child: Column(
+          children: [
+            CustomStepper(
+              lowerLimit: 1,
+              upperLimit: 10,
+              stepValue: 1,
+              initialValue: 1,
+              onChange: (newValue) {
+                print(newValue);
+              },
+            ),
+          ]
+
+
         ),
       ),
     );

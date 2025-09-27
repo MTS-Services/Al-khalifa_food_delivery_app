@@ -1,11 +1,13 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
+import 'package:al_khalifa/app/modules/home/controllers/home_controller.dart';
 import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
 import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../data/image_path.dart';
+import '../../product_details/widgets/custom_stepper.dart';
 import '../widget/custom_circle.dart';
 import '../widget/custom_header.dart';
 import '../widget/food_card.dart';
@@ -13,7 +15,9 @@ import '../widget/food_card.dart';
 class ProductDetailsScreen extends StatelessWidget {
   final PopularFoodItemModel popularItem;
   final bool? sold;
-  const ProductDetailsScreen({super.key, this.sold = false, required this.popularItem});
+   ProductDetailsScreen({super.key, this.sold = false, required this.popularItem});
+
+  final HomeController controller=Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +69,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 _buildAddToCard(),
                 SizedBox(height: 20.h),
               sold == true ? _buildRatingContainer() : SizedBox.shrink(),
+
               ],
             ),
           ),
@@ -122,18 +127,37 @@ class ProductDetailsScreen extends StatelessWidget {
       ),
     );
   }
+
+
   Widget _buildAddToCard() {
+    controller.setProduct(popularItem.foodId);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildCircleButton(Icons.remove, () {}),
-            Text('', style: const TextStyle(fontSize: 24)),
-            _buildCircleButton(Icons.add, () {}),
+            _buildCircleButton(Icons.remove, controller.decrement),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Obx(() => Text(
+                '${controller.count.value}',
+                style: const TextStyle(fontSize: 24),
+              )),
+            ),
+            _buildCircleButton(Icons.add, controller.increment),
           ],
         ),
-        CustomElevatedButton(onPressed: () {}, text: "Add to cart"),
+        CustomElevatedButton(
+          onPressed: () {
+            controller.getAddToCart(
+              popularItem.foodId,
+              controller.count.value,
+            );
+          },
+          text: "Add to cart",
+        ),
       ],
     );
   }
