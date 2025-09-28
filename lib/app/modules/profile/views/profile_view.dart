@@ -109,7 +109,7 @@ class ProfileView extends GetView<ProfileController> {
                 child: OutlinedButton(
                   onPressed: () async{
                     await SharedPrefServices.clear();
-                    Get.toNamed(Routes.LOGIN);
+                    Get.offAllNamed(Routes.LOGIN);
                   },
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(width: 1.2.w, color: Colors.black),

@@ -1,6 +1,7 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/data/image_path.dart';
+import 'package:al_khalifa/app/modules/custom_bottoom_bar/views/custom_bottoom_bar_view.dart';
 import 'package:al_khalifa/app/modules/email_verification/views/email_verification_view.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +135,21 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ),
                        SizedBox(height: 35.h),
-                      Image.asset(ImagePath.googleIcon, scale: 4),
+                      GetBuilder<LoginController>(
+                        builder: (loginController) {
+                          return GestureDetector(
+                            onTap: () async {
+                              bool result = await loginController.continueGoogleSignIn();
+                              if (result) {
+                                Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR);
+                                Get.snackbar("Success", "Google Sign-In Successful");
+                              } else {
+                                Get.snackbar("Error", "Google Sign-In Failed");
+                              }
+                            },
+                              child: Image.asset(ImagePath.googleIcon, scale: 4));
+                        }
+                      ),
                        SizedBox(height: 25.h),
                     ],
                   ),

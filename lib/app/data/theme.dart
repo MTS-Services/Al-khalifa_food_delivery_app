@@ -20,6 +20,14 @@ ThemeData themeData() {
         borderSide: BorderSide(color: AppColors.strokeColor),
         borderRadius: BorderRadius.circular(10),
       ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color:Colors.red),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color:Colors.red),
+        borderRadius: BorderRadius.circular(10),
+      )
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
