@@ -70,7 +70,7 @@ class LoginView extends GetView<LoginController> {
                               onPressed: controller.togglePasswordVisibility,
                             ),
                           ),
-                          validator: (String? value) {
+                          validator: (String? value) {//check validity
                             if (value?.isEmpty ?? true) {
                               return 'Enter your password';
                             }
