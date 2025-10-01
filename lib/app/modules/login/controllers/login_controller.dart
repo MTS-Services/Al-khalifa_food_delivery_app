@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:al_khalifa/app/api_services/auth_api_services/auth_api_services.dart';
 import 'package:al_khalifa/app/api_services/utility/urls.dart';
@@ -12,7 +11,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
-  GoogleSignIn googleSignIn=GoogleSignIn.instance;
+  GoogleSignIn googleSignIn = GoogleSignIn();
   var isObSecure1 = true.obs;
 
   void togglePasswordVisibility() {
@@ -62,21 +61,37 @@ class LoginController extends GetxController {
     }
   }
 
+  Future<bool> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser == null) return false; // User cancelled
 
-
-  Future<bool> continueGoogleSignIn()async{
-    String webClientId = '397749779909-02nqm910omsg2ohej4jr1o66sqn0fdp0.apps.googleusercontent.com';
-    try{
-      await googleSignIn.initialize(serverClientId: webClientId);
-      GoogleSignInAccount  account = await googleSignIn.authenticate();
-      GoogleSignInAuthentication googleAuth= account.authentication;
-      final credential= GoogleAuthProvider.credential(
-          idToken: googleAuth.idToken
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
       );
-      await auth.signInWithCredential(credential);
-      return true;
-    }catch(e){
-      log("Google sign in failed!$e");
+
+      final UserCredential userCredential = await auth.signInWithCredential(
+        credential,
+      );
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        // ✅ Await backend request
+        final token = await AuthApiServices.googleSignInRequest(
+          Urls.googleSignIn,
+          googleAuth.accessToken!,
+        );
+        await SharedPrefServices.saveUserToken(token);
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Google Sign-In Error: $e");
       return false;
     }
   }

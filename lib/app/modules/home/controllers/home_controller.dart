@@ -88,7 +88,7 @@ class HomeController extends GetxController {
       addToCartInProgress = false;
       update();
       print(response.statusCode);
-      print(response.body);
+      print('✅${response.body}');
       if (response.statusCode == 201) {
         Get.snackbar(
           'Success',

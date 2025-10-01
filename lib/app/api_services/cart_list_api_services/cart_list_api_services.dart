@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
 import 'package:get/get.dart';

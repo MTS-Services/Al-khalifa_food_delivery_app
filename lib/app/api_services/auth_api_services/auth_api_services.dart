@@ -69,9 +69,9 @@ class AuthApiServices {
   }
 
   static Future<dynamic> resetPasswordRequest(
-      String url,
-      Map<String, dynamic> body,
-      ) async {
+    String url,
+    Map<String, dynamic> body,
+  ) async {
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -81,6 +81,23 @@ class AuthApiServices {
       return response;
     } catch (e) {
       throw ("Email Verification Request Failed $e");
+    }
+  }
+
+  static Future<String> googleSignInRequest(
+    String url,
+    String accessToken,
+  ) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$url?access_token=$accessToken'),
+        headers: {"Content-Type": "application/json"},
+      );
+      final data = jsonDecode(response.body); // decode JSON
+      final token = data['access_token']; // extract token
+      return token;
+    } catch (e) {
+      throw ("Google Authentication Request Failed $e");
     }
   }
 }

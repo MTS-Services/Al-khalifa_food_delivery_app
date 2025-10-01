@@ -1,4 +1,3 @@
-import 'package:al_khalifa/app/modules/home/views/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/image_path.dart';

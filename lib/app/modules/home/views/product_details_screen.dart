@@ -6,8 +6,6 @@ import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../data/image_path.dart';
-import '../../product_details/widgets/custom_stepper.dart';
 import '../widget/custom_circle.dart';
 import '../widget/custom_header.dart';
 import '../widget/food_card.dart';
@@ -17,7 +15,7 @@ class ProductDetailsScreen extends StatelessWidget {
   final bool? sold;
    ProductDetailsScreen({super.key, this.sold = false, required this.popularItem});
 
-  final HomeController controller=Get.put(HomeController());
+  final HomeController controller=Get.find();
 
   @override
   Widget build(BuildContext context) {

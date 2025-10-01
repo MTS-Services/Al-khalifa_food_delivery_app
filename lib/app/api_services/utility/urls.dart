@@ -3,6 +3,7 @@ class Urls{
   static  String registration= '$_baseUrl/user/registration';
   static  String otpSignUp= '$_baseUrl/user/user_otp_verify';
   static  String signIn= '$_baseUrl/user/login';
+  static  String googleSignIn= '$_baseUrl/auth/google/token';
   static  String emailVerify= '$_baseUrl/user/resend-otp';
   static  String resetPassword= '$_baseUrl/user/reset_password';
   static  String allMenu= '$_baseUrl/menus/';

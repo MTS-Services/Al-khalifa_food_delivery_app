@@ -1,8 +1,6 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/data/image_path.dart';
-import 'package:al_khalifa/app/modules/custom_bottoom_bar/views/custom_bottoom_bar_view.dart';
-import 'package:al_khalifa/app/modules/email_verification/views/email_verification_view.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,20 +8,20 @@ import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-   LoginView({super.key});
- final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
+  LoginView({super.key});
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor, //backgroundColor
       body: SafeArea(
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 16.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Form(
             key: _formKey,
             child: CustomScrollView(
               slivers: [
-                SliverToBoxAdapter(child:SizedBox(height: 50.h)),
+                SliverToBoxAdapter(child: SizedBox(height: 50.h)),
                 SliverToBoxAdapter(
                   child: Text(
                     'Log In \nYour Account',
@@ -34,9 +32,9 @@ class LoginView extends GetView<LoginController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       SizedBox(height: 28.h),
+                      SizedBox(height: 28.h),
                       Text('Email', style: AppTextStyles.medium16),
-                       SizedBox(height: 8.h),
+                      SizedBox(height: 8.h),
                       TextFormField(
                         controller: controller.emailTEController,
                         decoration: InputDecoration(
@@ -51,9 +49,9 @@ class LoginView extends GetView<LoginController> {
                           return null;
                         },
                       ),
-                       SizedBox(height: 16.h),
+                      SizedBox(height: 16.h),
                       Text('password', style: AppTextStyles.medium16),
-                       SizedBox(height: 8.h),
+                      SizedBox(height: 8.h),
                       Obx(
                         () => TextFormField(
                           controller: controller.passTEController,
@@ -70,7 +68,8 @@ class LoginView extends GetView<LoginController> {
                               onPressed: controller.togglePasswordVisibility,
                             ),
                           ),
-                          validator: (String? value) {//check validity
+                          validator: (String? value) {
+                            //check validity
                             if (value?.isEmpty ?? true) {
                               return 'Enter your password';
                             }
@@ -82,12 +81,12 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ),
 
-                       SizedBox(height: 16.h),
+                      SizedBox(height: 16.h),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: GestureDetector(
                           onTap: () {
-                           Get.toNamed(Routes.EMAIL_VERIFICATION);
+                            Get.toNamed(Routes.EMAIL_VERIFICATION);
                           },
                           child: Text(
                             'Forget Password',
@@ -103,17 +102,17 @@ class LoginView extends GetView<LoginController> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                       SizedBox(height: 40.h),
+                      SizedBox(height: 40.h),
                       SizedBox(
                         width: double.infinity,
                         child: GetBuilder<LoginController>(
                           builder: (loginController) {
-                            if(loginController.signInProgress){
-                              return Center(child: CircularProgressIndicator(),);
+                            if (loginController.signInProgress) {
+                              return Center(child: CircularProgressIndicator());
                             }
                             return ElevatedButton(
                               onPressed: () {
-                                if(_formKey.currentState!.validate()){
+                                if (_formKey.currentState!.validate()) {
                                   loginController.getSignIn();
                                 }
                               },
@@ -124,33 +123,44 @@ class LoginView extends GetView<LoginController> {
                               ),
                               child: Text('Log In'),
                             );
-                          }
+                          },
                         ),
                       ),
-                       SizedBox(height: 35.h),
+                      SizedBox(height: 35.h),
                       Text(
                         'Or Log In with',
                         style: AppTextStyles.medium14.copyWith(
                           color: AppColors.darkBlackColor,
                         ),
                       ),
-                       SizedBox(height: 35.h),
+                      SizedBox(height: 35.h),
                       GetBuilder<LoginController>(
                         builder: (loginController) {
                           return GestureDetector(
                             onTap: () async {
-                              bool result = await loginController.continueGoogleSignIn();
-                              if (result) {
-                                Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR);
-                                Get.snackbar("Success", "Google Sign-In Successful");
+                              final isSuccess = await loginController
+                                  .signInWithGoogle();
+
+                              if (isSuccess) {
+                                Get.offAllNamed(Routes.CUSTOM_BOTTOOM_BAR);
+                                Get.snackbar(
+                                  "Success",
+                                  "Google Sign-In Successful",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                );
                               } else {
-                                Get.snackbar("Error", "Google Sign-In Failed");
+                                Get.snackbar(
+                                  "Error",
+                                  "Google Sign-In Failed",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                );
                               }
                             },
-                              child: Image.asset(ImagePath.googleIcon, scale: 4));
-                        }
+                            child: Image.asset(ImagePath.googleIcon, scale: 4),
+                          );
+                        },
                       ),
-                       SizedBox(height: 25.h),
+                      SizedBox(height: 25.h),
                     ],
                   ),
                 ),
