@@ -6,70 +6,71 @@ import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../widget/custom_circle.dart';
 import '../widget/custom_header.dart';
 import '../widget/food_card.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final PopularFoodItemModel popularItem;
   final bool? sold;
-   ProductDetailsScreen({super.key, this.sold = false, required this.popularItem});
+  ProductDetailsScreen({
+    super.key,
+    this.sold = false,
+    required this.popularItem,
+  });
 
-  final HomeController controller=Get.find();
+  final HomeController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomHeader(
-                  leadingIcon: Icons.arrow_back,
-                  onLeadingTap: () {
-                    Get.back();
-                  },
-                ),
-                FoodCard(
-                  showFullImage: true,
-                  isFullWidth: true,
-                  cardHeight: 150,
-                  imageUrl: popularItem.food.foodImageUrl,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomHeader(
+                leadingIcon: Icons.arrow_back,
+                onLeadingTap: () {
+                  Get.back();
+                },
+              ),
+              FoodCard(
+                showFullImage: true,
+                isFullWidth: true,
+                cardHeight: 150,
+                imageUrl: popularItem.food.foodImageUrl,
 
-                  title: popularItem.food.name,
-                  rating: popularItem.averageRating,
-                  price: popularItem.food.price,
-                ),
-                Text(
-                  popularItem.food.description,
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                ),
-                SizedBox(height: 15),
-                _buildTitleRow(),
-                SizedBox(height: 15),
-                SizedBox(
-                  height: 150,
-                  child: ListView(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    children: [
-                      _buildListTile("For 1 person", "Tk 190"),
-                      _buildListTile("For 1 person", "Tk 190"),
-                      _buildListTile("For 1 person", "Tk 190"),
-                      _buildListTile("For 1 person", "Tk 190"),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                _buildAddToCard(),
-                SizedBox(height: 20.h),
+                title: popularItem.food.name,
+                rating: popularItem.averageRating,
+                price: popularItem.food.price,
+              ),
+              Text(
+                popularItem.food.description,
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              SizedBox(height: 15),
+              // _buildTitleRow(),
+              // SizedBox(height: 15),
+              // SizedBox(
+              //   height: 150,
+              //   child: ListView(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     shrinkWrap: true,
+              //     children: [
+              //       _buildListTile("For 1 person", "Tk 190"),
+              //       _buildListTile("For 1 person", "Tk 190"),
+              //       _buildListTile("For 1 person", "Tk 190"),
+              //       _buildListTile("For 1 person", "Tk 190"),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 20),
+              Spacer(),
+              _buildAddToCard(),
+              SizedBox(height: 20.h),
               sold == true ? _buildRatingContainer() : SizedBox.shrink(),
-
-              ],
-            ),
+            ],
           ),
         ),
       ),
@@ -102,11 +103,14 @@ class ProductDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(
                 5,
-                (index) =>
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4.0.w),
-                      child: Icon(Icons.star_rounded, size: 54.sp, color: Colors.amber),
-                    ),
+                (index) => Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 4.0.w),
+                  child: Icon(
+                    Icons.star_rounded,
+                    size: 54.sp,
+                    color: Colors.amber,
+                  ),
+                ),
               ),
             ),
             Padding(
@@ -114,10 +118,12 @@ class ProductDetailsScreen extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.lightGreen.shade600,
-                    ),
-                    onPressed: () {}, child: Text('Rate')),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen.shade600,
+                  ),
+                  onPressed: () {},
+                  child: Text('Rate'),
+                ),
               ),
             ),
           ],
@@ -125,7 +131,6 @@ class ProductDetailsScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildAddToCard() {
     controller.setProduct(popularItem.foodId);
@@ -139,20 +144,19 @@ class ProductDetailsScreen extends StatelessWidget {
             _buildCircleButton(Icons.remove, controller.decrement),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Obx(() => Text(
-                '${controller.count.value}',
-                style: const TextStyle(fontSize: 24),
-              )),
+              child: Obx(
+                () => Text(
+                  '${controller.count.value}',
+                  style: const TextStyle(fontSize: 24),
+                ),
+              ),
             ),
             _buildCircleButton(Icons.add, controller.increment),
           ],
         ),
         CustomElevatedButton(
           onPressed: () {
-            controller.getAddToCart(
-              popularItem.foodId,
-              controller.count.value,
-            );
+            controller.getAddToCart(popularItem.foodId, controller.count.value);
           },
           text: "Add to cart",
         ),
@@ -160,15 +164,15 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(String title, String price) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      dense: true,
-      leading: const CustomCircle(),
-      title: Text(title, style: const TextStyle(fontSize: 16)),
-      trailing: Text(price, style: const TextStyle(fontSize: 16)),
-    );
-  }
+  // Widget _buildListTile(String title, String price) {
+  //   return ListTile(
+  //     contentPadding: EdgeInsets.zero,
+  //     dense: true,
+  //     leading: const CustomCircle(),
+  //     title: Text(title, style: const TextStyle(fontSize: 16)),
+  //     trailing: Text(price, style: const TextStyle(fontSize: 16)),
+  //   );
+  // }
 
   Widget _buildCircleButton(IconData icon, VoidCallback onPressed) {
     return ElevatedButton(
@@ -184,22 +188,22 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTitleRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Variation",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Text("Select one", style: TextStyle(fontSize: 15)),
-          ],
-        ),
-        CustomElevatedButton(onPressed: () {}, text: "Required"),
-      ],
-    );
-  }
+  // Widget _buildTitleRow() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: [
+  //       Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(
+  //             "Variation",
+  //             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+  //           ),
+  //           Text("Select one", style: TextStyle(fontSize: 15)),
+  //         ],
+  //       ),
+  //       CustomElevatedButton(onPressed: () {}, text: "Required"),
+  //     ],
+  //   );
+  // }
 }

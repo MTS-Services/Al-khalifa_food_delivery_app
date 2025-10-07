@@ -1,61 +1,3 @@
-/*
-import 'dart:convert';
-
-import 'package:al_khalifa/app/api_services/cart_list_api_services/cart_list_api_services.dart';
-import 'package:al_khalifa/app/api_services/utility/urls.dart';
-import 'package:al_khalifa/app/modules/cart/models/cart_item_model.dart';
-import 'package:get/get.dart';
-
-class CartController extends GetxController {
-  bool cartInProgress = false;
-  List<CartItem> cartItemModelData = [];
-
-  Future<bool> getCartListData() async {
-    cartInProgress = true;
-    update();
-    try {
-      final response = await CartListApiServices.cartListApiRequest(
-        Urls.cartList,
-      );
-      cartInProgress = false;
-      print("cart response ${response.statusCode}");
-      print("cart response body ${response.body}");
-      if (response.statusCode == 200) {
-
-        List<dynamic> decodedResponse = jsonDecode(response.body);
-
-
-
-        cartItemModelData = decodedResponse
-            .map((e) => CartItem.fromJson(e))
-            .toList();
-
-
-
-        print("called");
-        print("called ${cartItemModelData.length}");
-        update();
-        return true;
-      } else {
-        print("cart response ${response.statusCode}");
-        update();
-        return false;
-      }
-    } catch (e) {
-      cartInProgress = false;
-      update();
-      return false;
-    }
-  }
-
-  @override
-  void onInit() {
-    print("onItCalled");
-    getCartListData();
-    super.onInit();
-  }
-}
-*/
 import 'dart:convert';
 import 'package:get/get.dart';
 
@@ -89,10 +31,10 @@ class CartController extends GetxController {
   double get subtotal {
     double sum = 0;
     for (final item in cartItemModelData) {
-      final q = quantities[item.id]?.value ?? (item.quantity ?? 1);
+      final q = quantities[item.id]?.value ?? (item.quantity);
       final unit = (item.food.price is int)
           ? (item.food.price as int).toDouble()
-          : (item.food.price as double);
+          : item.food.price;
       sum += (unit * q);
     }
     return sum;
@@ -115,7 +57,7 @@ class CartController extends GetxController {
         final currentIds = cartItemModelData.map((e) => e.id).toSet();
 
         for (final item in cartItemModelData) {
-          quantities[item.id] = (item.quantity ?? 1).obs;
+          quantities[item.id] = (item.quantity).obs;
         }
         quantities.removeWhere((key, _) => !currentIds.contains(key));
 
