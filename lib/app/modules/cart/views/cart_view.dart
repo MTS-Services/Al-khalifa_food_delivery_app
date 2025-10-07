@@ -14,7 +14,7 @@ class CartView extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
-    final contorller = Get.find<CartController>();
+   // final contorller = Get.find<CartController>();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -48,7 +48,9 @@ class CartView extends GetView<CartController> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 16.h),
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+
+                        },
                         child: Text(
                           '+ Add more items',
                           style: AppTextStyles.medium18.copyWith(
@@ -72,14 +74,7 @@ class CartView extends GetView<CartController> {
                             chargeType: 'Delivery Fee',
                             amount: c.money(c.deliveryFee),
                           ),
-                          CustomList(
-                            chargeType: 'Platform fee',
-                            amount: c.money(c.platformFee),
-                          ),
-                          CustomList(
-                            chargeType: 'VAT',
-                            amount: c.money(c.vatAmount),
-                          ),
+
                           Divider(thickness: 1.r),
                           CustomList(
                             chargeType: 'Total',

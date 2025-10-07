@@ -7,26 +7,20 @@ import '../models/cart_item_model.dart';
 
 class CartController extends GetxController {
   bool cartInProgress = false;
-  bool deleteInProgress=false;
-
+  bool deleteInProgress = false;
+  bool decreaseItemInProgress=false;
 
   List<CartItem> cartItemModelData = [];
 
   final quantities = <int, RxInt>{}.obs;
 
-
-  double deliveryFee = 20;
-  double platformFee = 50;
-  double vatRate = 0.0;
-
+  double deliveryFee = 60;
 
   String money(num v) {
-
     final s = v.toString();
     final cleaned = s.endsWith('.0') ? s.substring(0, s.length - 2) : s;
     return '$cleaned Tk';
   }
-
 
   double get subtotal {
     double sum = 0;
@@ -40,15 +34,15 @@ class CartController extends GetxController {
     return sum;
   }
 
-  double get vatAmount => (subtotal * vatRate);
-  double get total => subtotal + deliveryFee + platformFee + vatAmount;
+  double get total => subtotal + deliveryFee;
 
   Future<bool> getCartListData() async {
     cartInProgress = true;
     update();
     try {
-      final response =
-      await CartListApiServices.cartListApiRequest(Urls.cartList);
+      final response = await CartListApiServices.cartListApiRequest(
+        Urls.cartList,
+      );
 
       if (response.statusCode == 200) {
         final decoded = jsonDecode(response.body) as List<dynamic>;
@@ -76,6 +70,7 @@ class CartController extends GetxController {
   }
 
 
+
   int qtyOf(int itemId) => quantities[itemId]?.value ?? 1;
 
   void increment(int itemId) {
@@ -94,14 +89,10 @@ class CartController extends GetxController {
     }
   }
 
-
   void setFees({double? delivery, double? platform, double? vat}) {
     if (delivery != null) deliveryFee = delivery;
-    if (platform != null) platformFee = platform;
-    if (vat != null) vatRate = vat;
     update(['totals']);
   }
-
 
   void removeItem(int itemId) {
     cartItemModelData.removeWhere((e) => e.id == itemId);
@@ -110,12 +101,13 @@ class CartController extends GetxController {
     update(['totals']);
   }
 
+
+
   @override
   void onInit() {
     super.onInit();
     getCartListData();
   }
-
 
   Future<void> deleteCartData(int cartId) async {
     deleteInProgress = true;
@@ -129,7 +121,6 @@ class CartController extends GetxController {
       deleteInProgress = false;
 
       if (response.statusCode == 200) {
-
         cartItemModelData.removeWhere((item) => item.id == cartId);
 
         update();
@@ -140,6 +131,25 @@ class CartController extends GetxController {
       }
     } catch (e) {
       deleteInProgress = false;
+      update();
+      Get.snackbar('Failed', '$e');
+    }
+  }
+
+  Future<void> decreaseCartItem(int cartId)async{
+    decreaseItemInProgress=true;
+    update();
+    try{
+      final response=await CartListApiServices.decreaseCartItemRequest(Urls.decreaseItem(cartId), {});
+      decreaseItemInProgress=false;
+      update();
+      if(response.statusCode == 201){
+        Get.snackbar('Success', 'Quantity successfully decrease');
+      }else{
+        Get.snackbar('Failed', response.body);
+      }
+    }catch(e){
+      decreaseItemInProgress=false;
       update();
       Get.snackbar('Failed', '$e');
     }

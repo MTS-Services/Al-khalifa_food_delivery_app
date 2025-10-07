@@ -40,7 +40,7 @@ class Food {
 class CartItem {
   final int id;
   final int productId;
-  final int quantity;
+  late final int quantity;
   final int userId;
   final Food food;
   final DateTime createdAt;

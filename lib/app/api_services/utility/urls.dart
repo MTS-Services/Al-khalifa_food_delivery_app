@@ -14,4 +14,5 @@ class Urls{
   static  String addCart= '$_baseUrl/carts/';
   static  String cartList= '$_baseUrl/carts/me';
   static  String deleteCart(int id) => '$_baseUrl/carts/$id';
+  static  String decreaseItem(int id) => '$_baseUrl/carts/$id/decrease';
 }

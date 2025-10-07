@@ -88,7 +88,7 @@ class HomeController extends GetxController {
       addToCartInProgress = false;
       update();
       print(response.statusCode);
-      print('✅${response.body}');
+      print('${response.body}');
       if (response.statusCode == 201) {
         Get.snackbar(
           'Success',
@@ -113,20 +113,18 @@ class HomeController extends GetxController {
   }
 
 
-  /// প্রতিটি প্রোডাক্টের জন্য আলাদা কাউন্টার
-  /// key = productId, value = RxInt quantity
   final Map<int, RxInt> _counts = {};
 
-  /// যে প্রোডাক্টের স্ক্রিনে আছো (UI থেকে সেট করবে)
+
   int? _currentProductId;
 
-  /// UI থেকে এক লাইনে সেট করো: setProduct(productId)
+
   void setProduct(int productId) {
     _currentProductId = productId;
     _counts.putIfAbsent(productId, () => 1.obs);
   }
 
-  /// আগের মতোই ব্যবহার করবে: Obx(() => Text('${controller.count}'))
+
   RxInt get count {
     final id = _currentProductId;
     if (id == null) return 1.obs; // safety
