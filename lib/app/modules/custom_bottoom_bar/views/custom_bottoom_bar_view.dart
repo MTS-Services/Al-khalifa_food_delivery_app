@@ -25,7 +25,7 @@ class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-          () => Scaffold(
+      () => Scaffold(
         body: IndexedStack(
           index: controller.currentIndex.value,
           children: pages,
@@ -37,7 +37,7 @@ class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
 
   Widget _buildBottomNavBar() {
     return Container(
-     // height: 70.h,
+      // height: 70.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0.r),
@@ -63,10 +63,10 @@ class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
           backgroundColor: Colors.white,
           selectedItemColor: AppColors.primaryColor,
           unselectedItemColor: AppColors.primaryTextColor,
-          selectedLabelStyle: AppTextStyles.medium13.apply(
+          selectedLabelStyle: AppTextStyles.medium11.apply(
             color: AppColors.primaryColor,
           ),
-          unselectedLabelStyle: AppTextStyles.bold13.apply(
+          unselectedLabelStyle: AppTextStyles.bold11.apply(
             color: AppColors.primaryTextColor,
           ),
           items: [
@@ -85,7 +85,7 @@ class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
     return BottomNavigationBarItem(
       icon: Image.asset(
         iconPath,
-        height: 28.h,
+        height: 30.h,
         width: 28.w,
         color: isSelected ? AppColors.primaryColor : AppColors.primaryTextColor,
       ),

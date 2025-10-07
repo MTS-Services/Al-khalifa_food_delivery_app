@@ -7,7 +7,6 @@ import '../../../data/app_text_styles.dart';
 import '../controllers/checkout_controller.dart';
 import 'build_show_dialog.dart';
 
-
 class CheckoutView extends GetView<CheckoutController> {
   const CheckoutView({super.key});
 
@@ -73,13 +72,9 @@ class CheckoutView extends GetView<CheckoutController> {
                       SizedBox(height: 16.h),
                       Text('Order Summary', style: AppTextStyles.medium18),
                       SizedBox(height: 8.h),
-                      const CustomList(
+                      CustomList(
                         chargeType: '1x Basmati Kacchi',
                         amount: '300 Tk',
-                      ),
-                      const CustomList(
-                        chargeType: '1x Basmati Kacchi 1:1',
-                        amount: '20 Tk',
                       ),
                       SizedBox(height: 8.h),
                       Divider(height: 24.h, thickness: 1),
@@ -102,22 +97,29 @@ class CheckoutView extends GetView<CheckoutController> {
                       SizedBox(height: 16.h),
                       SizedBox(
                         width: double.infinity,
-                        child: 
-                        Obx(() => ElevatedButton(
-                          onPressed: () {
-                            if(controller.selectedIndex>=0){
-                              buildShowDialog(context);
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: controller.selectedIndex.value<0 ? Colors.white : null,
-                              foregroundColor: controller.selectedIndex.value<0 ? Colors.black : null
+                        child: Obx(
+                          () => ElevatedButton(
+                            onPressed: () {
+                              if (controller.selectedIndex >= 0) {
+                                buildShowDialog(context);
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  controller.selectedIndex.value < 0
+                                  ? Colors.white
+                                  : null,
+                              foregroundColor:
+                                  controller.selectedIndex.value < 0
+                                  ? Colors.black
+                                  : null,
+                            ),
+                            child: Text(
+                              'Checkout',
+                              style: AppTextStyles.medium18,
+                            ),
                           ),
-                          child: Text(
-                            'Checkout',
-                            style: AppTextStyles.medium18,
-                          ),
-                        ),)
+                        ),
                       ),
                       SizedBox(height: 8.h),
                     ],
@@ -130,5 +132,4 @@ class CheckoutView extends GetView<CheckoutController> {
       ),
     );
   }
-
 }
