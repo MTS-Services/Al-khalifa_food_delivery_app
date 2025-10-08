@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../data/app_text_styles.dart';
+import '../../cart/models/cart_item_model.dart';
 import '../controllers/checkout_controller.dart';
 import 'build_show_dialog.dart';
 
@@ -12,6 +13,11 @@ class CheckoutView extends GetView<CheckoutController> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = Get.arguments as Map<String, dynamic>;
+    final List<CartItem> cartModelData = arguments['cart_model_data'];
+    final subtotal = arguments['subtotal'];
+    final deliveryFee = arguments['delivery_fee'];
+    final total = arguments['total'];
     return Scaffold(
       appBar: AppBar(title: const Text('Checkout'), centerTitle: true),
       body: SafeArea(
@@ -33,7 +39,7 @@ class CheckoutView extends GetView<CheckoutController> {
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                           suffixIcon: Icon(Icons.edit),
-                          hintText: 'Alipur',
+                          hintText: 'Enter your adress',
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 14.w,
                             vertical: 12.h,
@@ -54,7 +60,7 @@ class CheckoutView extends GetView<CheckoutController> {
                         minLines: 1,
                         maxLines: 3,
                         decoration: InputDecoration(
-                          hintText: 'enter your full address',
+                          hintText: 'Enter your instructions',
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 14.w,
                             vertical: 12.h,
@@ -72,45 +78,63 @@ class CheckoutView extends GetView<CheckoutController> {
                       SizedBox(height: 16.h),
                       Text('Order Summary', style: AppTextStyles.medium18),
                       SizedBox(height: 8.h),
+                      for (int i = 0; i < cartModelData.length; i++)
+                        CustomList(
+                          chargeType:
+                              '${cartModelData[i].quantity}x ${cartModelData[i].food.name}',
+                          amount:
+                              '${cartModelData[i].quantity * cartModelData[i].food.price} Tk',
+                        ),
+                      SizedBox(height: 8.h),
+                      Divider(height: 24.h, thickness: 1),
                       CustomList(
-                        chargeType: '1x Basmati Kacchi',
-                        amount: '300 Tk',
-                      ),
-                      SizedBox(height: 8.h),
-                      Divider(height: 24.h, thickness: 1),
-                      const CustomList(
                         chargeType: 'Subtotal',
-                        amount: '520 Tk',
+                        amount: '$subtotal Tk',
                       ),
-                      const CustomList(
+                      CustomList(
                         chargeType: 'Delivery Fee',
-                        amount: '20 Tk',
+                        amount: '$deliveryFee Tk',
                       ),
-                      const CustomList(
-                        chargeType: 'Platform fee',
-                        amount: '50 Tk',
-                      ),
-                      const CustomList(chargeType: 'VAT', amount: '0 Tk'),
+                      // const CustomList(
+                      //   chargeType: 'Platform fee',
+                      //   amount: '50 Tk',
+                      // ),
+                      // const CustomList(chargeType: 'VAT', amount: '0 Tk'),
                       SizedBox(height: 8.h),
                       Divider(height: 24.h, thickness: 1),
-                      const CustomList(chargeType: 'Total', amount: '620 Tk'),
+                      CustomList(chargeType: 'Total', amount: '$total Tk'),
                       SizedBox(height: 16.h),
                       SizedBox(
                         width: double.infinity,
                         child: Obx(
                           () => ElevatedButton(
                             onPressed: () {
-                              if (controller.selectedIndex >= 0) {
+                              if (controller.addressController.text.isEmpty) {
+                                Get.snackbar(
+                                  'Adress',
+                                  'Please enter the adress.',
+                                  animationDuration: Duration(
+                                    milliseconds: 300,
+                                  ),
+                                );
+                              }
+                              if (controller.selectedIndex >= 0 &&
+                                  controller
+                                      .addressController
+                                      .text
+                                      .isNotEmpty) {
                                 buildShowDialog(context);
                               }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                                  controller.selectedIndex.value < 0
+                                  controller.selectedIndex.value < 0 ||
+                                      controller.addressController.text.isEmpty
                                   ? Colors.white
                                   : null,
                               foregroundColor:
-                                  controller.selectedIndex.value < 0
+                                  controller.selectedIndex.value < 0 ||
+                                      controller.addressController.text.isEmpty
                                   ? Colors.black
                                   : null,
                             ),

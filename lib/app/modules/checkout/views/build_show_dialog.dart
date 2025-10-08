@@ -9,9 +9,7 @@ Future<dynamic> buildShowDialog(BuildContext context) {
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +35,7 @@ Future<dynamic> buildShowDialog(BuildContext context) {
           Divider(),
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.HOME);
+              Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR);
             },
             child: Text(
               'Go to Home',

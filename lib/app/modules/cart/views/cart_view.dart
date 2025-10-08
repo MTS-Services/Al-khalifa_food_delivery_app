@@ -90,7 +90,12 @@ class CartView extends GetView<CartController> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () =>
-                            Get.toNamed(Routes.CHECKOUT, arguments: {}),
+                            Get.toNamed(Routes.CHECKOUT, arguments: {
+                              'cart_model_data':cartController.cartItemModelData,
+                              'subtotal':cartController.subtotal,
+                              'delivery_fee':cartController.deliveryFee,
+                              'total':cartController.total,
+                            }),
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                           child: Text(

@@ -1,4 +1,3 @@
-
 import 'package:al_khalifa/app/modules/cart/models/cart_item_model.dart';
 import 'package:al_khalifa/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +11,8 @@ class CustomCartItem extends StatelessWidget {
   final CartItem cartItemModel;
   CustomCartItem({super.key, required this.cartItemModel});
 
-  final CartController cartController = Get.put(CartController());
-  final HomeController _homeController=Get.put(HomeController());
+  final CartController cartController = Get.find();
+  final HomeController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -65,18 +64,26 @@ class CustomCartItem extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 c.increment(cartItemModel.id);
-                                _homeController.getAddToCart(cartItemModel.productId, 1);
+                                _homeController.getAddToCart(
+                                  cartItemModel.productId,
+                                  1,
+                                );
                               },
                               child: _circleBtn('+'),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.w),
-                              child: Text('$qty', style: AppTextStyles.medium14),
+                              child: Text(
+                                '$qty',
+                                style: AppTextStyles.medium14,
+                              ),
                             ),
                             GestureDetector(
                               onTap: () {
                                 c.decrement(cartItemModel.id);
-                                cartController.decreaseCartItem(cartItemModel.id);
+                                cartController.decreaseCartItem(
+                                  cartItemModel.id,
+                                );
                               },
                               child: _circleBtn('-'),
                             ),
