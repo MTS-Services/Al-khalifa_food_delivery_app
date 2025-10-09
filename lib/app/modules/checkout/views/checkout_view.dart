@@ -1,3 +1,4 @@
+import 'package:al_khalifa/app/modules/cart/controllers/cart_controller.dart';
 import 'package:al_khalifa/app/modules/checkout/views/payment_method.dart';
 import 'package:al_khalifa/app/modules/common/custom_list.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class CheckoutView extends GetView<CheckoutController> {
     final subtotal = arguments['subtotal'];
     final deliveryFee = arguments['delivery_fee'];
     final total = arguments['total'];
+    final cartController = Get.find<CartController>();
     return Scaffold(
       appBar: AppBar(title: const Text('Checkout'), centerTitle: true),
       body: SafeArea(
@@ -74,7 +76,7 @@ class CheckoutView extends GetView<CheckoutController> {
                       Text('Payment Method', style: AppTextStyles.medium18),
                       SizedBox(height: 8.h),
                       PaymentMethod(paymentWay: "Cash on Delivery", index: 0),
-                      PaymentMethod(paymentWay: "bKash", index: 1),
+                      PaymentMethod(paymentWay: "Bkash", index: 1),
                       SizedBox(height: 16.h),
                       Text('Order Summary', style: AppTextStyles.medium18),
                       SizedBox(height: 8.h),
@@ -95,11 +97,6 @@ class CheckoutView extends GetView<CheckoutController> {
                         chargeType: 'Delivery Fee',
                         amount: '$deliveryFee Tk',
                       ),
-                      // const CustomList(
-                      //   chargeType: 'Platform fee',
-                      //   amount: '50 Tk',
-                      // ),
-                      // const CustomList(chargeType: 'VAT', amount: '0 Tk'),
                       SizedBox(height: 8.h),
                       Divider(height: 24.h, thickness: 1),
                       CustomList(chargeType: 'Total', amount: '$total Tk'),
@@ -125,6 +122,17 @@ class CheckoutView extends GetView<CheckoutController> {
                                       .isNotEmpty) {
                                 buildShowDialog(context);
                               }
+                              // Submit order directly
+                              controller.submitOrder(
+                                cartItems: cartModelData,
+                                subtotal: subtotal,
+                                deliveryFee: deliveryFee,
+                                total: total,
+                              );
+                              controller.addressController.clear();
+                              controller.instructionController.clear();
+                              controller.selectedIndex.value = -1;
+                              cartController.cartItemModelData.clear();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

@@ -14,7 +14,7 @@ class CartView extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
-   // final contorller = Get.find<CartController>();
+    // final contorller = Get.find<CartController>();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -24,6 +24,22 @@ class CartView extends GetView<CartController> {
               builder: (cartController) {
                 if (cartController.cartInProgress) {
                   return const Center(child: CircularProgressIndicator());
+                }
+                if (cartController.cartItemModelData.isEmpty) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height / 2 - 30.h,
+                      ),
+                      Center(
+                        child: Text(
+                          'No item added to cart yet',
+                          style: AppTextStyles.medium18,
+                        ),
+                      ),
+                    ],
+                  );
                 }
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,9 +64,7 @@ class CartView extends GetView<CartController> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 16.h),
                       child: GestureDetector(
-                        onTap: () {
-
-                        },
+                        onTap: () {},
                         child: Text(
                           '+ Add more items',
                           style: AppTextStyles.medium18.copyWith(
@@ -89,13 +103,15 @@ class CartView extends GetView<CartController> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () =>
-                            Get.toNamed(Routes.CHECKOUT, arguments: {
-                              'cart_model_data':cartController.cartItemModelData,
-                              'subtotal':cartController.subtotal,
-                              'delivery_fee':cartController.deliveryFee,
-                              'total':cartController.total,
-                            }),
+                        onPressed: () => Get.toNamed(
+                          Routes.CHECKOUT,
+                          arguments: {
+                            'cart_model_data': cartController.cartItemModelData,
+                            'subtotal': cartController.subtotal,
+                            'delivery_fee': cartController.deliveryFee,
+                            'total': cartController.total,
+                          },
+                        ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                           child: Text(
