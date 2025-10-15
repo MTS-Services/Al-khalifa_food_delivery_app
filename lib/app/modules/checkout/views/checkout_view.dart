@@ -1,4 +1,3 @@
-import 'package:al_khalifa/app/modules/cart/controllers/cart_controller.dart';
 import 'package:al_khalifa/app/modules/checkout/views/payment_method.dart';
 import 'package:al_khalifa/app/modules/common/custom_list.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ class CheckoutView extends GetView<CheckoutController> {
     final subtotal = arguments['subtotal'];
     final deliveryFee = arguments['delivery_fee'];
     final total = arguments['total'];
-    final cartController = Get.find<CartController>();
     return Scaffold(
       appBar: AppBar(title: const Text('Checkout'), centerTitle: true),
       body: SafeArea(
@@ -132,7 +130,6 @@ class CheckoutView extends GetView<CheckoutController> {
                               controller.addressController.clear();
                               controller.instructionController.clear();
                               controller.selectedIndex.value = -1;
-                              cartController.cartItemModelData.clear();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
