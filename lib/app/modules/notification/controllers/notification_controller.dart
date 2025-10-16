@@ -8,6 +8,7 @@ import '../../../api_services/notifications/all_notifications.dart';
 
 class NotificationController extends GetxController {
   bool notificationInProgress=false;
+  bool deleteNotificationInProgress=false;
   List<NotificationModel> notificationList=[];
 
   Future<bool> getAllNotification()async{
@@ -33,6 +34,9 @@ class NotificationController extends GetxController {
       return false;
     }
   }
+                          
+
+
   @override
   void onInit() {
     getAllNotification();

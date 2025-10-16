@@ -19,4 +19,21 @@ class Notifications{
       throw ("Get All Request Menu Failed $e");
     }
   }
+
+
+  static Future<dynamic>  deleteNotificationRequest(String url) async {
+    String? token=await SharedPrefServices.getUserToken();
+    if(token==null){
+      Get.toNamed(Routes.LOGIN);
+    }
+    try{
+      final response=http.delete(Uri.parse(url),headers: {
+        "Content-Type":"application/json",
+        "Authorization": "Bearer $token",
+      });
+      return response;
+    }catch(e){
+      throw ("Get All Request Menu Failed $e");
+    }
+  }
 }

@@ -6,16 +6,33 @@ import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../widget/custom_circle.dart';
 import '../widget/custom_header.dart';
 import '../widget/food_card.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  final PopularFoodItemModel popularItem;
+
   final bool? sold;
+  final String imageUrl;
+  final String description;
+  final String title;
+  final double rating;
+  final double price;
+  final int foodId;
+  final List<Variation> variations;
+
+
+
   ProductDetailsScreen({
     super.key,
     this.sold = false,
-    required this.popularItem,
+    required this.imageUrl,
+    required this.title,
+    required this.rating,
+    required this.price,
+    required this.description, required this.foodId,
+    required this.variations,
+
   });
 
   final HomeController controller = Get.find();
@@ -39,33 +56,30 @@ class ProductDetailsScreen extends StatelessWidget {
                 showFullImage: true,
                 isFullWidth: true,
                 cardHeight: 150,
-                imageUrl: popularItem.food.foodImageUrl,
+                imageUrl: imageUrl,
 
-                title: popularItem.food.name,
-                rating: popularItem.averageRating,
-                price: popularItem.food.price,
+                title: title,
+                rating: rating,
+                price: price,
               ),
               Text(
-                popularItem.food.description,
+                description,
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               SizedBox(height: 15),
-              // _buildTitleRow(),
-              // SizedBox(height: 15),
-              // SizedBox(
-              //   height: 150,
-              //   child: ListView(
-              //     physics: NeverScrollableScrollPhysics(),
-              //     shrinkWrap: true,
-              //     children: [
-              //       _buildListTile("For 1 person", "Tk 190"),
-              //       _buildListTile("For 1 person", "Tk 190"),
-              //       _buildListTile("For 1 person", "Tk 190"),
-              //       _buildListTile("For 1 person", "Tk 190"),
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(height: 20),
+              _buildTitleRow(),
+              SizedBox(height: 15),
+              if(variations.length>1)
+                ListView.builder(
+                  itemCount: variations.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final data=variations[index];
+                    return  _buildListTile(data.name,data.price.toString());
+                  },
+              ),
+              SizedBox(height: 20),
               Spacer(),
               _buildAddToCard(),
               SizedBox(height: 20.h),
@@ -133,7 +147,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildAddToCard() {
-    controller.setProduct(popularItem.foodId);
+    controller.setProduct(foodId);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -156,7 +170,7 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
         CustomElevatedButton(
           onPressed: () {
-            controller.getAddToCart(popularItem.foodId, controller.count.value);
+            controller.getAddToCart(foodId, controller.count.value);
           },
           text: "Add to cart",
         ),
@@ -164,15 +178,15 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  // Widget _buildListTile(String title, String price) {
-  //   return ListTile(
-  //     contentPadding: EdgeInsets.zero,
-  //     dense: true,
-  //     leading: const CustomCircle(),
-  //     title: Text(title, style: const TextStyle(fontSize: 16)),
-  //     trailing: Text(price, style: const TextStyle(fontSize: 16)),
-  //   );
-  // }
+  Widget _buildListTile(String title, String price) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      dense: true,
+      leading: const CustomCircle(),
+      title: Text(title, style: const TextStyle(fontSize: 16)),
+      trailing: Text(price, style: const TextStyle(fontSize: 16)),
+    );
+  }
 
   Widget _buildCircleButton(IconData icon, VoidCallback onPressed) {
     return ElevatedButton(
@@ -188,22 +202,22 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  // Widget _buildTitleRow() {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //     children: [
-  //       Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           Text(
-  //             "Variation",
-  //             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-  //           ),
-  //           Text("Select one", style: TextStyle(fontSize: 15)),
-  //         ],
-  //       ),
-  //       CustomElevatedButton(onPressed: () {}, text: "Required"),
-  //     ],
-  //   );
-  // }
+  Widget _buildTitleRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Variation",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Text("Select one", style: TextStyle(fontSize: 15)),
+          ],
+        ),
+        CustomElevatedButton(onPressed: () {}, text: "Required"),
+      ],
+    );
+  }
 }

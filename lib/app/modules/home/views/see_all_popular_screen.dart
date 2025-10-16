@@ -55,7 +55,16 @@ class SeeAllPopularScreen extends StatelessWidget {
             final foodCard=controller.popularFoodItemList[index];
             return GestureDetector(
               onTap: () {
-                Get.to(() => ProductDetailsScreen(popularItem: foodCard,));
+                Get.to(() => ProductDetailsScreen(
+                    imageUrl: foodCard.food.foodImageUrl,
+                    title: foodCard.food.name,
+                    rating: foodCard.averageRating,
+                    price: foodCard.food.price,
+                    description: foodCard.food.description,
+                    foodId: foodCard.foodId,
+                    variations: foodCard.food.variations,
+                )
+                );
               },
               child: FoodCard(
                 imageUrl:foodCard.food.foodImageUrl ,

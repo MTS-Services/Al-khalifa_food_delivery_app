@@ -32,6 +32,7 @@ class LoginController extends GetxController {
             "password": passTEController.text.trim(),
           });
 
+
       signInProgress = false;
       update();
       print(response.body);
@@ -41,6 +42,8 @@ class LoginController extends GetxController {
         final token = decodedResponse["access_token"];
         print("token is $token");
         SharedPrefServices.saveUserToken(token);
+        emailTEController.clear();
+        passTEController.clear();
         Get.snackbar(
           'Success',
           'Login Successful',
@@ -64,7 +67,7 @@ class LoginController extends GetxController {
   Future<bool> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      if (googleUser == null) return false; // User cancelled
+      if (googleUser == null) return false;
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
@@ -79,7 +82,6 @@ class LoginController extends GetxController {
       final User? user = userCredential.user;
 
       if (user != null) {
-        // ✅ Await backend request
         final token = await AuthApiServices.googleSignInRequest(
           Urls.googleSignIn,
           googleAuth.accessToken!,

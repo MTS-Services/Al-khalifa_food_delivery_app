@@ -59,6 +59,15 @@ class SignupController extends GetxController {
 
       if (response.statusCode == 201) {
         await SharedPrefServices.saveUserEmail(emailTEController.text);
+        firstNameTEController.clear();
+        lastNameTEController.clear();
+        emailTEController.clear();
+        numberTEController.clear();
+        districtTEController.clear();
+        cityTEController.clear();
+        addressTEController.clear();
+        passwordTEController.clear();
+        confirmPasswordTEController.clear();
         Get.snackbar(' Success', "Registration Successful");
         Get.toNamed(Routes.SIGNUP_OTP);
       } else {

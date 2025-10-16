@@ -15,6 +15,8 @@ class Urls{
   static  String cartList= '$_baseUrl/carts/me';
   static  String deleteCart(int id) => '$_baseUrl/carts/$id';
   static  String decreaseItem(int id) => '$_baseUrl/carts/$id/decrease';
+  static  String foodCategories(int id) => '$_baseUrl/food-categories/$id';
+  static  String deleteNotificationById(int id) => '$_baseUrl/notifications/$id';
   static  String order= '$_baseUrl/orders/';
   static  String myOrder= '$_baseUrl/orders/user/me';
 }

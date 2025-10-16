@@ -27,7 +27,7 @@ class NotificationContainer extends StatelessWidget {
             radius: 30.r,
             child: Image.network(iconImage, height: 32.h, width: 40.w),
           ),
-          SizedBox(width: 20.w),
+          SizedBox(width: 10.w),
           Expanded(
             child: Container(
               padding: EdgeInsets.all(10),
@@ -36,11 +36,17 @@ class NotificationContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
-                spacing: 3.h,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(notiTitle, style: AppTextStyles.medium16),
+                  Row(
+                    children: [
+                      Text(notiTitle, style: AppTextStyles.medium16),
+                      Spacer(),
+                      IconButton(onPressed: (){}, icon: Icon(Icons.delete_forever_outlined,color: Colors.red.shade400,)),
+                    ],
+                  ),
                   Text(notiSubTitle, style: AppTextStyles.regular12),
+                  const SizedBox(height: 5,),
                   Text(time, style: AppTextStyles.regular14),
                 ],
               ),

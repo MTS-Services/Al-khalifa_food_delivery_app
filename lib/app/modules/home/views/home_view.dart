@@ -1,3 +1,4 @@
+import 'package:al_khalifa/app/modules/home/views/details_menu.dart';
 import 'package:al_khalifa/app/modules/home/views/product_details_screen.dart';
 import 'package:al_khalifa/app/modules/home/views/see_all_meal_for_one_screen.dart';
 import 'package:al_khalifa/app/modules/home/views/see_all_popular_screen.dart';
@@ -46,17 +47,18 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 10),
                 _buildPopularGridView(),
                 const SizedBox(height: 10),
-                CustomHeader(
-                  title: "Meal For One",
-                  seeAllText: "See All",
-                  onSeeAllTap: () {
-                    Get.to(() => SeeAllMealForOneScreen());
-                  },
-                ),
+              Obx(() => CustomHeader(
+                title:controller.allFoodCategory.value?.name ,
+                seeAllText: "See All",
+                onSeeAllTap: () {
+                  Get.to(() => SeeAllMealForOneScreen(title:controller.allFoodCategory.value?.name ));
+                },
+              ),
+              ) ,
                 const SizedBox(height: 5),
                 Text("Delivery fee included!", style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 5),
-                //_buildMealForOneGridView(),
+                _buildMealForOneGridView(),
               ],
             ),
           ),
@@ -88,7 +90,15 @@ class HomeView extends GetView<HomeController> {
             final data=homeController.popularFoodItemList[index];
             return GestureDetector(
               onTap: () {
-                Get.to(() => ProductDetailsScreen(popularItem: data,));
+                Get.to(()=>ProductDetailsScreen(
+                    imageUrl: data.food.foodImageUrl,
+                    title: data.food.name,
+                    rating: data.averageRating,
+                    price: data.food.price,
+                    description: data.food.description,
+                    foodId: data.foodId,
+                    variations: data.food.variations,
+                ));
               },
               child: FoodCard(
                 imageUrl: data.food.foodImageUrl,
@@ -105,37 +115,58 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-/*  Widget _buildMealForOneGridView() {
+  Widget _buildMealForOneGridView() {
     final screenWidth = MediaQuery.of(Get.context!).size.width;
     int crossAxisCount = screenWidth < 500 ? 2 : 3;
 
-    return GridView.builder(
-      itemCount: 6,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 0.72,
-      ),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-          //  Get.to(() => ProductDetailsScreen());
-          },
-          child: FoodCard(
-            imageUrl: ImagePath.foodImage,
-            title: "Spicy Sausage",
-            rating: 5.8,
-            price: 250,
-            onAdd: () {},
-            cardHeight: 135,
-          ),
-        );
-      },
+    return GetBuilder<HomeController>(
+      builder: (controller) {
+        if(controller.allCategoriesInProgress){
+          return Center(child: CircularProgressIndicator(),);
+        }
+        if(controller.allFoodCategory.value==null){
+          return Center(child: Text("Your Category is empty"),);
+        }else{
+          return GridView.builder(
+            itemCount: 4,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 8,
+              childAspectRatio: 0.72,
+            ),
+            itemBuilder: (context, index) {
+              final data=controller.allFoodCategory.value!.foods[index];
+              return GestureDetector(
+                onTap: () {
+                  Get.to(()=>ProductDetailsScreen(
+                      imageUrl: data.foodImageUrl,
+                      title: data.name,
+                      rating: data.foodRatings.averageRating,
+                      price: data.price,
+                      description: data.description,
+                      foodId: data.id,
+                      variations: data.variations,
+                  )
+                  );
+                },
+                child: FoodCard(
+                  imageUrl:data.foodImageUrl,
+                  title: data.name,
+                  rating: data.foodRatings.averageRating,
+                  price: data.price,
+                  onAdd: () {},
+                  cardHeight: 135,
+                ),
+              );
+            },
+          );
+        }
+      }
     );
-  }*/
+  }
 
 
   Widget _buildProduct() {
@@ -155,14 +186,19 @@ class HomeView extends GetView<HomeController> {
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   width: 160,
-                  child:  FoodCard(
-                    showRating: false,
-                      showAddButton: false,
-                      imageUrl : menuData.menuImage,
-                      title: menuData.name,
-                      rating: 5.8,
-                      onAdd: () {},
-                      cardHeight: 140
+                  child:  GestureDetector(
+                    onTap: (){
+                      Get.to(() => DetailsMenu(allMenuModel: menuData,));
+                    },
+                    child: FoodCard(
+                      showRating: false,
+                        showAddButton: false,
+                        imageUrl : menuData.menuImage,
+                        title: menuData.name,
+                        rating: 5.8,
+                        onAdd: () {},
+                        cardHeight: 140
+                    ),
                   ),
                 ),
               );

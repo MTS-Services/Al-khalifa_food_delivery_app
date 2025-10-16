@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:al_khalifa/app/api_services/add_to_cart_services/add_to_cart_services.dart';
+import 'package:al_khalifa/app/api_services/food_categories_api_services/food_categories_api_services.dart';
 import 'package:al_khalifa/app/api_services/menu_api_services/menu_api_services.dart';
 import 'package:al_khalifa/app/api_services/utility/urls.dart';
 import 'package:al_khalifa/app/modules/cart/controllers/cart_controller.dart';
+import 'package:al_khalifa/app/modules/home/models/all_food_categories_model.dart';
 import 'package:al_khalifa/app/modules/home/models/all_menu_model.dart';
 import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
@@ -16,14 +18,47 @@ class HomeController extends GetxController {
   void onInit() {
     getAllMenu();
     getPopularData();
+    getAllCategories(23);
     super.onInit();
   }
 
   bool menuInProgress = false;
   bool popularDataInProgress = false;
   bool addToCartInProgress = false;
+  bool allCategoriesInProgress=false;
   List<AllMenuModel> allMenuModelList = [];
   List<PopularFoodItemModel> popularFoodItemList = [];
+  Rxn<AllFoodCategoriesModel> allFoodCategory = Rxn<AllFoodCategoriesModel>();
+  
+  Future<bool> getAllCategories(int foodId)async{
+    allCategoriesInProgress=true;
+    update();
+    try{
+      final response=await FoodCategoriesApiServices.foodCategoriesApiRequest(Urls.foodCategories(foodId));
+      allCategoriesInProgress=false;
+      print("response////// ${response.body}");
+      if(response.statusCode == 200){
+        final deCodedResponse=jsonDecode(response.body);
+        allFoodCategory.value =
+            AllFoodCategoriesModel.fromJson(deCodedResponse);
+        update();
+        return true;
+
+      }else{
+        update();
+        return false;
+      }
+
+    }catch(e){
+      allCategoriesInProgress=false;
+      update();
+      throw 'Error is $e';
+    }
+  }
+
+  
+
+
 
   Future<bool> getAllMenu() async {
     menuInProgress = true;
