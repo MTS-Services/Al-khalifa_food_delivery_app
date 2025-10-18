@@ -64,6 +64,7 @@ class NotificationView extends GetView<NotificationController> {
                           time: formattedTime,
                           notiTitle: notiController.notificationList[index].title,
                           notiSubTitle:notiController.notificationList[index].content,
+                          onDelete: () {notiController.getDeleteNotification(notiController.notificationList[index].id);},
                         ),
                       );
                     }

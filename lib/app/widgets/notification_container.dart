@@ -10,11 +10,13 @@ class NotificationContainer extends StatelessWidget {
     required this.notiTitle,
     required this.notiSubTitle,
     required this.time,
+    required this.onDelete,
   });
   final String iconImage;
   final String notiTitle;
   final String notiSubTitle;
   final String time;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class NotificationContainer extends StatelessWidget {
                     children: [
                       Text(notiTitle, style: AppTextStyles.medium16),
                       Spacer(),
-                      IconButton(onPressed: (){}, icon: Icon(Icons.delete_forever_outlined,color: Colors.red.shade400,)),
+                      IconButton(onPressed: onDelete, icon: Icon(Icons.delete_forever_outlined,color: Colors.red.shade400,)),
                     ],
                   ),
                   Text(notiSubTitle, style: AppTextStyles.regular12),
