@@ -1,34 +1,28 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/data/image_path.dart';
-import 'package:al_khalifa/app/modules/cart/views/cart_view.dart';
-import 'package:al_khalifa/app/modules/order/views/order_view.dart';
-import 'package:al_khalifa/app/modules/profile/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
-
-import '../../home/views/home_view.dart';
 import '../controllers/custom_bottoom_bar_controller.dart';
 
-class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
-  final List<Widget> pages = [
-    HomeView(),
-    CartView(),
-    OrderView(),
-    ProfileView(),
-  ];
+class CustomBottomBarView extends GetView<CustomBottomBarController> {
 
-  CustomBottoomBarView({super.key});
+  const CustomBottomBarView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
+    if (args != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.changeTab(args["index"]);
+      });
+    }
     return Obx(
-      () => Scaffold(
+          () => Scaffold(
         body: IndexedStack(
           index: controller.currentIndex.value,
-          children: pages,
+          children: controller.pages,
         ),
         bottomNavigationBar: _buildBottomNavBar(),
       ),
@@ -37,7 +31,6 @@ class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
 
   Widget _buildBottomNavBar() {
     return Container(
-      // height: 70.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0.r),
@@ -47,7 +40,7 @@ class CustomBottoomBarView extends GetView<CustomBottoomBarController> {
           BoxShadow(
             color: Colors.black.withAlpha(26),
             blurRadius: 10,
-            offset: Offset(0, -2),
+            offset: const Offset(0, -2),
           ),
         ],
       ),

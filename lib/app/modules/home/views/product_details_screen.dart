@@ -1,7 +1,10 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
+import 'package:al_khalifa/app/modules/custom_bottoom_bar/controllers/custom_bottoom_bar_controller.dart';
+import 'package:al_khalifa/app/modules/custom_bottoom_bar/views/custom_bottoom_bar_view.dart';
 import 'package:al_khalifa/app/modules/home/controllers/home_controller.dart';
 import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +33,8 @@ class ProductDetailsScreen extends StatelessWidget {
     required this.title,
     required this.rating,
     required this.price,
-    required this.description, required this.foodId,
+    required this.description,
+    required this.foodId,
     required this.variations,
 
   });
@@ -49,7 +53,8 @@ class ProductDetailsScreen extends StatelessWidget {
               CustomHeader(
                 leadingIcon: Icons.arrow_back,
                 onLeadingTap: () {
-                  Get.back();
+                Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":0});
+
                 },
               ),
               FoodCard(
@@ -57,7 +62,6 @@ class ProductDetailsScreen extends StatelessWidget {
                 isFullWidth: true,
                 cardHeight: 150,
                 imageUrl: imageUrl,
-
                 title: title,
                 rating: rating,
                 price: price,
@@ -67,8 +71,9 @@ class ProductDetailsScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               SizedBox(height: 15),
-              _buildTitleRow(),
-              SizedBox(height: 15),
+              if(variations.length>1)
+                _buildTitleRow(),
+                SizedBox(height: 15),
               if(variations.length>1)
                 ListView.builder(
                   itemCount: variations.length,
@@ -76,7 +81,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     final data=variations[index];
-                    return  _buildListTile(data.name,data.price.toString());
+                    return _buildListTile(data.name,data.price.toString());
                   },
               ),
               SizedBox(height: 20),
@@ -187,6 +192,11 @@ class ProductDetailsScreen extends StatelessWidget {
       trailing: Text(price, style: const TextStyle(fontSize: 16)),
     );
   }
+
+
+
+
+
 
   Widget _buildCircleButton(IconData icon, VoidCallback onPressed) {
     return ElevatedButton(

@@ -1,4 +1,4 @@
-import 'package:al_khalifa/app/data/image_path.dart';
+import 'dart:io';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,48 @@ class ProfileView extends GetView<ProfileController> {
                   }
                   return Column(
                     children: [
-                      Stack(
+                    Stack(
+                    alignment: Alignment.center,
+                    children: [
+
+                      CircleAvatar(
+                        radius: 70.r,
+                        backgroundColor: Colors.grey[200],
+                        backgroundImage: profileController.pickedImage != null
+                            ? FileImage(File(profileController.pickedImage!.path))
+                            : null,
+                      ),
+                      if (profileController.pickedImage == null)
+                        Positioned(
+                          bottom: 10, // move upward if needed
+                          right: 10,  // right side of the avatar
+                          child: InkWell(
+                            onTap: () => profileController.chooseImageFrom(),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                              ),
+                              child: const Icon(
+                                Icons.camera_alt_outlined,
+                                size: 24,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+
+                     /* Stack(
                         children: [
                           CircleAvatar(
                             backgroundImage: AssetImage(ImagePath.googleIcon),
@@ -63,7 +104,7 @@ class ProfileView extends GetView<ProfileController> {
                             ),
                           ),
                         ],
-                      ),
+                      ),*/
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 25.h),
                         child:Text("${profileController.profileModelInfo.value.firstName} ${profileController.profileModelInfo.value.lastName}",

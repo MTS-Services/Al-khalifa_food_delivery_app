@@ -5,6 +5,7 @@ import 'package:al_khalifa/app/modules/home/views/see_all_popular_screen.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../data/app_colors.dart';
 import '../../../data/image_path.dart';
 import '../controllers/home_controller.dart';
@@ -14,7 +15,9 @@ import '../widget/food_card.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key});
+
   final TextEditingController _searchTEController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +35,10 @@ class HomeView extends GetView<HomeController> {
                 _buildContainer(context),
                 const SizedBox(height: 20),
                 // Header
-                CustomHeader(
-                  title: "Categories",
-                ),
+                CustomHeader(title: "Menu"),
                 const SizedBox(height: 2),
                 _buildProduct(),
+                const SizedBox(height: 10),
                 CustomHeader(
                   title: "Popular",
                   seeAllText: "See All",
@@ -47,14 +49,19 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 10),
                 _buildPopularGridView(),
                 const SizedBox(height: 10),
-              Obx(() => CustomHeader(
-                title:controller.allFoodCategory.value?.name ,
-                seeAllText: "See All",
-                onSeeAllTap: () {
-                  Get.to(() => SeeAllMealForOneScreen(title:controller.allFoodCategory.value?.name ));
-                },
-              ),
-              ) ,
+                Obx(
+                  () => CustomHeader(
+                    title: controller.allFoodCategory.value?.name,
+                    seeAllText: "See All",
+                    onSeeAllTap: () {
+                      Get.to(
+                        () => SeeAllMealForOneScreen(
+                          title: controller.allFoodCategory.value?.name,
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 const SizedBox(height: 5),
                 Text("Delivery fee included!", style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 5),
@@ -73,8 +80,8 @@ class HomeView extends GetView<HomeController> {
 
     return GetBuilder<HomeController>(
       builder: (homeController) {
-        if(homeController.popularDataInProgress){
-          return Center(child: CircularProgressIndicator(),);
+        if (homeController.popularDataInProgress) {
+          return Center(child: CircularProgressIndicator());
         }
         return GridView.builder(
           itemCount: 4,
@@ -87,10 +94,11 @@ class HomeView extends GetView<HomeController> {
             childAspectRatio: 0.72,
           ),
           itemBuilder: (context, index) {
-            final data=homeController.popularFoodItemList[index];
+            final data = homeController.popularFoodItemList[index];
             return GestureDetector(
               onTap: () {
-                Get.to(()=>ProductDetailsScreen(
+                Get.to(
+                  () => ProductDetailsScreen(
                     imageUrl: data.food.foodImageUrl,
                     title: data.food.name,
                     rating: data.averageRating,
@@ -98,7 +106,8 @@ class HomeView extends GetView<HomeController> {
                     description: data.food.description,
                     foodId: data.foodId,
                     variations: data.food.variations,
-                ));
+                  ),
+                );
               },
               child: FoodCard(
                 imageUrl: data.food.foodImageUrl,
@@ -111,7 +120,7 @@ class HomeView extends GetView<HomeController> {
             );
           },
         );
-      }
+      },
     );
   }
 
@@ -121,12 +130,12 @@ class HomeView extends GetView<HomeController> {
 
     return GetBuilder<HomeController>(
       builder: (controller) {
-        if(controller.allCategoriesInProgress){
-          return Center(child: CircularProgressIndicator(),);
+        if (controller.allCategoriesInProgress) {
+          return Center(child: CircularProgressIndicator());
         }
-        if(controller.allFoodCategory.value==null){
-          return Center(child: Text("Your Category is empty"),);
-        }else{
+        if (controller.allFoodCategory.value == null) {
+          return Center(child: Text("Your Category is empty"));
+        } else {
           return GridView.builder(
             itemCount: 4,
             shrinkWrap: true,
@@ -138,10 +147,11 @@ class HomeView extends GetView<HomeController> {
               childAspectRatio: 0.72,
             ),
             itemBuilder: (context, index) {
-              final data=controller.allFoodCategory.value!.foods[index];
+              final data = controller.allFoodCategory.value!.foods[index];
               return GestureDetector(
                 onTap: () {
-                  Get.to(()=>ProductDetailsScreen(
+                  Get.to(
+                    () => ProductDetailsScreen(
                       imageUrl: data.foodImageUrl,
                       title: data.name,
                       rating: data.foodRatings.averageRating,
@@ -149,11 +159,11 @@ class HomeView extends GetView<HomeController> {
                       description: data.description,
                       foodId: data.id,
                       variations: data.variations,
-                  )
+                    ),
                   );
                 },
                 child: FoodCard(
-                  imageUrl:data.foodImageUrl,
+                  imageUrl: data.foodImageUrl,
                   title: data.name,
                   rating: data.foodRatings.averageRating,
                   price: data.price,
@@ -164,16 +174,15 @@ class HomeView extends GetView<HomeController> {
             },
           );
         }
-      }
+      },
     );
   }
-
 
   Widget _buildProduct() {
     return GetBuilder<HomeController>(
       builder: (homeController) {
-        if(homeController.menuInProgress){
-          return Center(child: CircularProgressIndicator(),);
+        if (homeController.menuInProgress) {
+          return Center(child: CircularProgressIndicator());
         }
         return SizedBox(
           height: 220,
@@ -181,23 +190,23 @@ class HomeView extends GetView<HomeController> {
             scrollDirection: Axis.horizontal,
             itemCount: homeController.allMenuModelList.length,
             itemBuilder: (context, index) {
-              final menuData=homeController.allMenuModelList[index];
+              final menuData = homeController.allMenuModelList[index];
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   width: 160,
-                  child:  GestureDetector(
-                    onTap: (){
-                      Get.to(() => DetailsMenu(allMenuModel: menuData,));
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => DetailsMenu(allMenuModel: menuData));
                     },
                     child: FoodCard(
                       showRating: false,
-                        showAddButton: false,
-                        imageUrl : menuData.menuImage,
-                        title: menuData.name,
-                        rating: 5.8,
-                        onAdd: () {},
-                        cardHeight: 140
+                      showAddButton: false,
+                      imageUrl: menuData.menuImage,
+                      title: menuData.name,
+                      rating: 5.8,
+                      onAdd: () {},
+                      cardHeight: 140,
                     ),
                   ),
                 ),
@@ -205,7 +214,7 @@ class HomeView extends GetView<HomeController> {
             },
           ),
         );
-      }
+      },
     );
   }
 
@@ -222,7 +231,6 @@ class HomeView extends GetView<HomeController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             Expanded(
               flex: 2,
               child: Column(
@@ -247,7 +255,10 @@ class HomeView extends GetView<HomeController> {
                   ),
                   const SizedBox(height: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(50),
@@ -281,7 +292,6 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-
   Widget _buildCustomLocationRow() {
     return CustomLocationRow(
       selectedLocation: "Dhaka",
@@ -296,27 +306,91 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildSearchBar() {
-    return SearchBar(
-      controller: _searchTEController,
-      shape: WidgetStateProperty.all(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      elevation: WidgetStateProperty.all(0.0),
-      leading: const Icon(
-        Icons.search,
-        size: 30,
-        color: AppColors.searchIconColor,
-      ),
-      hintText: "Search for food",
-      hintStyle: WidgetStateProperty.all(
-        TextStyle(
-          color: AppColors.searchIconColor,
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      onChanged: (value) {
-        print("Searching: $value");
+    return GetBuilder<HomeController>(
+      builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SearchBar(
+              controller: _searchTEController,
+              shape: WidgetStateProperty.all(
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              elevation: WidgetStateProperty.all(0.0),
+              leading: IconButton(
+                onPressed: () async {
+                  if (_searchTEController.text.isNotEmpty) {
+                    Get.toNamed(
+                      Routes.SEARCH_BAR,
+                      arguments: {"product_list": controller.searchModel},
+                    );
+                    _searchTEController.clear();
+                  }
+                },
+                icon: const Icon(
+                  Icons.search,
+                  size: 28,
+                  color: AppColors.searchIconColor,
+                ),
+              ),
+              hintText: "Search for food",
+              hintStyle: WidgetStateProperty.all(
+                const TextStyle(
+                  color: AppColors.searchIconColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              onChanged: (value) {
+                if (value.isNotEmpty) {
+                  controller.getSearchData(value);
+                } else {
+                  controller.searchModel.clear();
+                  controller.update();
+                }
+              },
+            ),
+
+            /*if (!controller.searchInProgress &&
+                controller.searchModel.isNotEmpty)
+              GridView.builder(
+                itemCount: controller.searchModel.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 8,
+                  childAspectRatio: 0.72,
+                ),
+                itemBuilder: (context, index) {
+                  final data = controller.searchModel[index];
+                  return GestureDetector(
+                    onTap: (){
+                      Get.to(() =>ProductDetailsScreen(
+                          imageUrl: data.foodImageUrl,
+                          title: data.name,
+                          rating: data.foodRatings.averageRating,
+                          price: data.price.toDouble(),
+                          description: data.description,
+                          foodId: data.id,
+                          variations: data.variations
+                      )
+                      );
+                    },
+                    child: FoodCard(
+                      imageUrl: data.foodImageUrl,
+                      title: data.name,
+                      rating: data.foodRatings.averageRating,
+                      price: data.price.toDouble(),
+                      onAdd: () {},
+                      cardHeight: 135,
+                    ),
+                  );
+                },
+              ),*/
+          ],
+        );
       },
     );
   }

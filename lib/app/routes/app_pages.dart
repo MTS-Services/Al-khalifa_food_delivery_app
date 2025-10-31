@@ -1,6 +1,5 @@
-import 'package:al_khalifa/app/modules/edit_profile/bindings/edit_profile_binding.dart';
-import 'package:al_khalifa/app/modules/edit_profile/views/edit_profile_view.dart';
 import 'package:get/get.dart';
+
 import '../modules/biriyani/bindings/biriyani_binding.dart';
 import '../modules/biriyani/views/biriyani_view.dart';
 import '../modules/cart/bindings/cart_binding.dart';
@@ -9,6 +8,8 @@ import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/checkout_view.dart';
 import '../modules/custom_bottoom_bar/bindings/custom_bottoom_bar_binding.dart';
 import '../modules/custom_bottoom_bar/views/custom_bottoom_bar_view.dart';
+import '../modules/edit_profile/bindings/edit_profile_binding.dart';
+import '../modules/edit_profile/views/edit_profile_view.dart';
 import '../modules/email_verification/bindings/email_verification_binding.dart';
 import '../modules/email_verification/views/email_verification_view.dart';
 import '../modules/history_page/bindings/history_page_binding.dart';
@@ -25,6 +26,8 @@ import '../modules/onbording2/bindings/onbording2_binding.dart';
 import '../modules/onbording2/views/onbording2_view.dart';
 import '../modules/order/bindings/order_binding.dart';
 import '../modules/order/views/order_view.dart';
+import '../modules/order_history/bindings/order_history_binding.dart';
+import '../modules/order_history/views/order_history_view.dart';
 import '../modules/otp/bindings/otp_binding.dart';
 import '../modules/otp/views/otp_view.dart';
 import '../modules/product_details/bindings/product_details_binding.dart';
@@ -80,7 +83,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () =>  LoginView(),
+      page: () => LoginView(),
       binding: LoginBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
@@ -101,7 +104,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.RESET_PASSWORD,
-      page: () =>  ResetPasswordView(),
+      page: () => ResetPasswordView(),
       binding: ResetPasswordBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
@@ -157,7 +160,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () =>  ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
@@ -171,15 +174,15 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SIGNUP,
-      page: () =>  SignupView(),
+      page: () => SignupView(),
       binding: SignupBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
-      name: _Paths.CUSTOM_BOTTOOM_BAR,
-      page: () => CustomBottoomBarView(),
-      binding: CustomBottoomBarBinding(),
+      name: _Paths.CUSTOM_BOTTOM_BAR,
+      page: () => CustomBottomBarView(),
+      binding: CustomBottomBarBinding(),
       transition: Transition.rightToLeft, // 👈 animation defined here
       transitionDuration: const Duration(milliseconds: 400),
     ),
@@ -192,6 +195,11 @@ class AppPages {
       name: _Paths.SIGNUP_OTP,
       page: () => SignupOtpView(),
       binding: SignupOtpBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDER_HISTORY,
+      page: () => const OrderHistoryView(),
+      binding: OrderHistoryBinding(),
     ),
   ];
 }

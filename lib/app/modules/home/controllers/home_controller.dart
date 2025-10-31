@@ -1,12 +1,15 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:al_khalifa/app/api_services/add_to_cart_services/add_to_cart_services.dart';
 import 'package:al_khalifa/app/api_services/food_categories_api_services/food_categories_api_services.dart';
 import 'package:al_khalifa/app/api_services/menu_api_services/menu_api_services.dart';
+import 'package:al_khalifa/app/api_services/search_api_services/search_api_services.dart';
 import 'package:al_khalifa/app/api_services/utility/urls.dart';
 import 'package:al_khalifa/app/modules/cart/controllers/cart_controller.dart';
 import 'package:al_khalifa/app/modules/home/models/all_food_categories_model.dart';
 import 'package:al_khalifa/app/modules/home/models/all_menu_model.dart';
 import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
+import 'package:al_khalifa/app/modules/home/models/search_model.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +18,9 @@ import '../../../api_services/popular_food_api_services/popular_food_api_service
 
 class HomeController extends GetxController {
   @override
+
   void onInit() {
+
     getAllMenu();
     getPopularData();
     getAllCategories(23);
@@ -26,6 +31,9 @@ class HomeController extends GetxController {
   bool popularDataInProgress = false;
   bool addToCartInProgress = false;
   bool allCategoriesInProgress=false;
+  bool searchInProgress=false;
+
+
   List<AllMenuModel> allMenuModelList = [];
   List<PopularFoodItemModel> popularFoodItemList = [];
   Rxn<AllFoodCategoriesModel> allFoodCategory = Rxn<AllFoodCategoriesModel>();
@@ -34,7 +42,7 @@ class HomeController extends GetxController {
     allCategoriesInProgress=true;
     update();
     try{
-      final response=await FoodCategoriesApiServices.foodCategoriesApiRequest(Urls.foodCategories(foodId));
+      final response = await FoodCategoriesApiServices.foodCategoriesApiRequest(Urls.foodCategories(foodId));
       allCategoriesInProgress=false;
       print("response////// ${response.body}");
       if(response.statusCode == 200){
@@ -55,10 +63,6 @@ class HomeController extends GetxController {
       throw 'Error is $e';
     }
   }
-
-  
-
-
 
   Future<bool> getAllMenu() async {
     menuInProgress = true;
@@ -132,7 +136,7 @@ class HomeController extends GetxController {
         );
          final cart = Get.find<CartController>();
          await cart.getCartListData();
-         Get.toNamed(Routes.CART);
+         Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":1});
       } else {
         Get.snackbar(
           'Failed',
@@ -147,18 +151,14 @@ class HomeController extends GetxController {
     }
   }
 
-
   final Map<int, RxInt> _counts = {};
 
-
   int? _currentProductId;
-
 
   void setProduct(int productId) {
     _currentProductId = productId;
     _counts.putIfAbsent(productId, () => 1.obs);
   }
-
 
   RxInt get count {
     final id = _currentProductId;
@@ -180,4 +180,39 @@ class HomeController extends GetxController {
     }
   }
 
+  List<SearchModel> _searchModel = [];
+  List<SearchModel> get searchModel => _searchModel;
+
+  Future<bool> getSearchData(String query)async{
+    searchInProgress=true;
+    update();
+    try{
+      final response=await SearchApiServices.searchApiRequest("${Urls.search}$query");
+      searchInProgress=false;
+      if(response.statusCode == 200){
+        List<dynamic> deCodedResponse=jsonDecode(response.body);
+        _searchModel = deCodedResponse
+            .map((e) => SearchModel.fromJson(e))
+            .where((item) =>
+            item.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+        update();
+        return true;
+      }else{
+        update();
+        return false;
+      }
+
+    }catch(e){
+      searchInProgress=false;
+      update();
+      Get.snackbar('failed', '$e');
+      return false;
+
+    }
+  }
+
+
 }
+
+

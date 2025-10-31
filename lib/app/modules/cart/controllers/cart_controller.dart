@@ -8,7 +8,7 @@ import '../models/cart_item_model.dart';
 class CartController extends GetxController {
   bool cartInProgress = false;
   bool deleteInProgress = false;
-  bool decreaseItemInProgress=false;
+  bool decreaseItemInProgress = false;
 
   List<CartItem> cartItemModelData = [];
 
@@ -69,8 +69,6 @@ class CartController extends GetxController {
     }
   }
 
-
-
   int qtyOf(int itemId) => quantities[itemId]?.value ?? 1;
 
   void increment(int itemId) {
@@ -100,8 +98,6 @@ class CartController extends GetxController {
     update();
     update(['totals']);
   }
-
-
 
   @override
   void onInit() {
@@ -136,24 +132,25 @@ class CartController extends GetxController {
     }
   }
 
-  Future<void> decreaseCartItem(int cartId)async{
-    decreaseItemInProgress=true;
+  Future<void> decreaseCartItem(int cartId) async {
+    decreaseItemInProgress = true;
     update();
-    try{
-      final response=await CartListApiServices.decreaseCartItemRequest(Urls.decreaseItem(cartId), {});
-      decreaseItemInProgress=false;
+    try {
+      final response = await CartListApiServices.decreaseCartItemRequest(
+        Urls.decreaseItem(cartId),
+        {},
+      );
+      decreaseItemInProgress = false;
       update();
-      if(response.statusCode == 201){
-        Get.snackbar('Success', 'Quantity successfully decrease');
-      }else{
+      if (response.statusCode == 201) {
+        //  Get.snackbar('Success', 'Quantity successfully decrease');
+      } else {
         Get.snackbar('Failed', response.body);
       }
-    }catch(e){
-      decreaseItemInProgress=false;
+    } catch (e) {
+      decreaseItemInProgress = false;
       update();
       Get.snackbar('Failed', '$e');
     }
   }
-
-
 }

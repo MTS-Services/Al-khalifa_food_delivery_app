@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 
 import '../controllers/custom_bottoom_bar_controller.dart';
 
-class CustomBottoomBarBinding extends Bindings {
+class CustomBottomBarBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<CustomBottoomBarController>(
-      () => CustomBottoomBarController(),
+    Get.lazyPut<CustomBottomBarController>(
+      () => CustomBottomBarController(),
     );
     Get.lazyPut<HomeController>(
       () => HomeController(),
