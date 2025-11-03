@@ -1,5 +1,6 @@
 import 'package:al_khalifa/app/modules/checkout/views/payment_method.dart';
 import 'package:al_khalifa/app/modules/common/custom_list.dart';
+import 'package:al_khalifa/app/modules/order_history/controllers/order_history_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -130,6 +131,7 @@ class CheckoutView extends GetView<CheckoutController> {
                               controller.addressController.clear();
                               controller.instructionController.clear();
                               controller.selectedIndex.value = -1;
+                              Get.find<OrderHistoryController>().fetchMyOrders();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

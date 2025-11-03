@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:al_khalifa/app/api_services/utility/urls.dart';
-import 'package:al_khalifa/app/modules/order/models/my_order_model.dart';
+import 'package:al_khalifa/app/modules/order_history/models/my_order_model.dart';
 import 'package:http/http.dart' as http;
 import '../../shared_prerf_services/shared_pref_services.dart';
 

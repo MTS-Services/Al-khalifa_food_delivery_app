@@ -1,4 +1,5 @@
 import 'package:al_khalifa/app/api_services/profile_api_services/profile_api_services.dart';
+import 'package:al_khalifa/app/modules/home/controllers/home_controller.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -59,8 +60,7 @@ class EditProfileController extends GetxController {
       if(response.statusCode == 201){
         Get.snackbar('Success', "Update Completed");
         profileController.getProfileData();
-
-        Get.toNamed(Routes.PROFILE);
+        Get.offAllNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":3});
       }else{
         Get.snackbar('Failed', "${response.body}");
       }
@@ -70,5 +70,4 @@ class EditProfileController extends GetxController {
       Get.snackbar('Failed Request', '$e');
     }
   }
-
 }

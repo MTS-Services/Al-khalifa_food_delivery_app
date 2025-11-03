@@ -16,6 +16,7 @@ class ProfileView extends GetView<ProfileController> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
         toolbarHeight: 80.h,
         title: Text('Profile', style: AppTextStyles.regular18),
         actions: [
@@ -83,28 +84,6 @@ class ProfileView extends GetView<ProfileController> {
                         ),
                     ],
                   ),
-
-                     /* Stack(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: AssetImage(ImagePath.googleIcon),
-                            radius: 60.r,
-                          ),
-                          Positioned(
-                            right: 0,
-                            bottom: 0,
-                            child: CircleAvatar(
-                              radius: 20.r,
-                              backgroundColor: Colors.white,
-                              child: Icon(
-                                Icons.camera_alt_outlined,
-                                size: 20.sp,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),*/
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 25.h),
                         child:Text("${profileController.profileModelInfo.value.firstName} ${profileController.profileModelInfo.value.lastName}",

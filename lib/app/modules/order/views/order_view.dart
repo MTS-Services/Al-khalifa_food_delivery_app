@@ -1,150 +1,183 @@
+import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
+import 'package:al_khalifa/app/modules/order_history/models/my_order_model.dart';
+import 'package:al_khalifa/app/modules/profile/controllers/profile_controller.dart';
 import 'package:al_khalifa/app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-
 import '../../../widgets/location_text.dart';
 import '../controllers/order_controller.dart';
-import '../widgets/order_box.dart';
 
-class OrderView extends GetView<OrderController> {
-  const OrderView({super.key});
+class OrderDetailsView extends GetView<OrderController> {
+   OrderDetailsView({super.key});
+  final data =Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
+    final args=Get.arguments;
+    MyOrderModel orderDetails=args["order_details"];
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Obx(() {
-            if (controller.isLoading.value) {
-              return Center(child: CircularProgressIndicator());
-            }
-            if (controller.errorMessage.isNotEmpty) {
-              return Center(child: Text(controller.errorMessage.toString()));
-            }
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20.h),
-                  Text('Order Item', style: AppTextStyles.medium18),
-                  SizedBox(height: 10.h),
+          child:  Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 20.h),
+                Text('Order Item', style: AppTextStyles.medium18),
+                SizedBox(height: 10.h),
+                if(orderDetails.orderItems!=null)
                   ListView.builder(
-                    itemCount: controller.myOrders.length,
+                    itemCount: orderDetails.orderItems?.length,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      final order = controller.myOrders[index];
-                      final firstItem = order.orderItems?.firstOrNull;
-
-                      return OrderBox(
-                        itemName: firstItem?.food?.name ?? 'Order #${order.id}',
-                        itemDetails:
-                            firstItem?.food?.description ??
-                            'Delicious meal from your order',
+                      final item=orderDetails.orderItems?[index];
+                      return Card(
+                        child: Container(
+                          color: AppColors.greyLightColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(6),
+                                  child: SizedBox(
+                                    height: 80,
+                                    width: 80,
+                                    child: Image.network('${item?.food?.foodImageUrl}',fit: BoxFit.cover,),
+                                  ),),
+                                const SizedBox(width: 10,),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${item?.food?.name}',
+                                        style: TextStyle(fontSize: 16),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        '${item?.food?.price}',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        '${orderDetails.deliveryAddress}',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       );
                     },
                   ),
-                  SizedBox(height: 20.h),
-                  Text('Order Details', style: AppTextStyles.medium18),
-                  SizedBox(height: 10.h),
-                  CustomRichText(title: 'Order number: ', text: ''),
-                  SizedBox(height: 10.h),
-                  CustomRichText(
-                    showIcon: true,
-                    text:
-                        'Alipur Jame Masjid er opposite side Dhaka City Corporation',
+                SizedBox(height: 20.h),
+                Text('Order Details', style: AppTextStyles.medium18),
+                SizedBox(height: 10.h),
+                 CustomRichText(title: 'Order number: ${orderDetails.updatedAt} ', text: ''),
+
+                SizedBox(height: 10.h),
+                CustomRichText(
+                  showIcon: true,
+                  text:
+                  '${orderDetails.deliveryAddress} ,${orderDetails.deliveryFullAddress}',
+                ),
+                SizedBox(height: 10.h),
+                Text('Total: TK ${orderDetails.totalAmount}', style: AppTextStyles.medium24),
+                SizedBox(height: 20.h),
+                Center(
+                  child: Text(
+                    'Got Your Order: ${data.profileModelInfo.value.firstName} ${data.profileModelInfo.value.lastName}',
+                    style: AppTextStyles.medium18,
                   ),
-                  SizedBox(height: 10.h),
-                  Text('Total: TK 546', style: AppTextStyles.medium24),
-                  SizedBox(height: 20.h),
-                  Center(
-                    child: Text(
-                      'Got Your Order Mr.Kahim',
-                      style: AppTextStyles.medium18,
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    'Once the order is confirmed by you, we will start preparing it.',
-                    style: AppTextStyles.regular14,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20.h),
-                  Center(
-                    child: CustomElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text('Cancle your order?'),
-                            actions: [
-                              Column(
-                                spacing: 10.h,
-                                children: [
-                                  Text(
-                                    'Do you really want the cancle the order?',
-                                    style: AppTextStyles.regular14,
-                                  ),
-                                  SizedBox(
+                ),
+                SizedBox(height: 20.h),
+                Text(
+                  'Once the order is confirmed by you, we will start preparing it.',
+                  style: AppTextStyles.regular14,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20.h),
+                Center(
+                  child: CustomElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Cancle your order?'),
+                          actions: [
+                            Column(
+                              spacing: 10.h,
+                              children: [
+                                Text(
+                                  'Do you really want the cancle the order?',
+                                  style: AppTextStyles.regular14,
+                                ),
+                                Obx(() {
+                                  return controller.orderDeleteInProgress.value
+                                      ? CircularProgressIndicator()
+                                      : SizedBox(
                                     width: double.infinity,
                                     child: ElevatedButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        'Cancle my order',
-                                        style: AppTextStyles.regular14,
+                                      onPressed: () {
+                                        controller.orderDeleteHistory(
+                                            orderDetails.id!);
+                                      },
+                                      child: Text('Cancel my order'),
+                                    ),
+                                  );
+                                }),
+                                /*SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                     controller.orderDeleteHistory();
+                                    },
+                                    child: Text(
+                                      'Cancle my order',
+                                      style: AppTextStyles.regular14,
+                                    ),
+                                  ),
+                                ),*/
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: OutlinedButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      'I\'ll wait for the raider',
+                                      style: AppTextStyles.regular14.apply(
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: OutlinedButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        'I\'ll wait for the raider',
-                                        style: AppTextStyles.regular14.apply(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      text: 'Cancle',
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  Center(
-                    child: Text(
-                      'You can cancle your order within 10 minutes.',
-                      style: AppTextStyles.medium12,
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  // Timer widget that updates every second
-                  Obx(
-                    () => Center(
-                      child: Text(
-                        controller.formattedTime,
-                        style: AppTextStyles.medium14.copyWith(
-                          color: controller.remainingTime.value < 60
-                              ? Colors
-                                    .red // Change color when less than 1 minute
-                              : Colors.black,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                    ),
+                      );
+                    },
+                    text: 'Cancle',
                   ),
-                ],
-              ),
-            );
-          }),
+                ),
+                SizedBox(height: 20.h),
+                Center(
+                  child: Text(
+                    'You can cancle your order within 10 minutes.',
+                    style: AppTextStyles.medium12,
+                  ),
+                ),
+                SizedBox(height: 20.h),
+              ],
+            ),
+          ),
         ),
       ),
     );

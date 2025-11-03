@@ -1,3 +1,4 @@
+import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/modules/home/views/details_menu.dart';
 import 'package:al_khalifa/app/modules/home/views/product_details_screen.dart';
 import 'package:al_khalifa/app/modules/home/views/see_all_meal_for_one_screen.dart';
@@ -293,15 +294,18 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildCustomLocationRow() {
-    return CustomLocationRow(
-      selectedLocation: "Dhaka",
-      locations: ["Dhaka", "Chittagong", "Khulna"],
-      onLocationChanged: (value) {
-        print("Selected: $value");
-      },
-      onNotificationTap: () {
-        Get.toNamed(Routes.NOTIFICATION);
-      },
+    return Row(
+      children: [
+        Icon(Icons.location_on_outlined),
+        Text("Shaistaganj", style: AppTextStyles.medium18),
+        Spacer(),
+        IconButton(
+          onPressed: () {
+            Get.toNamed(Routes.NOTIFICATION);
+          },
+          icon: Icon(Icons.notifications),
+        ),
+      ],
     );
   }
 
@@ -349,46 +353,18 @@ class HomeView extends GetView<HomeController> {
                   controller.update();
                 }
               },
-            ),
 
-            /*if (!controller.searchInProgress &&
-                controller.searchModel.isNotEmpty)
-              GridView.builder(
-                itemCount: controller.searchModel.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 8,
-                  childAspectRatio: 0.72,
-                ),
-                itemBuilder: (context, index) {
-                  final data = controller.searchModel[index];
-                  return GestureDetector(
-                    onTap: (){
-                      Get.to(() =>ProductDetailsScreen(
-                          imageUrl: data.foodImageUrl,
-                          title: data.name,
-                          rating: data.foodRatings.averageRating,
-                          price: data.price.toDouble(),
-                          description: data.description,
-                          foodId: data.id,
-                          variations: data.variations
-                      )
-                      );
-                    },
-                    child: FoodCard(
-                      imageUrl: data.foodImageUrl,
-                      title: data.name,
-                      rating: data.foodRatings.averageRating,
-                      price: data.price.toDouble(),
-                      onAdd: () {},
-                      cardHeight: 135,
-                    ),
+              onSubmitted: (value) async {
+                if (value.isNotEmpty) {
+                  await controller.getSearchData(value);
+                  Get.toNamed(
+                    Routes.SEARCH_BAR,
+                    arguments: {"product_list": controller.searchModel},
                   );
-                },
-              ),*/
+                  _searchTEController.clear();
+                }
+              },
+            ),
           ],
         );
       },

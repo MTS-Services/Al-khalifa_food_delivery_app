@@ -2,6 +2,7 @@ class MyOrderModel {
   double? totalAmount; // Changed from int? to double?
   String? deliveryAddress;
   String? deliveryFullAddress;
+  String? status;
   int? id;
   String? createdAt;
   String? updatedAt;
@@ -11,6 +12,7 @@ class MyOrderModel {
     this.totalAmount,
     this.deliveryAddress,
     this.deliveryFullAddress,
+    this.status,
     this.id,
     this.createdAt,
     this.updatedAt,
@@ -21,6 +23,7 @@ class MyOrderModel {
     return MyOrderModel(
       totalAmount: _toDouble(json['total_amount']),
       deliveryAddress: json['delivery_address'] as String?,
+      status: json['status'] as String?,
       deliveryFullAddress: json['delivery_full_address'] as String?,
       id: json['id'] as int?,
       createdAt: json['created_at'] as String?,

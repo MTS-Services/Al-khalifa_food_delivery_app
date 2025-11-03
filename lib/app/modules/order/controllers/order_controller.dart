@@ -1,74 +1,48 @@
 import 'dart:async';
 
+import 'package:al_khalifa/app/api_services/oder_delete_api_services/order_delete_api_service.dart';
+import 'package:al_khalifa/app/api_services/utility/urls.dart';
+import 'package:al_khalifa/app/modules/order_history/controllers/order_history_controller.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 import '../../../api_services/order_service/my_order.dart';
-import '../models/my_order_model.dart';
+import '../../order_history/models/my_order_model.dart';
 
 class OrderController extends GetxController {
-  var isLoading = false.obs;
-  var myOrders = <MyOrderModel>[].obs;
-  var errorMessage = ''.obs;
-  Timer? _timer;
-  final remainingTime = 600.obs;
+  RxBool orderDeleteInProgress = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    print('OrderController initialized');
-    startTimer();
-    fetchMyOrders();
-  }
-
-  Future<void> fetchMyOrders() async {
+  Future<void> orderDeleteHistory(int orderId) async {
+    orderDeleteInProgress.value = true;
+    update();
     try {
-      isLoading(true);
-      errorMessage('');
+      final response = await OrderDeleteApiService.orderDeleteApiRequest(
+        Urls.orderDelete(orderId),
+      );
+      orderDeleteInProgress.value = false;
 
-      final orders = await MyOrder.getMyOrder();
-      myOrders.assignAll(orders);
+      if (response.statusCode == 204) {
 
-      print('Fetched ${orders.length} orders');
-      
-    } catch (e) {
-      errorMessage(e.toString());
-      print('Error fetching orders: $e');
-      // Retry after 3 seconds if there's an error
-      await Future.delayed(Duration(seconds: 3));
-      fetchMyOrders();
-    } finally {
-      isLoading(false);
-    }
-  }
+        Get.snackbar('Success', 'Order Deleted successfully');
 
-  void startTimer() {
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(oneSec, (Timer timer) {
-      if (remainingTime.value < 1) {
-        timer.cancel();
-        print('Timer finished');
+        // remove order locally before API refresh
+        final orderHistoryController = Get.find<OrderHistoryController>();
+        orderHistoryController.myOrders.removeWhere((order) => order.id == orderId);
+        orderHistoryController.update();
+
+        // optional: re-fetch to ensure sync
+        await orderHistoryController.fetchMyOrders();
+
+        Get.offAllNamed(Routes.CUSTOM_BOTTOOM_BAR, arguments: {"index": 2});
+
       } else {
-        remainingTime.value--;
+        update();
+        Get.snackbar('Failed', response.body);
       }
-    });
-  }
-
-  // Manual refresh method
-  Future<void> refreshOrders() async {
-    print('Manual refresh triggered');
-    await fetchMyOrders();
-  }
-
-  String get formattedTime {
-    final minutes = (remainingTime.value ~/ 60).toString().padLeft(2, '0');
-    final seconds = (remainingTime.value % 60).toString().padLeft(2, '0');
-    return '$minutes:$seconds';
-  }
-
-  @override
-  void onClose() {
-    _timer?.cancel();
-    print('OrderController disposed');
-    super.onClose();
+    } catch (e) {
+      orderDeleteInProgress.value = false;
+      update();
+      Get.snackbar('Failed', '$e');
+    }
   }
 }

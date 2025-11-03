@@ -1,6 +1,6 @@
 import 'package:al_khalifa/app/modules/cart/controllers/cart_controller.dart';
 import 'package:al_khalifa/app/modules/home/controllers/home_controller.dart';
-import 'package:al_khalifa/app/modules/order/controllers/order_controller.dart';
+import 'package:al_khalifa/app/modules/order_history/controllers/order_history_controller.dart';
 import 'package:al_khalifa/app/modules/profile/controllers/profile_controller.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ import '../controllers/custom_bottoom_bar_controller.dart';
 class CustomBottomBarBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<CustomBottomBarController>(
+ /*   Get.lazyPut<CustomBottomBarController>(
       () => CustomBottomBarController(),
     );
     Get.lazyPut<HomeController>(
@@ -18,9 +18,14 @@ class CustomBottomBarBinding extends Bindings {
     Get.lazyPut<CartController>(
       () => CartController(),
     );
-    Get.lazyPut<OrderController>(
-      () => OrderController(),
-    );
+    Get.lazyPut<OrderHistoryController>(
+      () => OrderHistoryController(),
+    );*/
+
+    Get.put(CustomBottomBarController());
+    Get.put(HomeController());
+    Get.put(CartController());
+    Get.put(OrderHistoryController());
     Get.put(ProfileController());
   }
 }

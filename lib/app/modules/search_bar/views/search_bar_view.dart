@@ -1,4 +1,5 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
+import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/modules/home/controllers/home_controller.dart';
 import 'package:al_khalifa/app/modules/home/widget/custome_location_row.dart';
 import 'package:al_khalifa/app/modules/home/widget/food_card.dart';
@@ -99,15 +100,18 @@ class SearchBarView extends GetView<SearchBarController> {
   }
 
   Widget _buildCustomLocationRow() {
-    return CustomLocationRow(
-      selectedLocation: "Dhaka",
-      locations: ["Dhaka", "Chittagong", "Khulna"],
-      onLocationChanged: (value) {
-        debugPrint("Selected: $value");
-      },
-      onNotificationTap: () {
-        Get.toNamed(Routes.NOTIFICATION);
-      },
+    return Row(
+      children: [
+        Icon(Icons.location_on_outlined),
+        Text("Shaistaganj", style: AppTextStyles.medium18),
+        Spacer(),
+        IconButton(
+          onPressed: () {
+            Get.toNamed(Routes.NOTIFICATION);
+          },
+          icon: Icon(Icons.notifications),
+        ),
+      ],
     );
   }
 

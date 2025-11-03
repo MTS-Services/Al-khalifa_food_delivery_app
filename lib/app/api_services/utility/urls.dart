@@ -19,5 +19,6 @@ class Urls{
   static  String deleteNotificationById(int id) => '$_baseUrl/notifications/$id';
   static  String order= '$_baseUrl/orders/';
   static  String myOrder= '$_baseUrl/orders/user/me';
+  static  String orderDelete(int orderId) => '$_baseUrl/orders/$orderId';
   static  String search= '$_baseUrl/search/?q=';
 }
