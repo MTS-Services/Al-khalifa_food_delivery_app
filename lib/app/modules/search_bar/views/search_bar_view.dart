@@ -117,6 +117,7 @@ class SearchBarView extends GetView<SearchBarController> {
 
   Widget _buildSearchBar(HomeController homeController, TextEditingController searchTEController) {
     return SearchBar(
+      backgroundColor: WidgetStateProperty.all(AppColors.greyLightColor),
       controller: searchTEController,
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -126,18 +127,19 @@ class SearchBarView extends GetView<SearchBarController> {
         onPressed: () {
           if (searchTEController.text.isNotEmpty) {
             homeController.getSearchData(searchTEController.text);
+            searchTEController.clear();
           }
         },
         icon: const Icon(
           Icons.search,
           size: 28,
-          color: AppColors.searchIconColor,
+          color: AppColors.darkBlackColor,
         ),
       ),
       hintText: "Search for food",
       hintStyle: WidgetStateProperty.all(
         const TextStyle(
-          color: AppColors.searchIconColor,
+          color: AppColors.darkBlackColor,
           fontSize: 18,
           fontWeight: FontWeight.w400,
         ),
@@ -145,6 +147,7 @@ class SearchBarView extends GetView<SearchBarController> {
       onSubmitted: (value) {
         if (value.isNotEmpty) {
           homeController.getSearchData(value);
+          searchTEController.clear();
         }
       },
     );

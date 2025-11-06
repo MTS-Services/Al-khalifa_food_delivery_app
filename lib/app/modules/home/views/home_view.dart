@@ -11,7 +11,6 @@ import '../../../data/app_colors.dart';
 import '../../../data/image_path.dart';
 import '../controllers/home_controller.dart';
 import '../widget/custom_header.dart';
-import '../widget/custome_location_row.dart';
 import '../widget/food_card.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -34,12 +33,11 @@ class HomeView extends GetView<HomeController> {
                 _buildSearchBar(),
                 const SizedBox(height: 20),
                 _buildContainer(context),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 // Header
                 CustomHeader(title: "Menu"),
                 const SizedBox(height: 2),
                 _buildProduct(),
-                const SizedBox(height: 10),
                 CustomHeader(
                   title: "Popular",
                   seeAllText: "See All",
@@ -316,9 +314,11 @@ class HomeView extends GetView<HomeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SearchBar(
+              backgroundColor: WidgetStateProperty.all(AppColors.greyLightColor),
               controller: _searchTEController,
               shape: WidgetStateProperty.all(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
               elevation: WidgetStateProperty.all(0.0),
               leading: IconButton(
@@ -334,13 +334,13 @@ class HomeView extends GetView<HomeController> {
                 icon: const Icon(
                   Icons.search,
                   size: 28,
-                  color: AppColors.searchIconColor,
+                  color: AppColors.darkBlackColor,
                 ),
               ),
               hintText: "Search for food",
               hintStyle: WidgetStateProperty.all(
                 const TextStyle(
-                  color: AppColors.searchIconColor,
+                  color: AppColors.darkBlackColor,
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                 ),
@@ -348,6 +348,7 @@ class HomeView extends GetView<HomeController> {
               onChanged: (value) {
                 if (value.isNotEmpty) {
                   controller.getSearchData(value);
+                  _searchTEController.clear();
                 } else {
                   controller.searchModel.clear();
                   controller.update();

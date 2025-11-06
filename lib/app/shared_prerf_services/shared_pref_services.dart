@@ -42,13 +42,21 @@ class SharedPrefServices{
 
   static Future<void> clear()async{
     final SharedPreferences prefs=await SharedPreferences.getInstance();
+    final savedImagePath = prefs.getString('profile_image_path');
     await prefs.clear();
+    if (savedImagePath != null) {
+      await prefs.setString('profile_image_path', savedImagePath);
+    }
   }
 
   static Future<bool> get isLoggedIn async {
     String? userToken= await getUserToken();
     return userToken != null;
   }
+  static Future<SharedPreferences> getInstance() async {
+    return await SharedPreferences.getInstance();
+  }
+
 
 }
 

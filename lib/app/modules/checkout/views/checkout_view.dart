@@ -71,6 +71,27 @@ class CheckoutView extends GetView<CheckoutController> {
                           ),
                         ),
                       ),
+                      SizedBox(height: 12.h),
+                      Text(
+                        'Enter Contact Number',
+                        style: AppTextStyles.medium18,
+                      ),
+                      SizedBox(height: 12.h),
+                      TextFormField(
+                        controller: controller.phoneNumberController,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          suffixIcon: Icon(Icons.phone),
+                          hintText: 'Enter your phone Number',
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 14.w,
+                            vertical: 12.h,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                        ),
+                      ),
                       SizedBox(height: 20.h),
                       Text('Payment Method', style: AppTextStyles.medium18),
                       SizedBox(height: 8.h),
@@ -131,7 +152,7 @@ class CheckoutView extends GetView<CheckoutController> {
                               controller.addressController.clear();
                               controller.instructionController.clear();
                               controller.selectedIndex.value = -1;
-                              Get.find<OrderHistoryController>().fetchMyOrders();
+
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

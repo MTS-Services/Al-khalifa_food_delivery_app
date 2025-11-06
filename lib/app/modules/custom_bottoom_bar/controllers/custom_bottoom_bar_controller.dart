@@ -1,4 +1,5 @@
 
+
 import 'package:al_khalifa/app/modules/order_history/views/order_history_view.dart';
 import 'package:get/get.dart';
 import 'package:al_khalifa/app/modules/home/views/home_view.dart';
@@ -13,7 +14,7 @@ class CustomBottomBarController extends GetxController {
   final pages = [
      HomeView(),
     const CartView(),
-    const OrderHistoryView(),
+      OrderHistoryView(),
     const ProfileView(),
   ];
 

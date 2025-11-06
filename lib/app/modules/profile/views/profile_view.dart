@@ -55,7 +55,7 @@ class ProfileView extends GetView<ProfileController> {
                             ? FileImage(File(profileController.pickedImage!.path))
                             : null,
                       ),
-                      if (profileController.pickedImage == null)
+                     // if (profileController.pickedImage == null)
                         Positioned(
                           bottom: 10, // move upward if needed
                           right: 10,  // right side of the avatar
@@ -105,12 +105,12 @@ class ProfileView extends GetView<ProfileController> {
                           maxLines: 1,
                         ),
                       ),
-                      ListTile(
+                   /*   ListTile(
                         leading: const Icon(Icons.card_giftcard),
                         title: Text('Invite Friend', style: AppTextStyles.regular14),
                         trailing: const Icon(Icons.arrow_forward_ios_sharp),
                         onTap: () {},
-                      ),
+                      ),*/
                       ListTile(
                         leading: const Icon(Icons.card_giftcard),
                         title: Text('History', style: AppTextStyles.regular14),

@@ -1,15 +1,18 @@
 import 'package:al_khalifa/app/modules/checkout/model/order_model.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../api_services/order_service/order_service.dart';
 import '../../cart/models/cart_item_model.dart';
+import '../../order_history/controllers/order_history_controller.dart';
 
 class CheckoutController extends GetxController {
   final count = 1.obs;
   final selectedIndex = (-1).obs;
   TextEditingController addressController = TextEditingController();
   TextEditingController instructionController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   final OrderService _orderService = OrderService();
   var isLoading = false.obs;
 
@@ -34,16 +37,16 @@ class CheckoutController extends GetxController {
         totalAmount: total,
         deliveryAddress: addressController.text.trim(),
         specialInstruction: instructionController.text.trim(),
+        phoneNumber: phoneNumberController.text.trim(),
         orderItems: orderItems,
       );
 
       // Post to API
       await _orderService.postOrder(orderRequest);
 
-      // // Success - clear cart and navigate
-      // Get.find<CartController>().clearCart(); // If you have this method
-      // Get.offAllNamed(Routes.ORDER_SUCCESS); // Navigate to success page
       Get.snackbar('Success', 'Order placed successfully!');
+      Get.find<OrderHistoryController>().fetchOrderDetails();
+      Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":2});
     } catch (e) {
       Get.snackbar('Error', 'Failed to place order: $e');
       print('✅Order submission error: $e');

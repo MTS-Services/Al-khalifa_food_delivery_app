@@ -1,4 +1,5 @@
 import 'package:al_khalifa/app/modules/cart/controllers/cart_controller.dart';
+import 'package:al_khalifa/app/modules/history_page/controllers/history_page_controller.dart';
 import 'package:al_khalifa/app/modules/home/controllers/home_controller.dart';
 import 'package:al_khalifa/app/modules/order_history/controllers/order_history_controller.dart';
 import 'package:al_khalifa/app/modules/profile/controllers/profile_controller.dart';

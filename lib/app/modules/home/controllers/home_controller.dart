@@ -44,7 +44,6 @@ class HomeController extends GetxController {
     try{
       final response = await FoodCategoriesApiServices.foodCategoriesApiRequest(Urls.foodCategories(foodId));
       allCategoriesInProgress=false;
-      print("response////// ${response.body}");
       if(response.statusCode == 200){
         final deCodedResponse=jsonDecode(response.body);
         allFoodCategory.value =

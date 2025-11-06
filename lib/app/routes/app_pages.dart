@@ -24,8 +24,6 @@ import '../modules/onbording1/bindings/onbording1_binding.dart';
 import '../modules/onbording1/views/onbording1_view.dart';
 import '../modules/onbording2/bindings/onbording2_binding.dart';
 import '../modules/onbording2/views/onbording2_view.dart';
-import '../modules/order/bindings/order_binding.dart';
-import '../modules/order/views/order_view.dart';
 import '../modules/order_history/bindings/order_history_binding.dart';
 import '../modules/order_history/views/order_history_view.dart';
 import '../modules/otp/bindings/otp_binding.dart';
@@ -152,13 +150,6 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
-      name: _Paths.ORDER,
-      page: () =>  OrderDetailsView(),
-      binding: OrderBinding(),
-      transition: Transition.rightToLeft, // 👈 animation defined here
-      transitionDuration: const Duration(milliseconds: 400),
-    ),
-    GetPage(
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
@@ -198,7 +189,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ORDER_HISTORY,
-      page: () => const OrderHistoryView(),
+      page: () =>  OrderHistoryView(),
       binding: OrderHistoryBinding(),
     ),
   ];

@@ -20,5 +20,6 @@ class ImagePath{
   static const String person ='$baseUrl/person.png';
   static const String list ='$baseUrl/list.png';
   static const String location ='$baseUrl/location.png';
+  static const String noProduct ='$baseUrl/noProduct.png';
 
 }

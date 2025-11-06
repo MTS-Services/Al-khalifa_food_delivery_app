@@ -2,12 +2,14 @@ class OrderRequest {
   final double totalAmount;
   final String deliveryAddress;
   final String specialInstruction;
+  final String phoneNumber;
   final List<OrderItem> orderItems;
 
   OrderRequest({
     required this.totalAmount,
     required this.deliveryAddress,
     required this.specialInstruction,
+    required this.phoneNumber,
     required this.orderItems,
   });
 
@@ -28,6 +30,7 @@ class OrderRequest {
     'total_amount': totalAmount,
     'delivery_address': deliveryAddress,
     'delivery_full_address': specialInstruction,
+    'phone_number': phoneNumber,
     'order_items': orderItems.map((item) => item.toJson()).toList(),
   };
 }

@@ -1,44 +1,81 @@
+// import 'dart:convert';
+// import 'package:al_khalifa/app/api_services/utility/urls.dart';
+// import 'package:al_khalifa/app/modules/order_history/models/my_order_model.dart';
+// import 'package:http/http.dart' as http;
+// import '../../shared_prerf_services/shared_pref_services.dart';
+//
+// class MyOrder {
+//   static Future<List<MyOrderModel>> getMyOrder() async {
+//     String? token = await SharedPrefServices.getUserToken();
+//
+//     try {
+//       final response = await http.get(
+//         Uri.parse(Urls.myOrder),
+//         headers: {
+//           'Content-Type': 'application/json',
+//           "Authorization": "Bearer $token",
+//         },
+//       );
+//
+//       if (response.statusCode == 200) {
+//         print('✅ ${response.statusCode}');
+//         print('Response body: ${response.body}');
+//
+//         final List<dynamic> data = jsonDecode(response.body);
+//
+//         // Parse each item in the list
+//         List<MyOrderModel> orders = data.map((item) {
+//           return MyOrderModel.fromJson(item);
+//         }).toList();
+//
+//         return orders;
+//       } else {
+//         print('Error response: ${response.body}');
+//         throw Exception(
+//           'Failed to load orders. Status code: ${response.statusCode}',
+//         );
+//       }
+//     } catch (e) {
+//       throw Exception('There was some error: $e');
+//     }
+//   }
+// }
+
+
+
 import 'dart:convert';
-import 'package:al_khalifa/app/api_services/utility/urls.dart';
-import 'package:al_khalifa/app/modules/order_history/models/my_order_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../../modules/order_history/models/my_order_model.dart';
 import '../../shared_prerf_services/shared_pref_services.dart';
 
-class MyOrder {
-  static Future<List<MyOrderModel>> getMyOrder() async {
-    String? token = await SharedPrefServices.getUserToken();
 
+class OrderService {
+
+  static Future<OrderDetailsModel?> getOrderDetails() async {
     try {
+      String? token = await SharedPrefServices.getUserToken();
+
+
       final response = await http.get(
-        Uri.parse(Urls.myOrder),
-        headers: {
+        Uri.parse('https://khalifa.mtscorporate.com/orders/user/me/latest'),
+          headers: {
           'Content-Type': 'application/json',
           "Authorization": "Bearer $token",
         },
       );
 
       if (response.statusCode == 200) {
-        print('✅ ${response.statusCode}');
-        print('Response body: ${response.body}');
-
-        final List<dynamic> data = jsonDecode(response.body);
-
-        // Parse each item in the list
-        List<MyOrderModel> orders = data.map((item) {
-          return MyOrderModel.fromJson(item);
-        }).toList();
-
-        return orders;
+        final data = json.decode(response.body);
+        return OrderDetailsModel.fromJson(data);
       } else {
-        print('❌ Error status code: ${response.statusCode}');
-        print('Error response: ${response.body}');
-        throw Exception(
-          'Failed to load orders. Status code: ${response.statusCode}',
-        );
+        print("❌ Failed to load order: ${response.statusCode}");
+        return null;
       }
     } catch (e) {
-      print('❌ Exception in getMyOrder: $e');
-      throw Exception('There was some error: $e');
+      print("❌ Exception: $e");
+      return null;
     }
   }
 }
+

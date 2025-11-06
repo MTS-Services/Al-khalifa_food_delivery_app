@@ -18,7 +18,7 @@ class SeeAllPopularScreen extends StatelessWidget {
             child: Column(
               children: [
                 CustomHeader(
-                  title: "Kitchen Menu",
+                  title: "Popular Menu",
                   centerTitle: true,
                   leadingIcon: Icons.arrow_back,
                   onLeadingTap: (){

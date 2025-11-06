@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:al_khalifa/app/api_services/profile_api_services/profile_api_services.dart';
 import 'package:al_khalifa/app/api_services/utility/urls.dart';
+import 'package:al_khalifa/app/modules/history_page/bindings/history_page_binding.dart';
+import 'package:al_khalifa/app/modules/history_page/controllers/history_page_controller.dart';
 import 'package:al_khalifa/app/modules/profile/model/profile_model.dart';
+import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,9 +28,24 @@ class ProfileController extends GetxController {
   XFile ? _pickedImage;
 
   XFile? get pickedImage => _pickedImage;
+  // ---- SAVE IMAGE TO SHARED PREF ----
+  Future<void> _saveImageToPrefs(String path) async {
+    final prefs = await SharedPrefServices.getInstance();
+    await prefs.setString('profile_image_path', path);
+  }
 
-  void setPickedImage(XFile image) {
+  // ---- LOAD IMAGE FROM SHARED PREF ----
+  Future<void> _loadImageFromPrefs() async {
+    final prefs = await SharedPrefServices.getInstance();
+    final savedPath = prefs.getString('profile_image_path');
+    if (savedPath != null && File(savedPath).existsSync()) {
+      _pickedImage = XFile(savedPath);
+    }
+  }
+
+  Future<void> setPickedImage(XFile image) async {
     _pickedImage = image;
+    await _saveImageToPrefs(image.path);
     update();
   }
 
@@ -35,6 +54,7 @@ class ProfileController extends GetxController {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
       _pickedImage = XFile(pickedFile.path);
+      await _saveImageToPrefs(pickedFile.path);
       update();
     }
   }
@@ -102,5 +122,6 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
     getProfileData();
+    _loadImageFromPrefs();
   }
 }

@@ -39,15 +39,21 @@ class NotificationView extends GetView<NotificationController> {
                         color: AppColors.primaryTextColor,
                       ),
                     ),
-                    Text(
-                      'Mark all as read',
-                      style: AppTextStyles.regular14.apply(
-                        color: AppColors.primaryColor,
+                    GestureDetector(
+                      onTap: () {
+                        notiController.markAllAsRead();
+                      },
+                      child: Text(
+                        'Mark all as read',
+                        style: AppTextStyles.regular14.apply(
+                          color: AppColors.primaryColor,
+                        ),
                       ),
-                    ),
+                    )
+
                   ],
                 ),
-                SizedBox(height: 30.h),
+                SizedBox(height: 15.h),
                 Expanded(
                   child: ListView.builder(
                     itemCount:notiController.notificationList.length,
@@ -60,11 +66,16 @@ class NotificationView extends GetView<NotificationController> {
                         padding: const EdgeInsets.only(bottom: 12.0),
 
                         child: NotificationContainer(
-                          iconImage: notiController.notificationList[index].image,
                           time: formattedTime,
                           notiTitle: notiController.notificationList[index].title,
                           notiSubTitle:notiController.notificationList[index].content,
+                          isRead: notiController.notificationList[index].isRead,
                           onDelete: () {notiController.getDeleteNotification(notiController.notificationList[index].id);},
+                          onMarkAsRead: () {
+                            notiController.markAsRead(
+                              notiController.notificationList[index].id,
+                            );
+                          },
                         ),
                       );
                     }

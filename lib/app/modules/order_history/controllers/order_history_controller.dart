@@ -1,60 +1,87 @@
-import 'dart:async';
 import 'package:get/get.dart';
+import '../../../api_services/oder_delete_api_services/order_delete_api_service.dart';
 import '../../../api_services/order_service/my_order.dart';
+import '../../../api_services/utility/urls.dart';
+import '../../../routes/app_pages.dart';
 import '../models/my_order_model.dart';
+import 'dart:async';
 
 class OrderHistoryController extends GetxController {
   var isLoading = false.obs;
-  var myOrders = <MyOrderModel>[].obs;
-  var errorMessage = ''.obs;
-  Timer? _timer;
-  final remainingTime = 600.obs;
+  var orderDetails = Rxn<OrderDetailsModel>();
+  RxBool orderDeleteInProgress = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    print('OrderController initialized');
-    startTimer();
-    fetchMyOrders();
-  }
-
-  Future<void> fetchMyOrders() async {
+  Future<void> fetchOrderDetails() async {
     try {
       isLoading(true);
-      errorMessage('');
+      final data = await OrderService.getOrderDetails();
 
-      final orders = await MyOrder.getMyOrder();
-      myOrders.assignAll(orders);
-
-      print('Fetched ${orders.length} orders');
-
-    } catch (e) {
-      errorMessage(e.toString());
-      print('Error fetching orders: $e');
-      // Retry after 3 seconds if there's an error
-      /*await Future.delayed(Duration(seconds: 3));
-      fetchMyOrders();*/
+      if (data != null) {
+        orderDetails.value = data;
+        startOrderTimer(); // ✅ start again for new order
+        refresh();
+      }
     } finally {
       isLoading(false);
     }
   }
 
-  void startTimer() {
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(oneSec, (Timer timer) {
-      if (remainingTime.value < 1) {
+  Future<void> orderDeleteHistory(int orderId) async {
+    orderDeleteInProgress.value = true;
+    update();
+    try {
+      final response = await OrderDeleteApiService.orderDeleteApiRequest(
+        Urls.orderDelete(orderId),
+      );
+      orderDeleteInProgress.value = false;
+
+      if (response.statusCode == 204) {
+        Get.snackbar('Success', 'Order Deleted successfully');
+        await fetchOrderDetails();
+        Get.offAllNamed(Routes.CUSTOM_BOTTOOM_BAR, arguments: {"index": 2});
+      } else {
+        update();
+        Get.snackbar('Failed', response.body);
+      }
+    } catch (e) {
+      orderDeleteInProgress.value = false;
+      update();
+      Get.snackbar('Failed', '$e');
+    }
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    fetchOrderDetails();
+    super.onInit();
+  }
+
+  /// Countdown for cancel availability (5 min = 300 seconds)
+  RxInt remainingTime = 120.obs;
+  Timer? _timer;
+
+  /// Flag to disable cancel button
+  bool get canCancel => remainingTime.value > 0;
+
+  /// Start 5-minute timer when opening order
+  void startOrderTimer() {
+    _timer?.cancel(); // cancel any previous timer
+    remainingTime.value = 120;
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingTime.value <= 0) {
         timer.cancel();
-        print('Timer finished');
       } else {
         remainingTime.value--;
       }
     });
   }
 
-  // Manual refresh method
-  Future<void> refreshOrders() async {
-    print('Manual refresh triggered');
-    await fetchMyOrders();
+  /// Stop timer
+  void stopTimer() {
+    _timer?.cancel();
+    _timer = null;
   }
 
   String get formattedTime {
@@ -65,15 +92,7 @@ class OrderHistoryController extends GetxController {
 
   @override
   void onClose() {
-    _timer?.cancel();
-    print('OrderController disposed');
+    stopTimer();
     super.onClose();
-  }
-
-  var orderStatus="Pending".obs;
-
-  void changeOrderStatus(String status){
-    orderStatus.value=status;
-    update();
   }
 }
