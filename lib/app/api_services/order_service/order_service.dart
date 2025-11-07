@@ -8,7 +8,7 @@ import '../utility/urls.dart';
 
 class OrderService {
   // Change return type to be more specific
-  Future<Map<String, dynamic>> postOrder(OrderRequest orderRequest) async {
+  Future<bool> postOrder(OrderRequest orderRequest) async {
     String? token = await SharedPrefServices.getUserToken();
     // Check if token exists
     if (token == null || token.isEmpty) {
@@ -25,9 +25,8 @@ class OrderService {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Order posted successfully');
         final responseData = jsonDecode(response.body);
-        return responseData; // Return the response data
+        return true; // Return the response data
       } else {
         // Provide more detailed error information
         throw Exception(

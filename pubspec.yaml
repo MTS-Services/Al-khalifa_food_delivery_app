@@ -41,12 +41,14 @@ dependencies:
   pin_code_fields: ^8.0.1
   dropdown_button2: ^2.3.9
   http: ^1.5.0
-  shared_preferences: ^2.5.3
+#  shared_preferences: ^2.5.3
   firebase_core: ^4.1.1
   google_sign_in: ^5.4.4
   firebase_auth: ^6.1.0
   flutter_html: ^3.0.0
   get_storage: ^2.1.1
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

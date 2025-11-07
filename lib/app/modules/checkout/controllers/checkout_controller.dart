@@ -1,5 +1,6 @@
 import 'package:al_khalifa/app/modules/checkout/model/order_model.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
+import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,7 @@ import '../../cart/models/cart_item_model.dart';
 import '../../order_history/controllers/order_history_controller.dart';
 
 class CheckoutController extends GetxController {
+  final orderHistoryController=Get.put(OrderHistoryController());
   final count = 1.obs;
   final selectedIndex = (-1).obs;
   TextEditingController addressController = TextEditingController();
@@ -24,6 +26,7 @@ class CheckoutController extends GetxController {
   }) async {
     try {
       isLoading(true);
+      print("checkout controller is called");
 
       // Convert cart items to order items
       final orderItems = cartItems.map((cartItem) {
@@ -42,11 +45,24 @@ class CheckoutController extends GetxController {
       );
 
       // Post to API
-      await _orderService.postOrder(orderRequest);
+     bool response= await _orderService.postOrder(orderRequest);
 
-      Get.snackbar('Success', 'Order placed successfully!');
-      Get.find<OrderHistoryController>().fetchOrderDetails();
-      Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":2});
+      isLoading(false);
+
+     if(response){
+
+       print("checkout controller called");
+       Get.snackbar('Success', 'Order placed successfully!');
+       orderHistoryController.fetchOrderDetails();
+       await SharedPrefServices.saveIsCancelButtonTappedStatus(false);
+       addressController.clear();
+       instructionController.clear();
+       phoneNumberController.clear();
+       orderHistoryController.startPeriodicFunc();
+       Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":2});
+     }else{
+       Get.snackbar('Failed', 'Order failed!');
+     }
     } catch (e) {
       Get.snackbar('Error', 'Failed to place order: $e');
       print('✅Order submission error: $e');

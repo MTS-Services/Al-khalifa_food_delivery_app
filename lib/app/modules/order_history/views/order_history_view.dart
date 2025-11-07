@@ -2,8 +2,8 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
 import 'package:al_khalifa/app/data/image_path.dart';
+import 'package:al_khalifa/app/modules/order_history/models/my_order_model.dart';
 import 'package:al_khalifa/app/modules/profile/controllers/profile_controller.dart';
-import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:al_khalifa/app/widgets/location_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,23 +20,24 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            await controller.fetchOrderDetails();
-          },
-          child: Obx(() {
-            final orderDetails = controller.orderDetails.value;
+        child: Obx(() {
+          final OrderDetailsModel? orderDetailsModel = controller.orderDetails.value;
 
-            // Use a ListView for both empty and data states
-            return ListView(
+          // Use a ListView for both empty and data states
+          return RefreshIndicator(
+            onRefresh: ()async{
+              await controller.calledInit();
+            },
+            child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               children: [
                 SizedBox(height: 20.h),
-
-                if (orderDetails == null)
+                if(controller.isLoading.value)
+                  Center(child: CircularProgressIndicator())
+                else if (orderDetailsModel == null)
                 // Show loading or empty state with proper height
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.6,
                     child:Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -51,16 +52,16 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
                   )
                 else
                 // Show order content
-                  ..._buildOrderContent(orderDetails),
+                  ..._buildOrderContent(orderDetailsModel),
               ],
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }
 
-  List<Widget> _buildOrderContent(orderDetails) {
+  List<Widget> _buildOrderContent(OrderDetailsModel orderDetails) {
     return [
       Text('Order Item', style: AppTextStyles.medium18),
       SizedBox(height: 10.h),
@@ -145,12 +146,12 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
       ),
       SizedBox(height: 20.h),
       Obx(() {
-        if (controller.canCancel) {
+        if (controller.isCancelButtonOn.value) {
           // Still within 5 minutes — show countdown + cancel button
           return Column(
             children: [
               Text(
-                'You can cancel your order within: ${controller.formattedTime}',
+                'You can cancel your order within: ${controller.periodicRemainingMin}:${controller.periodicRemainingSecond}',
                 style: AppTextStyles.medium12,
               ),
               SizedBox(height: 10.h),
@@ -168,7 +169,7 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
                               'Do you really want to cancel the order?',
                               style: AppTextStyles.regular14,
                             ),
-                            SizedBox(
+                            Obx(()=>controller.isCancelButtonOn.value?SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {
@@ -176,7 +177,7 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
                                 },
                                 child: const Text('Cancel my order'),
                               ),
-                            ),
+                            ):SizedBox()),
                             SizedBox(
                               width: double.infinity,
                               child: OutlinedButton(
@@ -193,6 +194,8 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
                       ],
                     ),
                   );
+
+
                 },
                 text: 'Cancel',
               ),
@@ -203,7 +206,7 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
           return Column(
             children: [
               Text(
-                'Order Pending',
+                orderDetails.status,
                 style: AppTextStyles.medium18.copyWith(color: Colors.orange),
               ),
               SizedBox(height: 10.h),

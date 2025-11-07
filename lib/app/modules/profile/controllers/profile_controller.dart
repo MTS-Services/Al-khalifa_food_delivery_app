@@ -31,13 +31,15 @@ class ProfileController extends GetxController {
   // ---- SAVE IMAGE TO SHARED PREF ----
   Future<void> _saveImageToPrefs(String path) async {
     final prefs = await SharedPrefServices.getInstance();
-    await prefs.setString('profile_image_path', path);
+   // await prefs.setString('profile_image_path', path);
+    await prefs.put('profile_image_path', path);
   }
 
   // ---- LOAD IMAGE FROM SHARED PREF ----
   Future<void> _loadImageFromPrefs() async {
     final prefs = await SharedPrefServices.getInstance();
-    final savedPath = prefs.getString('profile_image_path');
+    //final savedPath = prefs.getString('profile_image_path');
+    final savedPath = prefs.get('profile_image_path');
     if (savedPath != null && File(savedPath).existsSync()) {
       _pickedImage = XFile(savedPath);
     }

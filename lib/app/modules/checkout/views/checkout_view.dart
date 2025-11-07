@@ -126,32 +126,22 @@ class CheckoutView extends GetView<CheckoutController> {
                         child: Obx(
                           () => ElevatedButton(
                             onPressed: () {
-                              if (controller.addressController.text.isEmpty) {
+                              if (controller.addressController.text.isEmpty && controller.phoneNumberController.text.isEmpty && controller.instructionController.text.isEmpty) {
                                 Get.snackbar(
-                                  'Adress',
-                                  'Please enter the adress.',
+                                  'Error',
+                                  'Please enter the all required field',
                                   animationDuration: Duration(
                                     milliseconds: 300,
                                   ),
                                 );
+                              }else{
+                                controller.submitOrder(
+                                  cartItems: cartModelData,
+                                  subtotal: subtotal,
+                                  deliveryFee: deliveryFee,
+                                  total: total,
+                                );
                               }
-                              if (controller.selectedIndex >= 0 &&
-                                  controller
-                                      .addressController
-                                      .text
-                                      .isNotEmpty) {
-                                buildShowDialog(context);
-                              }
-                              // Submit order directly
-                              controller.submitOrder(
-                                cartItems: cartModelData,
-                                subtotal: subtotal,
-                                deliveryFee: deliveryFee,
-                                total: total,
-                              );
-                              controller.addressController.clear();
-                              controller.instructionController.clear();
-                              controller.selectedIndex.value = -1;
 
                             },
                             style: ElevatedButton.styleFrom(

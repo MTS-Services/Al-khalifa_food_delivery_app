@@ -1,3 +1,4 @@
+import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
 import 'package:get/get.dart';
 import '../../../api_services/oder_delete_api_services/order_delete_api_service.dart';
 import '../../../api_services/order_service/my_order.dart';
@@ -11,6 +12,7 @@ class OrderHistoryController extends GetxController {
   var orderDetails = Rxn<OrderDetailsModel>();
   RxBool orderDeleteInProgress = false.obs;
 
+
   Future<void> fetchOrderDetails() async {
     try {
       isLoading(true);
@@ -18,7 +20,6 @@ class OrderHistoryController extends GetxController {
 
       if (data != null) {
         orderDetails.value = data;
-        startOrderTimer(); // ✅ start again for new order
         refresh();
       }
     } finally {
@@ -37,7 +38,7 @@ class OrderHistoryController extends GetxController {
 
       if (response.statusCode == 204) {
         Get.snackbar('Success', 'Order Deleted successfully');
-        await fetchOrderDetails();
+        await SharedPrefServices.saveIsCancelButtonTappedStatus(true);
         Get.offAllNamed(Routes.CUSTOM_BOTTOOM_BAR, arguments: {"index": 2});
       } else {
         update();
@@ -53,46 +54,51 @@ class OrderHistoryController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    fetchOrderDetails();
+    calledInit();
     super.onInit();
   }
 
-  /// Countdown for cancel availability (5 min = 300 seconds)
-  RxInt remainingTime = 120.obs;
-  Timer? _timer;
 
-  /// Flag to disable cancel button
-  bool get canCancel => remainingTime.value > 0;
-
-  /// Start 5-minute timer when opening order
-  void startOrderTimer() {
-    _timer?.cancel(); // cancel any previous timer
-    remainingTime.value = 120;
-
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (remainingTime.value <= 0) {
-        timer.cancel();
-      } else {
-        remainingTime.value--;
-      }
-    });
+  Future<void> calledInit()async{
+    bool response=await SharedPrefServices.getIsCancelButtonTappedStatus();
+    if(!response){
+      fetchOrderDetails();
+    }
   }
 
-  /// Stop timer
-  void stopTimer() {
-    _timer?.cancel();
-    _timer = null;
+
+  Timer? periodicTime;
+  RxInt periodicRemainingTime = 30.obs;
+  RxInt periodicRemainingMin = 0.obs;
+  RxInt periodicRemainingSecond = 0.obs;
+  RxBool isCancelButtonOn = false.obs;
+
+
+  void startPeriodicFunc(){
+    periodicTime?.cancel();
+    isCancelButtonOn.value=true;
+    update();
+     Timer.periodic(Duration(seconds: 1), (time){
+       if(periodicRemainingTime.value<=0){
+         isCancelButtonOn.value=false;
+         periodicTime?.cancel();
+       }else{
+         periodicRemainingTime.value--;
+         periodicTimeFormating();
+       }
+       update();
+     });
   }
 
-  String get formattedTime {
-    final minutes = (remainingTime.value ~/ 60).toString().padLeft(2, '0');
-    final seconds = (remainingTime.value % 60).toString().padLeft(2, '0');
-    return '$minutes:$seconds';
+
+  void periodicTimeFormating(){
+    periodicRemainingMin.value= periodicRemainingTime.value~/60;
+    periodicRemainingSecond.value=periodicRemainingTime.value % 60;
+    update();
   }
 
-  @override
-  void onClose() {
-    stopTimer();
-    super.onClose();
-  }
+
+
+
+
 }
