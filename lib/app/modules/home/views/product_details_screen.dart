@@ -82,6 +82,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final data=variations[index];
                     return _buildListTile(data.name,data.price.toString());
+
                   },
               ),
               SizedBox(height: 20),
@@ -187,7 +188,8 @@ class ProductDetailsScreen extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       dense: true,
-      leading: const CustomCircle(),
+      leading: const CustomCircle(
+      ),
       title: Text(title, style: const TextStyle(fontSize: 16)),
       trailing: Text(price, style: const TextStyle(fontSize: 16)),
     );

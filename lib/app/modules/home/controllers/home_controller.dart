@@ -32,7 +32,12 @@ class HomeController extends GetxController {
   bool addToCartInProgress = false;
   bool allCategoriesInProgress=false;
   bool searchInProgress=false;
+  var selectedIndex = (-1).obs; // -1 = nothing selected
 
+  void selectItem(int index) {
+    selectedIndex.value =
+    (selectedIndex.value == index) ? -1 : index; // toggle select/unselect
+  }
 
   List<AllMenuModel> allMenuModelList = [];
   List<PopularFoodItemModel> popularFoodItemList = [];

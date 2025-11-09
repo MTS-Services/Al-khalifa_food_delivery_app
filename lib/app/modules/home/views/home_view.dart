@@ -306,7 +306,6 @@ class HomeView extends GetView<HomeController> {
       ],
     );
   }
-
   Widget _buildSearchBar() {
     return GetBuilder<HomeController>(
       builder: (controller) {
@@ -371,4 +370,5 @@ class HomeView extends GetView<HomeController> {
       },
     );
   }
+
 }

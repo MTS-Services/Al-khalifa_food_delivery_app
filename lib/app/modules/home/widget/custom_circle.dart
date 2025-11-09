@@ -5,6 +5,7 @@ class CustomCircle extends StatelessWidget {
   final Color borderColor;
   final double borderWidth;
   final Color? fillColor;
+  final String? tag;
 
   const CustomCircle({
     super.key,
@@ -12,6 +13,7 @@ class CustomCircle extends StatelessWidget {
     this.borderColor = Colors.grey,
     this.borderWidth = 2,
     this.fillColor,
+    this.tag,
   });
 
   @override
