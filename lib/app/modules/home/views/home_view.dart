@@ -62,7 +62,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                Text("Delivery fee included!", style: TextStyle(fontSize: 16)),
+              //  Text("Delivery fee included!", style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 5),
                 _buildMealForOneGridView(),
               ],
@@ -114,7 +114,7 @@ class HomeView extends GetView<HomeController> {
                 rating: data.averageRating,
                 price: data.food.price,
                 onAdd: () {},
-                cardHeight: 135,
+               // cardHeight: 127,
               ),
             );
           },
@@ -129,14 +129,25 @@ class HomeView extends GetView<HomeController> {
 
     return GetBuilder<HomeController>(
       builder: (controller) {
+       // final length = controller.allFoodCategory.value!.foods;
         if (controller.allCategoriesInProgress) {
           return Center(child: CircularProgressIndicator());
         }
-        if (controller.allFoodCategory.value == null) {
-          return Center(child: Text("Your Category is empty"));
-        } else {
+       // if (controller.allFoodCategory.value?.foods == null) {
+        if (controller.allFoodCategory.value == null ||
+        controller.allFoodCategory.value!.foods == null ||
+        controller.allFoodCategory.value!.foods.isEmpty) {
+          return Column(
+            children: [
+              const SizedBox(height: 30,),
+              Center(child: Text("Your product is empty",style: AppTextStyles.regular20,)),
+              const SizedBox(height: 30,),
+            ],
+          );
+        }
+        //else {
           return GridView.builder(
-            itemCount: 4,
+            itemCount: controller.allFoodCategory.value!.foods.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -167,12 +178,12 @@ class HomeView extends GetView<HomeController> {
                   rating: data.foodRatings.averageRating,
                   price: data.price,
                   onAdd: () {},
-                  cardHeight: 135,
+                 // cardHeight: 135,
                 ),
               );
             },
           );
-        }
+       // }
       },
     );
   }
@@ -347,7 +358,6 @@ class HomeView extends GetView<HomeController> {
               onChanged: (value) {
                 if (value.isNotEmpty) {
                   controller.getSearchData(value);
-                  _searchTEController.clear();
                 } else {
                   controller.searchModel.clear();
                   controller.update();

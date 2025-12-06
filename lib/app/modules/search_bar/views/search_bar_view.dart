@@ -85,7 +85,7 @@ class SearchBarView extends GetView<SearchBarController> {
                             rating: data.foodRatings.averageRating,
                             price: data.price.toDouble(),
                             onAdd: () {},
-                            cardHeight: 135,
+                           // cardHeight: 127,
                           ),
                         );
                       },

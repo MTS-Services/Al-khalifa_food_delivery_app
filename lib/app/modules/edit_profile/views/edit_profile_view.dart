@@ -74,7 +74,7 @@ class EditProfileView extends GetView<EditProfileController> {
                           child: Padding(
                             padding: EdgeInsets.all(22.0.r),
                             child: Text(
-                              'shaistaganj',
+                              'shaistaganj',overflow: TextOverflow.ellipsis,maxLines: 1,
                               style: AppTextStyles.regular16,
                             ),
                           ),

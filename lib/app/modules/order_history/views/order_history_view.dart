@@ -15,7 +15,6 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
   OrderHistoryView({super.key});
   final data = Get.put(ProfileController());
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

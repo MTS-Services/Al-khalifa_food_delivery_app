@@ -72,7 +72,7 @@ class SeeAllPopularScreen extends StatelessWidget {
                 rating:foodCard.averageRating,
                 price: foodCard.food.price,
                 onAdd: () {},
-                cardHeight: 135,
+                //cardHeight: 127,
               ),
             );
           },

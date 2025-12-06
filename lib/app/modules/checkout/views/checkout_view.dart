@@ -142,7 +142,6 @@ class CheckoutView extends GetView<CheckoutController> {
                                   total: total,
                                 );
                               }
-
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

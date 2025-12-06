@@ -134,16 +134,19 @@ class Food {
 }
 
 class Variation {
+  final int id;
   final String name;
   final double price;
 
   Variation({
+    required this.id,
     required this.name,
     required this.price,
   });
 
   factory Variation.fromJson(Map<String, dynamic> json) {
     return Variation(
+      id:json["id"]??-1,
       name: json['name'] ?? '',
       price: (json['price'] ?? 0).toDouble(),
     );

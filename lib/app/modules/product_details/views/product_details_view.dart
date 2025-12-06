@@ -28,7 +28,6 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
             ),
           ]
 
-
         ),
       ),
     );

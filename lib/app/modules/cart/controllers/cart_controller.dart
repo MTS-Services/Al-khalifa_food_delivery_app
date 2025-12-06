@@ -22,17 +22,34 @@ class CartController extends GetxController {
     return '$cleaned Tk';
   }
 
+  // double get subtotal {
+  //   double sum = 0;
+  //   for (final item in cartItemModelData) {
+  //     final q = quantities[item.id]?.value ?? (item.quantity);
+  //     final unit = (item.food.price is int)
+  //         ? (item.food.price as int).toDouble()
+  //         : item.food.price;
+  //     sum += (unit * q);
+  //   }
+  //   return sum;
+  // }
   double get subtotal {
     double sum = 0;
+
     for (final item in cartItemModelData) {
-      final q = quantities[item.id]?.value ?? (item.quantity);
-      final unit = (item.food.price is int)
-          ? (item.food.price as int).toDouble()
-          : item.food.price;
-      sum += (unit * q);
+      final q = quantities[item.id]?.value ?? item.quantity;
+
+      final double variationPrice =
+      (item.variation.price is int)
+          ? (item.variation.price as int).toDouble()
+          : item.variation.price;
+
+      sum += variationPrice * q;
     }
+
     return sum;
   }
+
 
   double get total => subtotal + deliveryFee;
 
@@ -81,11 +98,23 @@ class CartController extends GetxController {
   void decrement(int itemId) {
     final q = quantities[itemId];
     if (q == null) return;
+    if (q.value <= 1) {
+      return;
+    }
+
+    q.value--;
+    update(['item_$itemId', 'totals']);
+  }
+
+
+/*  void decrement(int itemId) {
+    final q = quantities[itemId];
+    if (q == null) return;
     if (q.value > 1) {
       q.value--;
       update(['item_$itemId', 'totals']);
     }
-  }
+  }*/
 
   void setFees({double? delivery, double? platform, double? vat}) {
     if (delivery != null) deliveryFee = delivery;
@@ -137,8 +166,7 @@ class CartController extends GetxController {
     update();
     try {
       final response = await CartListApiServices.decreaseCartItemRequest(
-        Urls.decreaseItem(cartId),
-        {},
+        Urls.decreaseItem(cartId)
       );
       decreaseItemInProgress = false;
       update();
@@ -153,4 +181,30 @@ class CartController extends GetxController {
       Get.snackbar('Failed', '$e');
     }
   }
+
+  Future<void> increaseCartQuantity(int productId, int variationId) async {
+    try {
+      final response = await CartListApiServices.increaseCartQtyService(
+        Urls.addCart,
+        {
+          "product_id": productId,
+          "quantity": 1,
+          "variation_id": variationId,
+        },
+      );
+
+      if (response.statusCode == 201) {
+        // Optional snackbar
+        // Get.snackbar("Success", "Quantity increased");
+      } else {
+        Get.snackbar("Failed", response.body);
+      }
+    } catch (e) {
+      Get.snackbar("Error", "$e");
+    }
+  }
+
+
+
+
 }

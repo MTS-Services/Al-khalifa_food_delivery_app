@@ -1,4 +1,6 @@
 // models/food_model.dart
+import '../../home/models/popular_food_item_model.dart';
+
 class Food {
   final int id;
   final String name;
@@ -43,6 +45,7 @@ class CartItem {
   late final int quantity;
   final int userId;
   final Food food;
+  final Variation variation;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -54,6 +57,7 @@ class CartItem {
     required this.food,
     required this.createdAt,
     required this.updatedAt,
+    required this.variation,
   });
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
@@ -63,40 +67,10 @@ class CartItem {
       quantity: json['quantity'],
       userId: json['user_id'],
       food: Food.fromJson(json['food']),
+      variation: Variation.fromJson(json['variation']),
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'product_id': productId,
-      'quantity': quantity,
-      'user_id': userId,
-      'food': food.toJson(),
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
-    };
-  }
-
-  CartItem copyWith({
-    int? id,
-    int? productId,
-    int? quantity,
-    int? userId,
-    Food? food,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) {
-    return CartItem(
-      id: id ?? this.id,
-      productId: productId ?? this.productId,
-      quantity: quantity ?? this.quantity,
-      userId: userId ?? this.userId,
-      food: food ?? this.food,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-    );
-  }
 }

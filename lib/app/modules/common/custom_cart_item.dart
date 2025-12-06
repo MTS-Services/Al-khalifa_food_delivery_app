@@ -63,12 +63,24 @@ class CustomCartItem extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                // c.increment(cartItemModel.id);
+                                // Future.microtask(() {
+                                //   _homeController.getAddToCart(
+                                //     cartItemModel.productId,
+                                //     1,
+                                //     cartItemModel.variation.id,
+                                //   );
+                                // });
                                 c.increment(cartItemModel.id);
-                                _homeController.getAddToCart(
+
+                                // Backend এ increase quantity call
+                                c.increaseCartQuantity(
                                   cartItemModel.productId,
-                                  1,
+                                  cartItemModel.variation.id,
                                 );
-                              },
+
+                              }
+                              ,
                               child: _circleBtn('+'),
                             ),
                             Padding(
@@ -80,10 +92,18 @@ class CustomCartItem extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                c.decrement(cartItemModel.id);
-                                cartController.decreaseCartItem(
-                                  cartItemModel.id,
-                                );
+                                // c.decrement(cartItemModel.id);
+                                // cartController.decreaseCartItem(
+                                //   cartItemModel.id,
+                                // );
+
+                                  if (c.qtyOf(cartItemModel.id) > 1) {
+                                    c.decrement(cartItemModel.id);
+
+                                    Future.microtask(() {
+                                      c.decreaseCartItem(cartItemModel.id);
+                                    });
+                                  }
                               },
                               child: _circleBtn('-'),
                             ),
@@ -98,8 +118,8 @@ class CustomCartItem extends StatelessWidget {
                       id: 'item_${cartItemModel.id}',
                       builder: (c) {
                         final qty = c.qtyOf(cartItemModel.id);
-                        final total = cartItemModel.food.price * qty;
-                        return Text('$total Tk', style: AppTextStyles.medium14);
+                       // final total = cartItemModel.food.price * qty;
+                        return Text('${cartItemModel.variation.price*qty} Tk', style: AppTextStyles.medium14);
                       },
                     ),
                   ],

@@ -1,7 +1,5 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
-import 'package:al_khalifa/app/modules/custom_bottoom_bar/controllers/custom_bottoom_bar_controller.dart';
-import 'package:al_khalifa/app/modules/custom_bottoom_bar/views/custom_bottoom_bar_view.dart';
 import 'package:al_khalifa/app/modules/home/controllers/home_controller.dart';
 import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
@@ -43,6 +41,9 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(controller.selectedVariationId);
+    controller.selectedVariationId(variations[0].id);
+    print(controller.selectedVariationId);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -77,14 +78,13 @@ class ProductDetailsScreen extends StatelessWidget {
               if(variations.length>1)
                 ListView.builder(
                   itemCount: variations.length,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    final data=variations[index];
-                    return _buildListTile(data.name,data.price.toString());
-
+                    final data = variations[index];
+                    return _buildListTile(data.name, data.price.toString(), index,data.id);
                   },
-              ),
+                ),
               SizedBox(height: 20),
               Spacer(),
               _buildAddToCard(),
@@ -176,7 +176,7 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
         CustomElevatedButton(
           onPressed: () {
-            controller.getAddToCart(foodId, controller.count.value);
+            controller.getAddToCart(foodId, controller.count.value,controller.selectedVariationId.value);
           },
           text: "Add to cart",
         ),
@@ -184,11 +184,13 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(String title, String price) {
+  Widget _buildListTile(String title, String price,int index,int variationId) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       dense: true,
-      leading: const CustomCircle(
+      leading:  CustomCircle(
+        index: index,
+        variationId: variationId,
       ),
       title: Text(title, style: const TextStyle(fontSize: 16)),
       trailing: Text(price, style: const TextStyle(fontSize: 16)),

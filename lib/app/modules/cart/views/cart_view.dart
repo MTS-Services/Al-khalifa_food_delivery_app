@@ -15,7 +15,6 @@ class CartView extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
-    // final contorller = Get.find<CartController>();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

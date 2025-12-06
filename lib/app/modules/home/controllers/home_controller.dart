@@ -32,11 +32,18 @@ class HomeController extends GetxController {
   bool addToCartInProgress = false;
   bool allCategoriesInProgress=false;
   bool searchInProgress=false;
-  var selectedIndex = (-1).obs; // -1 = nothing selected
+  var selectedIndex = (-1).obs;
+  var selectedVariationId = (-1).obs;
 
-  void selectItem(int index) {
-    selectedIndex.value =
-    (selectedIndex.value == index) ? -1 : index; // toggle select/unselect
+  void selectIndex(int index,variationID) {
+    selectedIndex.value = index;
+    selectedVariationId.value=variationID;
+    print(selectedVariationId.value);
+  }
+
+  void selectedVariationID(int vid){
+    selectedVariationId.value=vid;
+    print(selectedVariationId.value);
   }
 
   List<AllMenuModel> allMenuModelList = [];
@@ -120,13 +127,13 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getAddToCart(int productId, int quantity) async {
+  Future<void> getAddToCart(int productId, int quantity,int variationId) async {
     addToCartInProgress = true;
     update();
     try {
       final response = await AddToCartServices.addToCartServices(
         Urls.addCart,
-        <String, dynamic>{"product_id": productId, "quantity": quantity},
+        <String, dynamic>{"product_id": productId, "quantity": quantity,"variation_id":variationId},
       );
       addToCartInProgress = false;
       update();
@@ -140,6 +147,7 @@ class HomeController extends GetxController {
         );
          final cart = Get.find<CartController>();
          await cart.getCartListData();
+         count.value =1;
          Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":1});
       } else {
         Get.snackbar(
@@ -147,6 +155,7 @@ class HomeController extends GetxController {
           '${response.body}',
           backgroundColor: Colors.red.shade400,
         );
+        print(response.body);
       }
     } catch (e) {
       addToCartInProgress = false;
@@ -161,7 +170,7 @@ class HomeController extends GetxController {
 
   void setProduct(int productId) {
     _currentProductId = productId;
-    _counts.putIfAbsent(productId, () => 1.obs);
+    _counts[productId] = 1.obs;
   }
 
   RxInt get count {
