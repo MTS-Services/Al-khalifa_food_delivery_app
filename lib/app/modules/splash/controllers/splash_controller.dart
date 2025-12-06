@@ -1,23 +1,21 @@
+import 'package:al_khalifa/app/routes/app_pages.dart';
+import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
-  //TODO: Implement SplashController
-
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    goToNextScreen();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> goToNextScreen() async {
+    await SharedPrefServices.getUserToken();
+    await Future.delayed(const Duration(seconds: 2));
+    if (await SharedPrefServices.isLoggedIn) {
+      Get.offAllNamed(Routes.CUSTOM_BOTTOOM_BAR);
+    } else {
+      Get.offAllNamed(Routes.ONBORDING1);
+    }
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

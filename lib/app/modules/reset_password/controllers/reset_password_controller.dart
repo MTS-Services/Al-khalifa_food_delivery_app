@@ -1,4 +1,9 @@
+import 'package:al_khalifa/app/api_services/auth_api_services/auth_api_services.dart';
+import 'package:al_khalifa/app/api_services/utility/urls.dart';
+import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../routes/app_pages.dart';
 
 class ResetPasswordController extends GetxController {
   //TODO: Implement ResetPasswordController
@@ -7,32 +12,37 @@ class ResetPasswordController extends GetxController {
   void togglePassVisibility() {
     isObSecure4.value = !isObSecure4.value;
   }
-
-
   var isObSecure5 = true.obs;
 
   void toggleConfirmPassVisibility() {
     isObSecure5.value = !isObSecure5.value;
   }
 
-
-
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  bool resetPasswordInProgress=false;
+  final TextEditingController passwordController=TextEditingController();
+  final TextEditingController confirmPassController=TextEditingController();
+  
+  Future<void> getResetPassword()async{
+    resetPasswordInProgress=true;
+    update();
+    final email=await SharedPrefServices.getUserEmail();
+    final otp=await SharedPrefServices.getUserOtp();
+    try{
+      final response=await AuthApiServices.resetPasswordRequest(Urls.resetPassword, <String,dynamic>{
+        "email": email,
+        "otp": otp,
+        "password": passwordController.text.trim(),
+      });
+      if(response.statusCode == 200){
+        Get.snackbar('Success', 'Password reset successfully.',backgroundColor:Colors.green.shade100);
+        Get.toNamed(Routes.LOGIN);
+      }else{
+        Get.snackbar('Failed', '${response.body}',backgroundColor:Colors.red.shade400);
+      }
+    }catch(e){
+      resetPasswordInProgress=false;
+      update();
+      Get.snackbar('Error', 'Something went wrong: ${e.toString()}');
+    }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

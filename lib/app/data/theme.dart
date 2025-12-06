@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 
 ThemeData themeData() {
   return ThemeData(
+    fontFamily: 'Poppins',
+    scaffoldBackgroundColor: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white,
+      scrolledUnderElevation: 0,
+    ),
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 18),
       enabledBorder: OutlineInputBorder(
@@ -14,6 +20,14 @@ ThemeData themeData() {
         borderSide: BorderSide(color: AppColors.strokeColor),
         borderRadius: BorderRadius.circular(10),
       ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color:Colors.red),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color:Colors.red),
+        borderRadius: BorderRadius.circular(10),
+      )
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -26,6 +40,20 @@ ThemeData themeData() {
           color: AppColors.whiteColor,
         ), // textStyle: AppTextStyles.bold16,
       ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(color: AppColors.primaryColor),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+    ),
+    dialogTheme: DialogThemeData(
+      backgroundColor: Colors.white,
+      // elevation: 10,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      titleTextStyle: AppTextStyles.medium16.apply(color: Colors.black),
     ),
   );
 }

@@ -1,23 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../home/controllers/home_controller.dart';
 
 class SearchBarController extends GetxController {
-  //TODO: Implement SearchBarController
+  final TextEditingController searchTEController = TextEditingController();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  final HomeController homeController = Get.find<HomeController>();
 
   @override
   void onClose() {
+    searchTEController.dispose();
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
