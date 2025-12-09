@@ -1,13 +1,11 @@
 import 'package:al_khalifa/app/modules/checkout/views/payment_method.dart';
 import 'package:al_khalifa/app/modules/common/custom_list.dart';
-import 'package:al_khalifa/app/modules/order_history/controllers/order_history_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../data/app_text_styles.dart';
 import '../../cart/models/cart_item_model.dart';
 import '../controllers/checkout_controller.dart';
-import 'build_show_dialog.dart';
 
 class CheckoutView extends GetView<CheckoutController> {
   const CheckoutView({super.key});
@@ -105,7 +103,7 @@ class CheckoutView extends GetView<CheckoutController> {
                           chargeType:
                               '${cartModelData[i].quantity}x ${cartModelData[i].food.name}',
                           amount:
-                              '${cartModelData[i].quantity * cartModelData[i].food.price} Tk',
+                              '${cartModelData[i].quantity * cartModelData[i].variation.price} Tk',
                         ),
                       SizedBox(height: 8.h),
                       Divider(height: 24.h, thickness: 1),
@@ -126,7 +124,15 @@ class CheckoutView extends GetView<CheckoutController> {
                         child: Obx(
                           () => ElevatedButton(
                             onPressed: () {
-                              if (controller.addressController.text.isEmpty && controller.phoneNumberController.text.isEmpty && controller.instructionController.text.isEmpty) {
+                              if (controller.addressController.text.isEmpty &&
+                                  controller
+                                      .phoneNumberController
+                                      .text
+                                      .isEmpty &&
+                                  controller
+                                      .instructionController
+                                      .text
+                                      .isEmpty) {
                                 Get.snackbar(
                                   'Error',
                                   'Please enter the all required field',
@@ -134,7 +140,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                     milliseconds: 300,
                                   ),
                                 );
-                              }else{
+                              } else {
                                 controller.submitOrder(
                                   cartItems: cartModelData,
                                   subtotal: subtotal,

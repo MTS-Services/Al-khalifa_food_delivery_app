@@ -1,12 +1,12 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/data/app_text_styles.dart';
+import 'package:al_khalifa/app/modules/checkout/controllers/checkout_controller.dart';
 import 'package:al_khalifa/app/modules/common/custom_list.dart';
 import 'package:al_khalifa/app/modules/custom_bottoom_bar/controllers/custom_bottoom_bar_controller.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../common/custom_cart_item.dart';
 import '../controllers/cart_controller.dart';
 
@@ -105,7 +105,8 @@ class CartView extends GetView<CartController> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => Get.toNamed(
+                        onPressed: () {
+                          Get.toNamed(
                           Routes.CHECKOUT,
                           arguments: {
                             'cart_model_data': cartController.cartItemModelData,
@@ -113,7 +114,9 @@ class CartView extends GetView<CartController> {
                             'delivery_fee': cartController.deliveryFee,
                             'total': cartController.total,
                           },
-                        ),
+                        );
+                          Get.find<CheckoutController>().resetCheckout();
+                        },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                           child: Text(

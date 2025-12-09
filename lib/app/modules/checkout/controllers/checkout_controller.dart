@@ -1,3 +1,4 @@
+import 'package:al_khalifa/app/modules/cart/controllers/cart_controller.dart';
 import 'package:al_khalifa/app/modules/checkout/model/order_model.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
@@ -50,14 +51,14 @@ class CheckoutController extends GetxController {
       isLoading(false);
 
      if(response){
-
+        final cartController =Get.find<CartController>();
+        cartController.cartItemModelData.clear();
+        cartController.quantities.clear();
+        cartController.update();
        print("checkout controller called");
        Get.snackbar('Success', 'Order placed successfully!');
        orderHistoryController.fetchOrderDetails();
        await SharedPrefServices.saveIsCancelButtonTappedStatus(false);
-       addressController.clear();
-       instructionController.clear();
-       phoneNumberController.clear();
        orderHistoryController.startPeriodicFunc();
        Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":2});
      }else{
@@ -74,6 +75,14 @@ class CheckoutController extends GetxController {
   void select(int index) {
     selectedIndex.value = index;
   }
+
+  void resetCheckout() {
+    selectedIndex.value = -1;
+    addressController.clear();
+    instructionController.clear();
+    phoneNumberController.clear();
+  }
+
 
   void increment() {
     count.value++;

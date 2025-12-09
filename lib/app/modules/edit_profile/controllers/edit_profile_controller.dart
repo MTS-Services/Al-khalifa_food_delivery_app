@@ -8,12 +8,14 @@ import '../../../api_services/utility/urls.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class EditProfileController extends GetxController {
+
+  final List<String> city = ['Dhaka', 'Dhanmondi', 'Uttora', 'Mirpur'];
+
   ProfileController profileController = Get.put(ProfileController());
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController districtController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   var selectedDistrict = RxnString();
@@ -27,6 +29,10 @@ class EditProfileController extends GetxController {
     numberController.text = profileController.profileModelInfo.value.phoneNumber;
     emailController.text =profileController.profileModelInfo.value.email;
     addressController.text =profileController.profileModelInfo.value.address;
+    selectedDistrict.value = "Shaistaganj";
+    selectedCity.value = city.contains(profileController.profileModelInfo.value.city)
+        ? profileController.profileModelInfo.value.city
+        : null;
   }
 
   void onClose(){
@@ -45,8 +51,8 @@ class EditProfileController extends GetxController {
           "first_name":firstNameController.text.trim(),
           "last_name":lastNameController.text.trim(),
           "email":emailController.text.trim(),
-          "city": "string",
-          "district": "string",
+          "district": "Shaistaganj",
+          "city": selectedCity.value ?? '',
           "address":addressController.text.trim(),
           "phone_number": numberController.text.trim(),
           "role": "customer",

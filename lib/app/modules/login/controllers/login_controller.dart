@@ -49,6 +49,7 @@ class LoginController extends GetxController {
           'Login Successful',
           backgroundColor: Colors.green.shade100,
         );
+        await Future.delayed(Duration(milliseconds: 300));
         Get.offAllNamed(Routes.CUSTOM_BOTTOOM_BAR);
       } else {
         Get.snackbar(

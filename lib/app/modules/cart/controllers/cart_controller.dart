@@ -22,17 +22,6 @@ class CartController extends GetxController {
     return '$cleaned Tk';
   }
 
-  // double get subtotal {
-  //   double sum = 0;
-  //   for (final item in cartItemModelData) {
-  //     final q = quantities[item.id]?.value ?? (item.quantity);
-  //     final unit = (item.food.price is int)
-  //         ? (item.food.price as int).toDouble()
-  //         : item.food.price;
-  //     sum += (unit * q);
-  //   }
-  //   return sum;
-  // }
   double get subtotal {
     double sum = 0;
 
@@ -105,16 +94,6 @@ class CartController extends GetxController {
     q.value--;
     update(['item_$itemId', 'totals']);
   }
-
-
-/*  void decrement(int itemId) {
-    final q = quantities[itemId];
-    if (q == null) return;
-    if (q.value > 1) {
-      q.value--;
-      update(['item_$itemId', 'totals']);
-    }
-  }*/
 
   void setFees({double? delivery, double? platform, double? vat}) {
     if (delivery != null) deliveryFee = delivery;

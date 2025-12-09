@@ -63,14 +63,6 @@ class CustomCartItem extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                // c.increment(cartItemModel.id);
-                                // Future.microtask(() {
-                                //   _homeController.getAddToCart(
-                                //     cartItemModel.productId,
-                                //     1,
-                                //     cartItemModel.variation.id,
-                                //   );
-                                // });
                                 c.increment(cartItemModel.id);
 
                                 // Backend এ increase quantity call
@@ -92,10 +84,6 @@ class CustomCartItem extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                // c.decrement(cartItemModel.id);
-                                // cartController.decreaseCartItem(
-                                //   cartItemModel.id,
-                                // );
 
                                   if (c.qtyOf(cartItemModel.id) > 1) {
                                     c.decrement(cartItemModel.id);
