@@ -11,6 +11,7 @@ import 'package:al_khalifa/app/modules/home/models/all_menu_model.dart';
 import 'package:al_khalifa/app/modules/home/models/popular_food_item_model.dart';
 import 'package:al_khalifa/app/modules/home/models/search_model.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
+import 'package:al_khalifa/app/widgets/showCustomSnackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -140,21 +141,13 @@ class HomeController extends GetxController {
       print(response.statusCode);
       print('${response.body}');
       if (response.statusCode == 201) {
-        Get.snackbar(
-          'Success',
-          'Data Add To Cart successful',
-          backgroundColor: Colors.green.shade100,
-        );
+        showCustomSnackbar(context: Get.context!, title: 'success', message: "Data Add To Cart successful",backgroundColor: Colors.green);
          final cart = Get.find<CartController>();
          await cart.getCartListData();
          count.value =1;
          Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":1});
       } else {
-        Get.snackbar(
-          'Failed',
-          '${response.body}',
-          backgroundColor: Colors.red.shade400,
-        );
+        showCustomSnackbar(context: Get.context!, title: 'Failed', message: '${response.body}', backgroundColor: Colors.red.shade400,);
         print(response.body);
       }
     } catch (e) {

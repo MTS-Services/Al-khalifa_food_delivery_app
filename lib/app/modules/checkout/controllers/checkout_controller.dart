@@ -2,7 +2,7 @@ import 'package:al_khalifa/app/modules/cart/controllers/cart_controller.dart';
 import 'package:al_khalifa/app/modules/checkout/model/order_model.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../api_services/order_service/order_service.dart';
@@ -56,17 +56,20 @@ class CheckoutController extends GetxController {
         cartController.quantities.clear();
         cartController.update();
        print("checkout controller called");
-       Get.snackbar('Success', 'Order placed successfully!');
+
+      // Get.snackbar('Success', 'Order placed successfully!');
        orderHistoryController.fetchOrderDetails();
        await SharedPrefServices.saveIsCancelButtonTappedStatus(false);
        orderHistoryController.startPeriodicFunc();
        Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":2});
      }else{
-       Get.snackbar('Failed', 'Order failed!');
+
+      // Get.snackbar('Failed', 'Order failed!');
      }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to place order: $e');
-      print('✅Order submission error: $e');
+
+    //  Get.snackbar('Error', 'Failed to place order: $e');
+     // print('✅Order submission error: $e');
     } finally {
       isLoading(false);
     }

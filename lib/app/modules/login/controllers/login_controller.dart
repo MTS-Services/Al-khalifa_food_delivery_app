@@ -4,6 +4,7 @@ import 'package:al_khalifa/app/api_services/auth_api_services/auth_api_services.
 import 'package:al_khalifa/app/api_services/utility/urls.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
+import 'package:al_khalifa/app/widgets/showCustomSnackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,26 +43,22 @@ class LoginController extends GetxController {
         final token = decodedResponse["access_token"];
         print("token is $token");
         SharedPrefServices.saveUserToken(token);
-        emailTEController.clear();
-        passTEController.clear();
-        Get.snackbar(
-          'Success',
-          'Login Successful',
-          backgroundColor: Colors.green.shade100,
-        );
+
+        showCustomSnackbar(context: Get.context!, title: 'success', message: "Login Successful",backgroundColor: Colors.green);
+
         await Future.delayed(Duration(milliseconds: 300));
         Get.offAllNamed(Routes.CUSTOM_BOTTOOM_BAR);
+        emailTEController.clear();
+        passTEController.clear();
       } else {
-        Get.snackbar(
-          'Failed',
-          '${response.body}',
-          backgroundColor: Colors.red.shade400,
-        );
+        showCustomSnackbar(context: Get.context!, title: 'Failed', message: '${response.body}', backgroundColor: Colors.red.shade400,);
+
       }
     } catch (e) {
       signInProgress = false;
       update();
-      Get.snackbar('Error', 'Something went wrong: ${e.toString()}');
+      showCustomSnackbar(context: Get.context!, title: 'Error', message: 'Something went wrong: ${e.toString()}',);
+
     }
   }
 

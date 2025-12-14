@@ -5,11 +5,15 @@ import 'package:al_khalifa/app/modules/order_history/controllers/order_history_c
 import 'package:al_khalifa/app/modules/profile/controllers/profile_controller.dart';
 import 'package:get/get.dart';
 
+import '../../checkout/controllers/checkout_controller.dart';
 import '../controllers/custom_bottoom_bar_controller.dart';
 
 class CustomBottomBarBinding extends Bindings {
   @override
   void dependencies() {
+
+      Get.lazyPut<CheckoutController>(() => CheckoutController());
+
  /*   Get.lazyPut<CustomBottomBarController>(
       () => CustomBottomBarController(),
     );

@@ -111,6 +111,7 @@ class OrderItemModel {
 }
 
 class FoodModel {
+  final int id; //change id
   final String name;
   final String description;
   final String foodImageUrl;
@@ -119,6 +120,7 @@ class FoodModel {
   final int categoryId;
 
   FoodModel({
+    required this.id,
     required this.name,
     required this.description,
     required this.foodImageUrl,
@@ -129,6 +131,7 @@ class FoodModel {
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
     return FoodModel(
+      id: json['id']??-1,
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       foodImageUrl: json['food_image_url'] ?? '',

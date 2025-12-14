@@ -1,13 +1,62 @@
 
 import 'dart:convert';
 
+import 'package:al_khalifa/app/api_services/food_rating_api_service/food_rating_api_service.dart';
 import 'package:al_khalifa/app/api_services/payment_history_api_services/payment_history_api_service.dart';
 import 'package:al_khalifa/app/api_services/utility/urls.dart';
 import 'package:al_khalifa/app/modules/history_page/model/details_history_model.dart';
 import 'package:al_khalifa/app/modules/history_page/model/payment_history_model.dart';
+import 'package:al_khalifa/app/widgets/showCustomSnackbar.dart';
 import 'package:get/get.dart';
 
 class HistoryPageController extends GetxController {
+
+  final RxMap<int, int> selectedStars = <int, int>{}.obs;
+
+  final RxBool foodRatingInProgress = false.obs;
+
+  void changeSelectStar(int foodId, int index) {
+    selectedStars[foodId] = index;
+  }
+
+  int getSelectedStar(int foodId) {
+    return selectedStars[foodId] ?? -1;
+  }
+
+  Future<bool> foodRating(int foodId) async {
+    if (!selectedStars.containsKey(foodId)) {
+      showCustomSnackbar(
+        context: Get.context!,
+        title: "Warning",
+        message: "Please select a rating",
+      );
+      return false;
+    }
+
+    foodRatingInProgress.value = true;
+
+    try {
+      final body = {
+        "food_id": foodId,
+        "stars": selectedStars[foodId]! + 1,
+      };
+
+      final response =
+      await FoodRatingApiService.foodRatingsApiServiceRequest(
+        Urls.foodRatings,
+        body,
+      );
+
+      if (response.statusCode == 201) {
+        selectedStars.remove(foodId);
+        return true;
+      }
+      return false;
+    } finally {
+      foodRatingInProgress.value = false;
+    }
+  }
+
   List<PaymentHistoryModel>  historyModelList=[];
 
   Rxn<DetailsHistoryModel> detailsHistory=Rxn<DetailsHistoryModel>();

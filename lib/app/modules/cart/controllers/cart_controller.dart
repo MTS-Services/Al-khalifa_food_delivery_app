@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../api_services/cart_list_api_services/cart_list_api_services.dart';
@@ -128,7 +129,10 @@ class CartController extends GetxController {
         cartItemModelData.removeWhere((item) => item.id == cartId);
 
         update();
-        Get.snackbar('Success', 'Deleted from cart successfully');
+        //Get.snackbar('Success', 'Deleted from cart successfully');
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(content: Text('Deleted from cart successfully')),
+        );
       } else {
         update();
         Get.snackbar('Failed', response.body);

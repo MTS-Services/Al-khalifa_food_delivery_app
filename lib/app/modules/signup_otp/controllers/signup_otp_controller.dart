@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:al_khalifa/app/api_services/auth_api_services/auth_api_services.dart';
 import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
+import 'package:al_khalifa/app/widgets/showCustomSnackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,15 +28,18 @@ class SignupOtpController extends GetxController {
         print(response.statusCode.toString());
         print(response.body);
         if(response.statusCode == 200){
-          Get.snackbar('Success', "Otp Verification Successful",backgroundColor: Colors.green.shade100);
+          showCustomSnackbar(context: Get.context!, title: 'Success', message: 'Otp Verification Successful', backgroundColor: Colors.green,);
+         // Get.snackbar('Success', "Otp Verification Successful",backgroundColor: Colors.green.shade100);
           Get.toNamed(Routes.LOGIN);
         }else{
-          Get.snackbar("Error", '${response.body}',backgroundColor: Colors.red.shade400);
+          showCustomSnackbar(context: Get.context!, title: 'Failed', message: '${response.body}', backgroundColor: Colors.red.shade400,);
+         // Get.snackbar("Error", '${response.body}',backgroundColor: Colors.red.shade400);
         }
       }catch(e){
         otpInProgress=false;
         update();
-        Get.snackbar('Error', 'Something went wrong: ${e.toString()}');
+        showCustomSnackbar(context: Get.context!, title: 'Error', message: 'Something went wrong: ${e.toString()}',);
+        //Get.snackbar('Error', 'Something went wrong: ${e.toString()}');
       }
     }
 
