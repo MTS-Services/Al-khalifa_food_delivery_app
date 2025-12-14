@@ -133,6 +133,6 @@ class SharedPrefServices {
 
   static Future<bool> getIsCancelButtonTappedStatus()async{
     final box=await Hive.openBox("app_data");
-    return await box.get("isCancelButtonTapped");
+    return box.get("isCancelButtonTapped",defaultValue: false);
   }
 }

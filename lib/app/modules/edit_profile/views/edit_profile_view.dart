@@ -8,10 +8,7 @@ import 'custom_profile_text_field.dart';
 import 'dropdown_button.dart';
 
 class EditProfileView extends GetView<EditProfileController> {
-  EditProfileView({super.key});
-
-  final List<String> district = ['Dhaka', 'Cumilla', 'Chittagong', 'Rajshahi'];
-  final List<String> city = ['Dhaka', 'Dhanmondi', 'Uttora', 'Mirpur'];
+const  EditProfileView({super.key});
 
 
   @override
@@ -90,13 +87,16 @@ class EditProfileView extends GetView<EditProfileController> {
                         Text('City', style: AppTextStyles.medium16),
                         SizedBox(height: 8.h),
                         Obx(() {
+                          final selectedValue = controller.city.contains(controller.selectedCity.value)
+                              ? controller.selectedCity.value
+                              : null;
+
                           return AppDropdown<String>(
-                            items: city,
-                            value: (controller.selectedCity.value ?? '').isEmpty
-                                ? null
-                                : controller.selectedCity.value,
+                            items: controller.city,
+                            value: selectedValue,
                             onChanged: (v) {
                               controller.selectedCity.value = v ?? '';
+                              print("Selected city: ${controller.selectedCity.value}");
                             },
                             hintText: 'Select City',
                             borderColor: AppColors.strokeColor,

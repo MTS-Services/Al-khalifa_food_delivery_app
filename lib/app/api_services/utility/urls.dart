@@ -30,4 +30,6 @@ class Urls {
   static String paymentDetailsHistory(int id) =>
       '$_baseUrl/payment_history/user_payment/$id';
   static String search = '$_baseUrl/search/?q=';
+
+  static String foodRatings = '$_baseUrl/food_rating/';
 }

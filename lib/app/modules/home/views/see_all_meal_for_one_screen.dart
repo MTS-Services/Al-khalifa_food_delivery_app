@@ -1,5 +1,6 @@
 import 'package:al_khalifa/app/modules/home/controllers/home_controller.dart';
 import 'package:al_khalifa/app/modules/home/views/product_details_screen.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widget/custom_header.dart';
@@ -23,7 +24,7 @@ class SeeAllMealForOneScreen extends StatelessWidget {
                   centerTitle: true,
                   leadingIcon: Icons.arrow_back,
                   onLeadingTap: (){
-                    Get.back();
+                    Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":0});
                   },
                 ),
                 _buildPopularGridView()
@@ -83,9 +84,7 @@ class SeeAllMealForOneScreen extends StatelessWidget {
             },
           );
         }
-
       }
     );
   }
-
 }

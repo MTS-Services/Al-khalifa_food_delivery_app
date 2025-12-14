@@ -49,11 +49,11 @@ ThemeData themeData() {
         ),
       ),
     ),
-    dialogTheme: DialogThemeData(
-      backgroundColor: Colors.white,
-      // elevation: 10,
-      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      titleTextStyle: AppTextStyles.medium16.apply(color: Colors.black),
-    ),
+    // dialogTheme: DialogThemeData(
+    //   backgroundColor: Colors.white,
+    //   // elevation: 10,
+    //   // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+    //   titleTextStyle: AppTextStyles.medium16.apply(color: Colors.black),
+    // ),
   );
 }

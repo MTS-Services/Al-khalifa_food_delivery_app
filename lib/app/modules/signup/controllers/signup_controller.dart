@@ -1,7 +1,9 @@
 import 'package:al_khalifa/app/api_services/auth_api_services/auth_api_services.dart';
 import 'package:al_khalifa/app/api_services/utility/urls.dart';
 import 'package:al_khalifa/app/routes/app_pages.dart';
+import 'package:al_khalifa/app/widgets/showCustomSnackbar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../shared_prerf_services/shared_pref_services.dart';
@@ -68,16 +70,19 @@ class SignupController extends GetxController {
         addressTEController.clear();
         passwordTEController.clear();
         confirmPasswordTEController.clear();
-        Get.snackbar(' Success', "Registration Successful");
+        showCustomSnackbar(context: Get.context!, title: 'success', message: "Registration Successful",backgroundColor: Colors.green);
+       // Get.snackbar(' Success', "Registration Successful");
         Get.toNamed(Routes.SIGNUP_OTP);
       } else {
         print(response.body);
-        Get.snackbar("Error", '${response.body}');
+        showCustomSnackbar(context: Get.context!, title: 'Failed', message: '${response.body}', backgroundColor: Colors.red.shade400,);
+        //Get.snackbar("Error", '${response.body}');
       }
     } catch (e) {
       signUpInProgress = false;
       update();
-      Get.snackbar('Error', 'Something went wrong: ${e.toString()}');
+      showCustomSnackbar(context: Get.context!, title: 'Error', message: 'Something went wrong: ${e.toString()}',);
+     // Get.snackbar('Error', 'Something went wrong: ${e.toString()}');
     }
   }
 }

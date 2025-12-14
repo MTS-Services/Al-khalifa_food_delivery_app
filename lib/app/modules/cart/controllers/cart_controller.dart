@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../api_services/cart_list_api_services/cart_list_api_services.dart';
@@ -22,17 +23,6 @@ class CartController extends GetxController {
     return '$cleaned Tk';
   }
 
-  // double get subtotal {
-  //   double sum = 0;
-  //   for (final item in cartItemModelData) {
-  //     final q = quantities[item.id]?.value ?? (item.quantity);
-  //     final unit = (item.food.price is int)
-  //         ? (item.food.price as int).toDouble()
-  //         : item.food.price;
-  //     sum += (unit * q);
-  //   }
-  //   return sum;
-  // }
   double get subtotal {
     double sum = 0;
 
@@ -106,16 +96,6 @@ class CartController extends GetxController {
     update(['item_$itemId', 'totals']);
   }
 
-
-/*  void decrement(int itemId) {
-    final q = quantities[itemId];
-    if (q == null) return;
-    if (q.value > 1) {
-      q.value--;
-      update(['item_$itemId', 'totals']);
-    }
-  }*/
-
   void setFees({double? delivery, double? platform, double? vat}) {
     if (delivery != null) deliveryFee = delivery;
     update(['totals']);
@@ -149,7 +129,10 @@ class CartController extends GetxController {
         cartItemModelData.removeWhere((item) => item.id == cartId);
 
         update();
-        Get.snackbar('Success', 'Deleted from cart successfully');
+        //Get.snackbar('Success', 'Deleted from cart successfully');
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(content: Text('Deleted from cart successfully')),
+        );
       } else {
         update();
         Get.snackbar('Failed', response.body);

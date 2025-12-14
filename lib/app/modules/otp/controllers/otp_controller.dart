@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:al_khalifa/app/shared_prerf_services/shared_pref_services.dart';
+import 'package:al_khalifa/app/widgets/showCustomSnackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,15 +30,18 @@ class OtpController extends GetxController {
       print(response.body);
       if (response.statusCode == 200) {
        await SharedPrefServices.saveUserOtp(otpController.text);
-        Get.snackbar('Success', "Otp Verification Successful",backgroundColor:Colors.green.shade100);
+       showCustomSnackbar(context: Get.context!, title: 'success', message: "Otp Verification Successfull",backgroundColor: Colors.green);
+       // Get.snackbar('Success', "Otp Verification Successful",backgroundColor:Colors.green.shade100);
         Get.toNamed(Routes.RESET_PASSWORD);
       } else {
-        Get.snackbar("Error", '${response.body}',backgroundColor:Colors.red.shade400);
+        showCustomSnackbar(context: Get.context!, title: 'Failed', message: '${response.body}', backgroundColor: Colors.red.shade400,);
+       // Get.snackbar("Error", '${response.body}',backgroundColor:Colors.red.shade400);
       }
     } catch (e) {
       otpInProgress = false;
       update();
-      Get.snackbar('Error', 'Something went wrong: ${e.toString()}');
+      showCustomSnackbar(context: Get.context!, title: 'Error', message: 'Something went wrong: ${e.toString()}',);
+     // Get.snackbar('Error', 'Something went wrong: ${e.toString()}');
     }
   }
 
@@ -73,12 +77,15 @@ class OtpController extends GetxController {
         {"email": savedEmail},
       );
       if (response.statusCode == 200) {
-        Get.snackbar('Success', 'OTP resent successfully',backgroundColor: Colors.green.shade100);
+        showCustomSnackbar(context: Get.context!, title: 'Success', message: 'OTP resent successfully', backgroundColor: Colors.green);
+       // Get.snackbar('Success', 'OTP resent successfully',backgroundColor: Colors.green.shade100);
         startTimer();
       } else {
-        Get.snackbar('Failed', '${response.body}',backgroundColor: Colors.red.shade400);
+        showCustomSnackbar(context: Get.context!, title: 'Failed', message: '${response.body}', backgroundColor: Colors.red.shade400,);
+       // Get.snackbar('Failed', '${response.body}',backgroundColor: Colors.red.shade400);
       }
     } catch (e) {
+
       Get.snackbar('Error', 'Resend failed: ${e.toString()}');
     }
   }

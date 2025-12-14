@@ -1,6 +1,7 @@
 import 'package:al_khalifa/app/data/app_colors.dart';
 import 'package:al_khalifa/app/modules/home/models/all_menu_model.dart';
 import 'package:al_khalifa/app/modules/home/widget/custom_header.dart';
+import 'package:al_khalifa/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,7 @@ class DetailsMenu extends StatelessWidget {
                 centerTitle: true,
                 leadingIcon: Icons.arrow_back,
                 onLeadingTap: (){
-                  Get.back();
+                  Get.toNamed(Routes.CUSTOM_BOTTOOM_BAR,arguments: {"index":0});
                 },
               ),
               const SizedBox(height: 12),
