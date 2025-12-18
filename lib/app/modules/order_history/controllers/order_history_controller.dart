@@ -12,7 +12,6 @@ class OrderHistoryController extends GetxController {
   var orderDetails = Rxn<OrderDetailsModel>();
   RxBool orderDeleteInProgress = false.obs;
 
-
   Future<void> fetchOrderDetails() async {
     try {
       isLoading(true);
@@ -53,19 +52,16 @@ class OrderHistoryController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     calledInit();
     super.onInit();
   }
 
-
-  Future<void> calledInit()async{
-    bool response=await SharedPrefServices.getIsCancelButtonTappedStatus();
-    if(!response){
+  Future<void> calledInit() async {
+    bool response = await SharedPrefServices.getIsCancelButtonTappedStatus();
+    if (!response) {
       fetchOrderDetails();
     }
   }
-
 
   Timer? periodicTime;
   RxInt periodicRemainingTime = 30.obs;
@@ -74,31 +70,34 @@ class OrderHistoryController extends GetxController {
   RxBool isCancelButtonOn = false.obs;
 
 
-  void startPeriodicFunc(){
+  void periodicTimeFormating() {
+    periodicRemainingMin.value = periodicRemainingTime.value ~/ 60;
+    periodicRemainingSecond.value = periodicRemainingTime.value % 60;
+    update();
+  }
+
+  void startPeriodicFunc() {
     periodicTime?.cancel();
-    isCancelButtonOn.value=true;
-    update();
-     Timer.periodic(Duration(seconds: 1), (time){
-       if(periodicRemainingTime.value<=0){
-         isCancelButtonOn.value=false;
-         periodicTime?.cancel();
-       }else{
-         periodicRemainingTime.value--;
-         periodicTimeFormating();
-       }
-       update();
-     });
+
+    periodicRemainingTime.value = 30;
+    periodicTimeFormating();
+
+    isCancelButtonOn.value = true;
+
+    periodicTime = Timer.periodic(const Duration(seconds: 1), (time) {
+      if (periodicRemainingTime.value <= 0) {
+        isCancelButtonOn.value = false;
+        periodicTime?.cancel();
+      } else {
+        periodicRemainingTime.value--;
+        periodicTimeFormating();
+      }
+    });
   }
 
-
-  void periodicTimeFormating(){
-    periodicRemainingMin.value= periodicRemainingTime.value~/60;
-    periodicRemainingSecond.value=periodicRemainingTime.value % 60;
-    update();
+  void clearTimer() {
+    periodicTime?.cancel();
+    periodicRemainingTime.value = 30;
+    isCancelButtonOn.value = false;
   }
-
-
-
-
-
 }

@@ -22,7 +22,6 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
         child: Obx(() {
           final OrderDetailsModel? orderDetailsModel = controller.orderDetails.value;
 
-          // Use a ListView for both empty and data states
           return RefreshIndicator(
             onRefresh: ()async{
               await controller.calledInit();
