@@ -37,8 +37,9 @@ class OrderRequest {
 
 class OrderItem {
   final int foodId;
+  final int variationId;
 
-  OrderItem({required this.foodId});
+  OrderItem({required this.foodId, required this.variationId});
 
-  Map<String, dynamic> toJson() => {'food_id': foodId};
+  Map<String, dynamic> toJson() => {'food_id': foodId,"variation_id":variationId};
 }
