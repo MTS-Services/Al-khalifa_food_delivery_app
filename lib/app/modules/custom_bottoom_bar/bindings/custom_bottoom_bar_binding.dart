@@ -12,9 +12,9 @@ class CustomBottomBarBinding extends Bindings {
   @override
   void dependencies() {
 
-      Get.lazyPut<CheckoutController>(() => CheckoutController());
+    Get.lazyPut<CheckoutController>(() => CheckoutController());
 
- /*   Get.lazyPut<CustomBottomBarController>(
+    /*   Get.lazyPut<CustomBottomBarController>(
       () => CustomBottomBarController(),
     );
     Get.lazyPut<HomeController>(

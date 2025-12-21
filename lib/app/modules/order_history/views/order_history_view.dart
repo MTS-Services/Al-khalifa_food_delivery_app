@@ -97,7 +97,7 @@ class OrderHistoryView extends GetView<OrderHistoryController> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          '৳ ${item.food.price}',
+                          '৳ ${item.variation.price}',
                           style: const TextStyle(fontSize: 16),
                         ),
                         Text(
