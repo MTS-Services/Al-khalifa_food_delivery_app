@@ -64,13 +64,15 @@ class User {
 class OrderItem {
   final int id;
   final Food food;
+  final Variation variation;
 
-  OrderItem({required this.id, required this.food});
+  OrderItem({required this.id, required this.food, required this.variation});
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(
       id: json['id'],
       food: Food.fromJson(json['food']),
+      variation: Variation.fromJson(json['variation'])
     );
   }
 }
@@ -100,6 +102,26 @@ class Food {
       price: (json['price'] as num).toDouble(),
       perPerson: json['per_person'],
       categoryId: json['category_id'],
+    );
+  }
+}
+
+class Variation {
+  final int id;
+  final String name;
+  final double price;
+
+  Variation({
+    required this.id,
+    required this.name,
+    required this.price,
+  });
+
+  factory Variation.fromJson(Map<String, dynamic> json) {
+    return Variation(
+      id: json['id'],
+      name: json['name'] ?? '',
+      price: (json['price'] as num).toDouble(),
     );
   }
 }
