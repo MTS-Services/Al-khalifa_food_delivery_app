@@ -8,19 +8,13 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Firebase initialization
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // GetStorage initialization
   await GetStorage.init();
-
-  // Hive initialization
   await Hive.initFlutter();
   await Hive.openBox('app_data');
 
-  // ✅ সরাসরি AppManagement run করুন
   runApp(AppManagement());
 }
