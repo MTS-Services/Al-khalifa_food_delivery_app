@@ -33,6 +33,7 @@ class CheckoutController extends GetxController {
       final orderItems = cartItems.map((cartItem) {
         return OrderItem(
           foodId: cartItem.productId,
+          variationId: cartItem.variation.id
         ); // Use productId instead of id
       }).toList();
 
