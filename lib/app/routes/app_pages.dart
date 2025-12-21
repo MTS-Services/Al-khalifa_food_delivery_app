@@ -167,14 +167,14 @@ class AppPages {
       name: _Paths.SIGNUP,
       page: () => SignupView(),
       binding: SignupBinding(),
-      transition: Transition.rightToLeft, // 👈 animation defined here
+      transition: Transition.rightToLeft,
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: _Paths.CUSTOM_BOTTOM_BAR,
       page: () => CustomBottomBarView(),
       binding: CustomBottomBarBinding(),
-      transition: Transition.rightToLeft, // 👈 animation defined here
+      transition: Transition.rightToLeft,
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
